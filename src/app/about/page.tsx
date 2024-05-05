@@ -1,5 +1,5 @@
 const About = () => {
-  return <main>This is the about page</main>;
+  return <>About</>;
 };
 
 export default About;
