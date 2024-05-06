@@ -1,29 +1,8 @@
 "use client";
 
-import { ReactNode } from "react";
+import { Center, Flex, Link, Spacer, useDisclosure } from "@chakra-ui/react";
 import NextLink from "next/link";
-import {
-  Box,
-  Flex,
-  Avatar,
-  HStack,
-  IconButton,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  Link,
-  useDisclosure,
-  useColorModeValue,
-  Stack,
-  Spacer,
-  Text,
-  Center,
-} from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
-import { SiLinkedin } from "react-icons/si";
+import { ReactNode } from "react";
 
 const Links: NavLinkType[] = [
   { label: "Home", link: "/" },
@@ -34,17 +13,42 @@ const Links: NavLinkType[] = [
 
 const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
   <Link
+    mx={5}
+    my={6}
     px={2}
     as={NextLink}
     href={href}
+    position="static"
+    zIndex={1}
+    color="text.main"
+    fontWeight="bold"
+    fontSize="xl"
+    _before={{
+      content: '""',
+      position: "absolute",
+      bg: "secondary.main",
+      left: "0",
+      width: "100%",
+      height: "8px",
+      zIndex: "-1",
+      bottom: "3px",
+      transition: "all .3s ease-in-out",
+      rounded: "full",
+    }}
     _hover={{
-      textDecoration: "none",
-      bg: "gray.200",
+      _before: {
+        bottom: "0",
+        height: "100%",
+      },
+    }}
+    _focus={{
+      _before: {
+        bottom: "0",
+        height: "100%",
+      },
     }}
   >
-    <Text fontSize="xl" verticalAlign="center">
-      {children}
-    </Text>
+    {children}
   </Link>
 );
 
@@ -52,17 +56,19 @@ const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box>
-      <Center>
-        <Flex py={4} px={6} align="center" position="static">
+    <Center>
+      <Flex>
+        <Spacer />
+        <Center>
           {Links.map((item) => (
             <NavLink key={item.label} href={item.link}>
               {item.label}
             </NavLink>
           ))}
-        </Flex>
-      </Center>
-    </Box>
+        </Center>
+        <Spacer />
+      </Flex>
+    </Center>
   );
 };
 
