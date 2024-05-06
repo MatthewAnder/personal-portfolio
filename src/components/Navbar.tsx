@@ -18,7 +18,7 @@ const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
     px={2}
     as={NextLink}
     href={href}
-    position="static"
+    position="sticky"
     zIndex={1}
     color="text.main"
     fontWeight="bold"
@@ -41,12 +41,6 @@ const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
         height: "100%",
       },
     }}
-    _focus={{
-      _before: {
-        bottom: "0",
-        height: "100%",
-      },
-    }}
   >
     {children}
   </Link>
@@ -58,7 +52,6 @@ const Navbar = () => {
   return (
     <Center>
       <Flex>
-        <Spacer />
         <Center>
           {Links.map((item) => (
             <NavLink key={item.label} href={item.link}>
@@ -66,7 +59,6 @@ const Navbar = () => {
             </NavLink>
           ))}
         </Center>
-        <Spacer />
       </Flex>
     </Center>
   );
