@@ -33,7 +33,7 @@ const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
       height: "8px",
       zIndex: "-1",
       bottom: "3px",
-      transition: "all .3s ease-in-out",
+      transition: "all .2s ease-in-out",
       rounded: "xl",
     }}
     _hover={{
@@ -41,16 +41,11 @@ const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
         bottom: "0",
         height: "100%",
       },
-      _active: {
-        top: "1px",
-      },
     }}
     _active={{
       _before: {
-        transform: "scale(1.5)",
+        transform: "scale(1.1)",
         transition: "all 0.1s linear",
-        opacity: "0.5",
-        rounded: "full",
       },
     }}
   >
