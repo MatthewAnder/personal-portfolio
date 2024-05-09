@@ -53,6 +53,9 @@ const keys = keyframes`
   75% {
     transform: translateY(-3.6em)
   }
+  100% {
+    transform: translateY(-4.8em)
+  }
 `;
 const animation = `${keys} infinite 6s ease-out forwards`;
 const AnimatedText = () => {
@@ -62,6 +65,7 @@ const AnimatedText = () => {
       <HighlightText color={"primary.200"}>Backend</HighlightText>
       <HighlightText color={"primary.300"}>Game</HighlightText>
       <HighlightText color={"primary.400"}>Cybersecurity?</HighlightText>
+      <HighlightText color={"primary.100"}>Frontend</HighlightText>{" "}
     </Flex>
   );
 };
@@ -71,7 +75,7 @@ const HighlightText = ({
   color,
 }: {
   children: ReactChild;
-  color: ResponsiveValue<Colors>;
+  color: any;
 }) => {
   return (
     <Heading
