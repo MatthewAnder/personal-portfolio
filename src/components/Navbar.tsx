@@ -16,7 +16,7 @@ const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
     draggable="false"
     mx={5}
     my={6}
-    px={2}
+    px={3}
     as={NextLink}
     href={href}
     position="relative"
@@ -27,7 +27,7 @@ const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
     _before={{
       content: '""',
       position: "absolute",
-      bg: "secondary.main",
+      bg: "accent.900",
       left: "0",
       width: "100%",
       height: "8px",
