@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 // Chakra Provider Component
 import { Providers } from "@/app/providers";
 import Navbar from "@/components/Navbar";
+import Socials from "@/components/Socials";
 
 export default function RootLayout({
   children,
@@ -13,6 +14,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <Navbar />
+          <Socials />
           {children}
         </Providers>
       </body>

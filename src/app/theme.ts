@@ -1,6 +1,17 @@
 import { extendTheme } from "@chakra-ui/react";
 
 export const theme = extendTheme({
+  Link: {
+    baseStyle: {
+      // normal styling
+      textDecoration: "none",
+      // hover styling goes here
+      _hover: {
+        textDecoration: "none",
+      },
+    },
+  },
+
   styles: {
     global: {
       "html, body": {

@@ -12,6 +12,22 @@ import {
 import { motion } from "framer-motion";
 import { ReactChild } from "react";
 
+// Import Sections
+import About from "@/components/sections/About";
+import Projects from "@/components/sections/Projects";
+import Contact from "@/components/sections/Contact";
+
+const Page = () => {
+  return (
+    <Box>
+      <Home />
+      <About />
+      <Projects />
+      <Contact />
+    </Box>
+  );
+};
+
 const Home = () => {
   return (
     <Box>
@@ -22,8 +38,8 @@ const Home = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.1 }}
         variants={{
-          visible: { opacity: 1, scale: 1 },
-          hidden: { opacity: 0, scale: 0 },
+          visible: { opacity: 1 },
+          hidden: { opacity: 0 },
         }}
       >
         <HomeRaw />
@@ -149,4 +165,4 @@ const Picture = () => {
   );
 };
 
-export default Home;
+export default Page;
