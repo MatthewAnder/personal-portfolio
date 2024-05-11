@@ -5,51 +5,47 @@ import NextLink from "next/link";
 import { ReactNode } from "react";
 
 const Links: NavLinkType[] = [
-  { label: "Home", link: "/" },
-  { label: "About", link: "/about" },
-  { label: "Projects", link: "/projects" },
-  { label: "Contact Me", link: "/contact" },
+  { label: "Home", link: "/", color: "primary.500" },
+  { label: "About", link: "/about", color: "primary.200" },
+  { label: "Projects", link: "/projects", color: "primary.300" },
+  { label: "Contact", link: "/contact", color: "text.main" },
 ];
 
-const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
+const NavLink = ({ navItem }: { navItem: NavLinkType }) => (
   <Link
     draggable="false"
-    mx={7}
-    my={3}
-    px={3}
+    py={3}
+    px={4}
     as={NextLink}
-    href={href}
+    href={navItem.link}
     position="relative"
     zIndex={1}
-    color="text.main"
+    color={"background.700"}
+    shadow={"inner"}
     fontWeight="bold"
     fontSize="xl"
     _before={{
-      content: '""',
+      content: "''",
       position: "absolute",
-      bg: "accent.900",
+      bottom: "0",
       left: "0",
-      width: "100%",
-      height: "8px",
+      bg: `${navItem.color}`,
       zIndex: "-1",
-      bottom: "3px",
-      transition: "all .2s ease-in-out",
-      rounded: "xl",
+      width: "100%",
+      height: "6px",
+      transition: "all .3s ease-out",
     }}
     _hover={{
+      color: "background.50",
+    }}
+    _focus={{
       _before: {
-        bottom: "0",
         height: "100%",
       },
-    }}
-    _active={{
-      _before: {
-        transform: "scale(1.1)",
-        transition: "all 0.1s linear",
-      },
+      color: "background.50",
     }}
   >
-    {children}
+    {navItem.label}
   </Link>
 );
 
@@ -60,14 +56,12 @@ const Navbar = () => {
         bg={"background.main"}
         top={5}
         rounded={"full"}
-        boxShadow={"2xl"}
+        boxShadow={"dark-lg"}
         position={"fixed"}
       >
-        <Center>
+        <Center mx={10}>
           {Links.map((item) => (
-            <NavLink key={item.label} href={item.link}>
-              {item.label}
-            </NavLink>
+            <NavLink key={item.label} navItem={item} />
           ))}
         </Center>
       </Flex>
@@ -78,6 +72,7 @@ const Navbar = () => {
 interface NavLinkType {
   label: string;
   link: string;
+  color: string;
 }
 
 export default Navbar;

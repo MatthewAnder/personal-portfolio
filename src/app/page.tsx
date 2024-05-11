@@ -24,17 +24,32 @@ const Home = () => {
   );
 };
 
+const semicolon = "black";
 const Title = () => {
   return (
     <VStack align={"end"} mx={6}>
       <Heading as="h1" fontSize={"2xl"} lineHeight="tall" color={"primary.200"}>
-        Matthew Haryanto
+        <Character color={"primary.100"} char={"const"} />{" "}
+        <Character color={"primary.300"} char={"name:"} />{" "}
+        <Character color={"primary.400"} char={"String"} />{" "}
+        <Character color={"primary.500"} char={"="} />{" "}
+        <Character color={"primary.600"} char={"'"} />
+        <Character color={"text.main"} char={"Matthew Haryanto"} />
+        <Character color={"primary.600"} char={"'"} />
       </Heading>
       <AnimatedText />
-      <Heading as="h2" fontSize={"2xl"} lineHeight="tall" color={"primary.300"}>
+      <Heading as="h2" fontSize={"2xl"} lineHeight="tall" color={"primary.600"}>
         Developer&#33;
       </Heading>
     </VStack>
+  );
+};
+
+const Character = ({ color, char }: { color: any; char: String }) => {
+  return (
+    <Box as="span" color={color}>
+      {char}
+    </Box>
   );
 };
 
@@ -60,7 +75,7 @@ const AnimatedText = () => {
       <HighlightText color={"primary.100"}>Frontend</HighlightText>
       <HighlightText color={"primary.200"}>Backend</HighlightText>
       <HighlightText color={"primary.300"}>Game</HighlightText>
-      <HighlightText color={"primary.400"}>Designer</HighlightText>
+      <HighlightText color={"primary.400"}>Cybersecurity?</HighlightText>
       <HighlightText color={"primary.100"}>Frontend</HighlightText>
     </Flex>
   );
@@ -79,6 +94,7 @@ const HighlightText = ({
       fontSize="4em"
       animation={animation}
       color={color}
+      letterSpacing={0}
     >
       {children.toString()}
     </Heading>
