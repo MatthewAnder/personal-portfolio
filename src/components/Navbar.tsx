@@ -14,8 +14,8 @@ const Links: NavLinkType[] = [
 const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
   <Link
     draggable="false"
-    mx={5}
-    my={6}
+    mx={7}
+    my={3}
     px={3}
     as={NextLink}
     href={href}
@@ -56,7 +56,13 @@ const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
 const Navbar = () => {
   return (
     <Center>
-      <Flex>
+      <Flex
+        bg={"background.main"}
+        top={5}
+        rounded={"full"}
+        boxShadow={"2xl"}
+        position={"fixed"}
+      >
         <Center>
           {Links.map((item) => (
             <NavLink key={item.label} href={item.link}>

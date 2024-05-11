@@ -3,69 +3,65 @@
 import {
   Box,
   Center,
-  Image,
-  Heading,
-  Highlight,
-  HStack,
-  Text,
   Flex,
+  Heading,
+  Image,
   VStack,
   keyframes,
 } from "@chakra-ui/react";
-import type { ResponsiveValue, Colors } from "@chakra-ui/react";
 import { ReactChild } from "react";
 
 const Home = () => {
   return (
-    <Center>
-      <Flex>
-        <Title />
-        <Picture />
-      </Flex>
-    </Center>
+    <Box>
+      <Center>
+        <Flex alignItems={"center"} mx={4} height={"100vh"}>
+          <Title />
+          <Picture />
+        </Flex>
+      </Center>
+    </Box>
   );
 };
 
 const Title = () => {
   return (
-    <Box>
-      
-      <VStack align={"end"}>
-        <Heading as="h1" lineHeight="tall">
-          Matthew Haryanto
-        </Heading>
-        <AnimatedText />
-        <Heading as="h1" lineHeight="tall">
-          Developer&#33;
-        </Heading>
-      </VStack>
-    </Box>
+    <VStack align={"end"} mx={6}>
+      <Heading as="h1" fontSize={"2xl"} lineHeight="tall" color={"primary.200"}>
+        Matthew Haryanto
+      </Heading>
+      <AnimatedText />
+      <Heading as="h2" fontSize={"2xl"} lineHeight="tall" color={"primary.300"}>
+        Developer&#33;
+      </Heading>
+    </VStack>
   );
 };
 
+const gap: number = 1.2;
 const keys = keyframes`
   25% {
-    transform: translateY(-1.2em);
+    transform: translateY(-${gap}em);
   }
   50% {
-    transform: translateY(-2.4em)
+    transform: translateY(-${gap * 2}em)
   }
   75% {
-    transform: translateY(-3.6em)
+    transform: translateY(-${gap * 3}em)
   }
   100% {
-    transform: translateY(-4.8em)
+    transform: translateY(-${gap * 4}em)
   }
 `;
-const animation = `${keys} infinite 6s ease-out forwards`;
+const animation = `${keys} infinite 10s forwards`;
 const AnimatedText = () => {
   return (
-    <Flex direction="column" align={"end"} height="2.2em" overflow={"hidden"}>
+    <Flex direction="column" align={"end"} height="4.5em" overflow={"hidden"}>
       <HighlightText color={"primary.100"}>Frontend</HighlightText>
       <HighlightText color={"primary.200"}>Backend</HighlightText>
       <HighlightText color={"primary.300"}>Game</HighlightText>
-      <HighlightText color={"primary.400"}>Cybersecurity?</HighlightText>
-      <HighlightText color={"primary.100"}>Frontend</HighlightText>{" "}
+      <HighlightText color={"primary.400"}>Designer</HighlightText>
+      <HighlightText color={"primary.100"}>Frontend</HighlightText>
     </Flex>
   );
 };
@@ -80,7 +76,7 @@ const HighlightText = ({
   return (
     <Heading
       lineHeight="1.2em"
-      fontSize="2em"
+      fontSize="4em"
       animation={animation}
       color={color}
     >
@@ -91,9 +87,29 @@ const HighlightText = ({
 
 const Picture = () => {
   return (
-    <Box>
-      <Image src="" alt="img" />
-    </Box>
+    <Image
+      src="/images/profile.jpg"
+      alt="img"
+      boxSize={"md"}
+      objectFit="cover"
+      rounded={"full"}
+      _before={{
+        content: '""',
+        position: "absolute",
+        rounded: "full",
+        bg: "background.600",
+        left: "0",
+        bottom: "0",
+        width: "100%",
+        transition: "all .2s ease-in-out",
+      }}
+      _hover={{
+        _before: {
+          transform: "scale(2)",
+        },
+      }}
+      boxShadow={"2xl"}
+    />
   );
 };
 

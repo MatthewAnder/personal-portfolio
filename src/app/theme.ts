@@ -15,6 +15,11 @@ export const theme = extendTheme({
     },
   },
 
+  fonts: {
+    heading: `'Jetbrains Mono'`,
+    body: `'Jetbrains Mono'`,
+  },
+
   colors: {
     text: {
       main: "#e4bb68",

@@ -2,11 +2,6 @@ import type { Metadata } from "next";
 // Chakra Provider Component
 import { Providers } from "@/app/providers";
 import Navbar from "@/components/Navbar";
-import { JetBrains_Mono } from "next/font/google";
-
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
-});
 
 export default function RootLayout({
   children,
@@ -14,7 +9,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={jetbrains.className}>
+    <html lang="en">
       <body>
         <Providers>
           <Navbar />
