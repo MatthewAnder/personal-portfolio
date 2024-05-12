@@ -1,5 +1,7 @@
+"use client";
+
 import { Box, Flex, Link } from "@chakra-ui/react";
-import { transform } from "next/dist/build/swc";
+import { motion } from "framer-motion";
 
 import {
   FaGithub,
@@ -46,8 +48,21 @@ const Socials = () => {
       alignItems={"end"}
       width={"200px"}
     >
-      {Items.map((item: SocialItems) => (
-        <NavLink key={item.label} navItem={item} />
+      {Items.map((item: SocialItems, index: number) => (
+        <motion.div
+          key={item.label}
+          initial="hidden"
+          whileInView={"visible"}
+          viewport={{ once: true }}
+          variants={{ hidden: { x: -56 }, visible: { x: 0 } }}
+          transition={{
+            type: "spring",
+            duration: 0.5,
+            delay: 1.4 + 0.2 * index,
+          }}
+        >
+          <NavLink key={item.label} navItem={item} />
+        </motion.div>
       ))}
     </Flex>
   );

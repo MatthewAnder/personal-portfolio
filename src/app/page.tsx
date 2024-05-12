@@ -34,12 +34,10 @@ const Home = () => {
       <motion.div
         initial={"hidden"}
         whileInView={"visible"}
-        exit={"hidden"}
-        viewport={{ once: true }}
-        transition={{ duration: 0.1 }}
+        transition={{ duration: 0.5 }}
         variants={{
-          visible: { opacity: 1 },
-          hidden: { opacity: 0 },
+          visible: { opacity: 1, y: 0 },
+          hidden: { opacity: 0, y: 75 },
         }}
       >
         <HomeRaw />
@@ -139,29 +137,24 @@ const HighlightText = ({
 
 const Picture = () => {
   return (
-    <Image
-      src="/images/profile.jpg"
-      alt="img"
-      boxSize={"md"}
-      objectFit="cover"
-      rounded={"full"}
-      _before={{
-        content: '""',
-        position: "absolute",
-        rounded: "full",
-        bg: "background.600",
-        left: "0",
-        bottom: "0",
-        width: "100%",
-        transition: "all .2s ease-in-out",
+    <motion.div
+      initial={"hidden"}
+      whileInView={"visible"}
+      transition={{ duration: 1, delay: 0.6, type: "spring", damping: 10 }}
+      variants={{
+        visible: { opacity: 1, scale: 1 },
+        hidden: { opacity: 0, scale: 0 },
       }}
-      _hover={{
-        _before: {
-          transform: "scale(2)",
-        },
-      }}
-      boxShadow={"2xl"}
-    />
+    >
+      <Image
+        src="/images/profile.jpg"
+        alt="img"
+        boxSize={"md"}
+        objectFit="cover"
+        rounded={"full"}
+        boxShadow={"2xl"}
+      />
+    </motion.div>
   );
 };
 

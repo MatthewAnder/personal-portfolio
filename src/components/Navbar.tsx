@@ -4,12 +4,20 @@ import { Box, Center, Flex, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { ReactNode } from "react";
 
+interface NavLinkType {
+  label: string;
+  link: string;
+  color: string;
+}
+
 const Links: NavLinkType[] = [
   { label: "Home", link: "/", color: "primary.500" },
-  { label: "About", link: "/about", color: "primary.200" },
-  { label: "Projects", link: "/projects", color: "primary.300" },
-  { label: "Contact", link: "/contact", color: "text.main" },
+  { label: "About", link: "#about", color: "primary.200" },
+  { label: "Projects", link: "#projects", color: "primary.300" },
+  { label: "Contact", link: "#contact", color: "text.main" },
 ];
+
+const handleActive = () => {};
 
 const NavLink = ({ navItem }: { navItem: NavLinkType }) => (
   <Link
@@ -44,6 +52,7 @@ const NavLink = ({ navItem }: { navItem: NavLinkType }) => (
       },
       color: "background.50",
     }}
+    onClick={handleActive}
   >
     {navItem.label}
   </Link>
@@ -51,7 +60,7 @@ const NavLink = ({ navItem }: { navItem: NavLinkType }) => (
 
 const Navbar = () => {
   return (
-    <Center>
+    <Center zIndex={20} position={"static"}>
       <Flex
         bg={"background.main"}
         top={5}
@@ -68,11 +77,5 @@ const Navbar = () => {
     </Center>
   );
 };
-
-interface NavLinkType {
-  label: string;
-  link: string;
-  color: string;
-}
 
 export default Navbar;
