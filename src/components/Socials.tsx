@@ -34,12 +34,6 @@ const Items: SocialItems[] = [
     link: "https://www.linkedin.com/in/matthewanh/",
     bgColor: "#dd2a7b",
   },
-  {
-    label: "Outlook",
-    icon: <FaRegEnvelope />,
-    link: "mailto:matthewanh@hotmail.com",
-    bgColor: "#0072c6",
-  },
 ];
 
 const Socials = () => {
@@ -75,11 +69,13 @@ const NavLink = ({ navItem }: { navItem: SocialItems }) => {
         rounded={"full"}
         alignItems={"center"}
         background={"background.600"}
+        opacity={0.7}
         transition={`${duration} ease-out`}
         pl={20}
         _hover={{
           transform: "translateX(6em)",
           bg: "background.700",
+          opacity: "1",
         }}
         data-group
       >
