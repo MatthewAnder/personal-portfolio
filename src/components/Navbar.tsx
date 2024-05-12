@@ -1,80 +1,96 @@
 "use client";
 
-import { Box, Center, Flex, Link } from "@chakra-ui/react";
+import { Center, Flex, Link } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import NextLink from "next/link";
-import { ReactNode } from "react";
+import { ReactPropTypes, useState } from "react";
 
-interface NavLinkType {
+interface NavLinkItem {
   label: string;
   link: string;
   color: string;
 }
 
-const Links: NavLinkType[] = [
+interface NavLinks {
+  navItem: NavLinkItem;
+  section: string;
+  onClick: () => void;
+}
+
+const Links: NavLinkItem[] = [
   { label: "Home", link: "/", color: "primary.500" },
   { label: "About", link: "#about", color: "primary.200" },
   { label: "Projects", link: "#projects", color: "primary.300" },
   { label: "Contact", link: "#contact", color: "text.main" },
 ];
 
-const handleActive = () => {};
-
-const NavLink = ({ navItem }: { navItem: NavLinkType }) => (
-  <Link
-    draggable="false"
-    py={3}
-    px={4}
-    as={NextLink}
-    href={navItem.link}
-    position="relative"
-    zIndex={1}
-    color={"background.700"}
-    shadow={"inner"}
-    fontWeight="bold"
-    fontSize="xl"
-    _before={{
-      content: "''",
-      position: "absolute",
-      bottom: "0",
-      left: "0",
-      bg: `${navItem.color}`,
-      zIndex: "-1",
-      width: "100%",
-      height: "6px",
-      transition: "all .3s ease-out",
-    }}
-    _hover={{
-      color: "background.50",
-    }}
-    _focus={{
-      _before: {
-        height: "100%",
-      },
-      color: "background.50",
-    }}
-    onClick={handleActive}
-  >
-    {navItem.label}
-  </Link>
-);
+const NavLink = ({ navItem, section, onClick }: NavLinks) => {
+  return (
+    <Link
+      draggable="false"
+      py={3}
+      px={4}
+      as={NextLink}
+      href={navItem.link}
+      position="relative"
+      zIndex={1}
+      color={section === navItem.label ? "background.50" : "background.700"}
+      shadow={"inner"}
+      fontWeight="bold"
+      fontSize="xl"
+      _before={{
+        content: "''",
+        position: "absolute",
+        bottom: "0",
+        left: "0",
+        bg: `${navItem.color}`,
+        zIndex: "-1",
+        width: "100%",
+        height: section == navItem.label ? "100%" : "6px",
+        transition: "all .3s ease-out",
+      }}
+      _hover={{
+        color: "background.50",
+      }}
+      onClick={onClick}
+    >
+      {navItem.label}
+    </Link>
+  );
+};
 
 const Navbar = () => {
+  const [section, setSection] = useState("Home");
+
   return (
-    <Center zIndex={20} position={"static"}>
-      <Flex
-        bg={"background.main"}
-        top={5}
-        rounded={"full"}
-        boxShadow={"dark-lg"}
-        position={"fixed"}
-      >
-        <Center mx={10}>
-          {Links.map((item) => (
-            <NavLink key={item.label} navItem={item} />
-          ))}
-        </Center>
-      </Flex>
-    </Center>
+    <motion.div
+      initial="hidden"
+      whileInView={"visible"}
+      viewport={{ once: true }}
+      animate="visible"
+      variants={{ hidden: { y: -100 }, visible: { y: 0 } }}
+    >
+      <Center zIndex={20}>
+        <Flex
+          bg={"background.main"}
+          top={5}
+          rounded={"full"}
+          boxShadow={"dark-lg"}
+          position={"fixed"}
+        >
+          <Center mx={10}>
+            {Links.map((item) => (
+              <NavLink
+                key={item.label}
+                navItem={item}
+                section={section}
+                onClick={() => setSection(item.label)}
+              />
+            ))}
+          </Center>
+        </Flex>
+      </Center>
+    </motion.div>
   );
 };
 

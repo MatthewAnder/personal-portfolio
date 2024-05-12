@@ -34,7 +34,6 @@ const Home = () => {
       <motion.div
         initial={"hidden"}
         whileInView={"visible"}
-        transition={{ duration: 0.5 }}
         variants={{
           visible: { opacity: 1, y: 0 },
           hidden: { opacity: 0, y: 75 },
@@ -61,15 +60,8 @@ const semicolon = "black";
 const Title = () => {
   return (
     <VStack align={"end"} mx={6}>
-      <Heading as="h1" fontSize={"2xl"} lineHeight="tall" color={"primary.200"}>
-        <Character color={"primary.100"} char={"const "} />
-        <Character color={"primary.300"} char={"name: "} />
-        <Character color={"primary.400"} char={"String"} />
-        <Character color={"primary.500"} char={" = "} />
-        <Character color={"primary.600"} char={"'"} />
-        <Character color={"text.main"} char={"MATTHEW HARYANTO"} />
-        <Character color={"primary.600"} char={"'"} />
-        <Character color={"primary.200"} char={";"} />
+      <Heading as="h1" fontSize={"2xl"} lineHeight="tall" color={"primary.500"}>
+        MATTHEW HARYANTO
       </Heading>
       <AnimatedText />
       <Heading as="h2" fontSize={"2xl"} lineHeight="tall" color={"primary.600"}>
@@ -102,7 +94,7 @@ const keys = keyframes`
     transform: translateY(-${gap * 4}em)
   }
 `;
-const animation = `${keys} infinite 10s forwards`;
+const animation = `${keys} infinite 10s`;
 const AnimatedText = () => {
   return (
     <Flex direction="column" align={"end"} height="4.5em" overflow={"hidden"}>
@@ -123,15 +115,22 @@ const HighlightText = ({
   color: any;
 }) => {
   return (
-    <Heading
-      lineHeight="1.2em"
-      fontSize="4em"
-      animation={animation}
-      color={color}
-      letterSpacing={0}
+    <motion.div
+      animate=""
+      variants={{
+        visible: { opacity: 1 },
+        hiddent: { opacity: 0 },
+      }}
     >
-      {children.toString()}
-    </Heading>
+      <Heading
+        lineHeight="1.2em"
+        fontSize="4em"
+        color={color}
+        letterSpacing={0}
+      >
+        {children.toString()}
+      </Heading>
+    </motion.div>
   );
 };
 
