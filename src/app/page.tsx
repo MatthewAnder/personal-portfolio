@@ -9,7 +9,7 @@ import {
   VStack,
   keyframes,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { Variant, Variants, motion } from "framer-motion";
 import { ReactChild } from "react";
 
 // Import Sections
@@ -30,23 +30,6 @@ const Page = () => {
 
 const Home = () => {
   return (
-    <Box>
-      <motion.div
-        initial={"hidden"}
-        whileInView={"visible"}
-        variants={{
-          visible: { opacity: 1, y: 0 },
-          hidden: { opacity: 0, y: 75 },
-        }}
-      >
-        <HomeRaw />
-      </motion.div>
-    </Box>
-  );
-};
-
-const HomeRaw = () => {
-  return (
     <Center>
       <Flex alignItems={"center"} mx={4} height={"100vh"}>
         <Title />
@@ -56,48 +39,50 @@ const HomeRaw = () => {
   );
 };
 
-const semicolon = "black";
 const Title = () => {
   return (
-    <VStack align={"end"} mx={6}>
-      <Heading as="h1" fontSize={"2xl"} lineHeight="tall" color={"primary.500"}>
-        MATTHEW HARYANTO
-      </Heading>
-      <AnimatedText />
-      <Heading as="h2" fontSize={"2xl"} lineHeight="tall" color={"primary.600"}>
-        {"<!--- Developer --->"}
-      </Heading>
-    </VStack>
+    <motion.div
+      initial={"hidden"}
+      whileInView={"visible"}
+      exit={"hidden"}
+      variants={{
+        visible: { opacity: 1, y: 0 },
+        hidden: { opacity: 0, y: 75 },
+      }}
+    >
+      <VStack align={"end"} mx={6}>
+        <Heading
+          as="h1"
+          fontSize={"3xl"}
+          lineHeight="tall"
+          color={"primary.500"}
+          letterSpacing={"3px"}
+        >
+          MATTHEW HARYANTO
+        </Heading>
+        <AnimatedText />
+        <Heading
+          as="h2"
+          fontSize={"2xl"}
+          lineHeight="tall"
+          color={"primary.600"}
+        >
+          {"<!--- Developer --->"}
+        </Heading>
+      </VStack>
+    </motion.div>
   );
 };
 
-const Character = ({ color, char }: { color: any; char: String }) => {
-  return (
-    <Box as="span" color={color}>
-      {char}
-    </Box>
-  );
-};
-
-const gap: number = 1.2;
-const keys = keyframes`
-  25% {
-    transform: translateY(-${gap}em);
-  }
-  50% {
-    transform: translateY(-${gap * 2}em)
-  }
-  75% {
-    transform: translateY(-${gap * 3}em)
-  }
-  100% {
-    transform: translateY(-${gap * 4}em)
-  }
-`;
-const animation = `${keys} infinite 10s`;
 const AnimatedText = () => {
   return (
-    <Flex direction="column" align={"end"} height="4.5em" overflow={"hidden"}>
+    <Flex
+      direction="column"
+      align={"end"}
+      height="4.5em"
+      overflow={"hidden"}
+      zIndex={1}
+    >
       <HighlightText color={"primary.100"}>Frontend</HighlightText>
       <HighlightText color={"primary.200"}>Backend</HighlightText>
       <HighlightText color={"primary.300"}>Game</HighlightText>
@@ -116,17 +101,22 @@ const HighlightText = ({
 }) => {
   return (
     <motion.div
-      animate=""
-      variants={{
-        visible: { opacity: 1 },
-        hiddent: { opacity: 0 },
+      animate={{ y: ["0%", "-100%", "-200%", "-300%", "-400%"] }}
+      transition={{
+        y: {
+          repeat: Infinity,
+          repeatType: "loop",
+          duration: 10,
+          delay: 1,
+          ease: "backInOut",
+        },
       }}
     >
       <Heading
         lineHeight="1.2em"
         fontSize="4em"
         color={color}
-        letterSpacing={0}
+        letterSpacing={-4}
       >
         {children.toString()}
       </Heading>
@@ -139,7 +129,8 @@ const Picture = () => {
     <motion.div
       initial={"hidden"}
       whileInView={"visible"}
-      transition={{ duration: 1, delay: 0.6, type: "spring", damping: 10 }}
+      exit={"hidden"}
+      transition={{ delay: 0.3 }}
       variants={{
         visible: { opacity: 1, scale: 1 },
         hidden: { opacity: 0, scale: 0 },

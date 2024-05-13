@@ -33,7 +33,6 @@ const NavLink = ({ navItem, section, onClick }: NavLinks) => {
       as={NextLink}
       href={navItem.link}
       position="relative"
-      zIndex={1}
       color={section === navItem.label ? "background.50" : "background.700"}
       shadow={"inner"}
       fontWeight="bold"
@@ -77,6 +76,7 @@ const Navbar = () => {
           rounded={"full"}
           boxShadow={"dark-lg"}
           position={"fixed"}
+          zIndex={10}
         >
           <Center mx={10}>
             {Links.map((item) => (
