@@ -18,7 +18,7 @@ interface NavLinks {
 }
 
 const Links: NavLinkItem[] = [
-  { label: "Home", link: "/", color: "primary.500" },
+  { label: "Home", link: "#home", color: "primary.500" },
   { label: "About", link: "#about", color: "primary.200" },
   { label: "Projects", link: "#projects", color: "primary.300" },
   { label: "Contact", link: "#contact", color: "text.main" },

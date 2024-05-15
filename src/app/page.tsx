@@ -1,21 +1,13 @@
 "use client";
 
-import {
-  Box,
-  Center,
-  Flex,
-  Heading,
-  Image,
-  VStack,
-  keyframes,
-} from "@chakra-ui/react";
-import { Variant, Variants, motion } from "framer-motion";
+import { Box, Center, Flex, Heading, Image, VStack } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { ReactChild } from "react";
 
 // Import Sections
 import About from "@/components/sections/About";
-import Projects from "@/components/sections/Projects";
 import Contact from "@/components/sections/Contact";
+import Projects from "@/components/sections/Projects";
 
 const Page = () => {
   return (
@@ -30,7 +22,7 @@ const Page = () => {
 
 const Home = () => {
   return (
-    <Center>
+    <Center id="home">
       <Flex alignItems={"center"} mx={4} height={"100vh"}>
         <Title />
         <Picture />
@@ -47,7 +39,7 @@ const Title = () => {
       exit={"hidden"}
       variants={{
         visible: { opacity: 1, y: 0 },
-        hidden: { opacity: 0, y: 75 },
+        hidden: { opacity: 0, y: 100 },
       }}
     >
       <VStack align={"end"} mx={6}>
@@ -129,7 +121,7 @@ const Picture = () => {
     <motion.div
       initial={"hidden"}
       whileInView={"visible"}
-      exit={"hidden"}
+      viewport={{ once: true }}
       transition={{ delay: 0.3 }}
       variants={{
         visible: { opacity: 1, scale: 1 },

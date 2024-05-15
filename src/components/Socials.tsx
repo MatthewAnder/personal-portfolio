@@ -2,6 +2,7 @@
 
 import { Box, Flex, Link } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { ReactElement } from "react";
 
 import {
   FaGithub,
@@ -12,7 +13,7 @@ import {
 
 interface SocialItems {
   label: string;
-  icon: any;
+  icon: ReactElement;
   link: string;
   bgColor: string;
 }
