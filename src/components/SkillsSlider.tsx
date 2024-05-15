@@ -1,13 +1,15 @@
 import { Box, Center, Flex } from "@chakra-ui/react";
 import {
-  animate,
   motion,
+  useAnimationFrame,
   useMotionValue,
   useScroll,
+  useSpring,
   useTransform,
+  useVelocity,
+  wrap,
 } from "framer-motion";
-import { ReactNode, useEffect, useRef } from "react";
-import useMeasure from "react-use-measure";
+import { ReactNode, useRef } from "react";
 
 const TAGS: string[] = [
   "HTML",
@@ -28,13 +30,11 @@ const TAGS: string[] = [
   "ChakraUI",
   "R",
 ];
-const DURATION: number = 30;
 const ROWS: number = 3;
-const TAGS_PER_ROW: number = 10;
+const TAGS_PER_ROW: number = 5;
 
 interface InfiniteLoop {
   children: ReactNode;
-  duration: number;
   reverse: boolean;
 }
 
@@ -42,49 +42,45 @@ interface TagType {
   text: string;
 }
 
-const InfiniteLoopSlider = ({
-  children,
-  duration,
-  reverse = false,
-}: InfiniteLoop) => {
-  let [container, { width }] = useMeasure();
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
+const InfiniteLoopSlider = ({ children, reverse = false }: InfiniteLoop) => {
+  const baseX = useMotionValue(0);
 
-  const { scrollYProgress } = useScroll();
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY);
+  const smoothVelocity = useSpring(scrollVelocity, {
+    damping: 50,
+    stiffness: 400,
+  });
+  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
+    clamp: false,
+  });
 
-  const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
+  const x = useTransform(baseX, (v: number) => `${wrap(-25, -58, v)}%`);
 
-  useEffect(() => {
-    let controls;
-    width = reverse ? -width : width;
-    let finalPos = width / 2 - 10;
+  const directionFactor = useRef<number>(1);
+  useAnimationFrame((t: number, delta: number) => {
+    const baseVelocity = reverse ? -2 : 2;
+    let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 
-    controls = animate(x, [0, finalPos], {
-      ease: "linear",
-      duration: duration,
-      repeat: Infinity,
-      repeatType: "loop",
-      repeatDelay: 0,
-    });
+    /**
+     * This is what changes the direction of the scroll once we
+     * switch scrolling directions.
+     */
+    if (velocityFactor.get() < 0) {
+      directionFactor.current = -1;
+    } else if (velocityFactor.get() > 0) {
+      directionFactor.current = 1;
+    }
 
-    return controls.stop;
-  }, [x, width]);
+    moveBy += directionFactor.current * moveBy * velocityFactor.get();
+
+    baseX.set(baseX.get() + moveBy);
+  });
 
   return (
-    <motion.div
-      style={{
-        x,
-        opacity: opacityProgress,
-        width: "max-content",
-      }}
-      ref={ref}
-    >
-      <Flex
-        width={"fit-content"}
-        float={reverse ? "left" : "right"}
-        ref={container}
-      >
+    <motion.div style={{ x, width: "max-content" }}>
+      <Flex>
+        {children}
         {children}
         {children}
       </Flex>
@@ -115,12 +111,10 @@ const Tag = ({ text }: TagType) => (
 );
 
 const SkillsSlider = () => {
-  const random = (min: number, max: number) =>
-    Math.floor(Math.random() * (max - min)) + min;
   const shuffle = (arr: string[]) => [...arr].sort(() => 0.5 - Math.random());
 
   return (
-    <Center w={"100%"}>
+    <Center>
       <Flex
         shrink={0}
         p={"1.5rem 0"}
@@ -128,15 +122,11 @@ const SkillsSlider = () => {
         position={"relative"}
         gap={"1rem 0"}
         maxWidth={"90vw"}
-        w={"70rem"}
+        w={"60rem"}
         overflow={"hidden"}
       >
         {[...new Array(ROWS)].map((_, i) => (
-          <InfiniteLoopSlider
-            key={i}
-            duration={random(DURATION - 5, DURATION + 5)}
-            reverse={i % 2 == 0}
-          >
+          <InfiniteLoopSlider key={i} reverse={i % 2 == 0}>
             {shuffle(TAGS)
               .slice(0, TAGS_PER_ROW)
               .map((tag: string) => {
@@ -147,12 +137,12 @@ const SkillsSlider = () => {
         <Box
           pointerEvents={"none"}
           position={"absolute"}
-          height={"100vh"}
+          height={"15rem"}
           inset={0}
           background={
             "linear-gradient(90deg, #282c34, transparent 30%, transparent 70%, #282c34)"
           }
-        />
+        />{" "}
       </Flex>
     </Center>
   );
