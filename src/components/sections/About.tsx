@@ -1,20 +1,18 @@
-import { Box } from "@chakra-ui/react";
-import SkillsSlider from "@/components/SkillsSlider";
-import Typewriter from "@/components/Typewriter";
-import { useScroll, useTransform } from "framer-motion";
+import { Center, Flex, Heading } from "@chakra-ui/react";
 
 const About = () => {
-  const { scrollYProgress } = useScroll();
-  const speedProgress = useTransform(scrollYProgress, [0, 1], [100, 200]);
   return (
-    <Box height={"100vh"} id="about">
-      <SkillsSlider />
-    </Box>
+    <Center>
+      <Flex
+        alignItems={"center"}
+        height={"100vh"}
+        id="about"
+        direction={"column"}
+      >
+        <Heading color={"text.main"}>Learn More!</Heading>
+      </Flex>
+    </Center>
   );
-};
-
-const Page = () => {
-  return <></>;
 };
 
 export default About;

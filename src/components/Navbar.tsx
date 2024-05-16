@@ -75,8 +75,9 @@ const Navbar = () => {
           top={5}
           rounded={"full"}
           boxShadow={"dark-lg"}
-          position={"fixed"}
+          my={{ base: "10", lg: "0" }}
           zIndex={10}
+          position={{ base: "sticky", lg: "fixed" }}
         >
           <Center mx={10}>
             {Links.map((item) => (

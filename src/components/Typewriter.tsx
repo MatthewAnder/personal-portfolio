@@ -2,19 +2,13 @@ import { useEffect } from "react";
 import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import { Box } from "@chakra-ui/react";
 
+interface HomePage {
+  label: string;
+}
+
 const Typewriter = () => {
   const textIndex = useMotionValue(0);
-  const texts = [
-    "I am writing to you because I want a job.",
-    "I am the best candidate for this job.",
-    "In my grand adventure as a seasoned designer...",
-    "Knock knock! Who's there? Your new employee!",
-    "Walking the tightrope balance of project management...",
-    "I find myself compelled to express my interest due to...",
-    "My pen (or should I say, keyboard) is at work today because...",
-    "Inspired by the alluring challenge in the job posting, I am writing...",
-    "Stirred to my keyboard by the tantalising nature of the role…",
-  ];
+  const texts = ["Frontend", "Backend", "Game", "Cybersecurity"];
 
   const baseText = useTransform(textIndex, (latest) => texts[latest] || "");
   const count = useMotionValue(0);
@@ -27,7 +21,7 @@ const Typewriter = () => {
   useEffect(() => {
     animate(count, 60, {
       type: "tween",
-      duration: 1,
+      duration: 5,
       ease: "easeIn",
       repeat: Infinity,
       repeatType: "reverse",
@@ -49,7 +43,7 @@ const Typewriter = () => {
   }, []);
 
   return (
-    <Box fontSize={"4xl"} color={"text.main"}>
+    <Box fontSize={"4xl"} color={"text.main"} height={14}>
       <motion.span>{displayText}</motion.span>
     </Box>
   );

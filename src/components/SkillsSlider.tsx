@@ -51,11 +51,11 @@ const InfiniteLoopSlider = ({ children, reverse = false }: InfiniteLoop) => {
     damping: 50,
     stiffness: 400,
   });
-  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
+  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 4], {
     clamp: false,
   });
 
-  const x = useTransform(baseX, (v: number) => `${wrap(-25, -58, v)}%`);
+  const x = useTransform(baseX, (v: number) => `${wrap(-23, -48, v)}%`);
 
   const directionFactor = useRef<number>(1);
   useAnimationFrame((t: number, delta: number) => {
@@ -80,6 +80,7 @@ const InfiniteLoopSlider = ({ children, reverse = false }: InfiniteLoop) => {
   return (
     <motion.div style={{ x, width: "max-content" }}>
       <Flex>
+        {children}
         {children}
         {children}
         {children}
