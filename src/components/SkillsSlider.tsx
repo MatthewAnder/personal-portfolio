@@ -91,11 +91,11 @@ const InfiniteLoopSlider = ({ children, reverse = false }: InfiniteLoop) => {
 
 const Tag = ({ text }: TagType) => (
   <Center
-    fontSize={"0.9rem"}
+    fontSize={"1.1rem"}
     borderRadius={"0.4rem"}
     mr={"1rem"}
-    bg={"#334155"}
-    color={"#e2e8f0"}
+    bg={"background.900"}
+    color={"background.200"}
     p={"0.7rem 1rem"}
     boxShadow={[
       "0 0.1rem 0.2rem rgba(0, 0, 0, 0.2)",
@@ -104,7 +104,7 @@ const Tag = ({ text }: TagType) => (
     ]}
     suppressHydrationWarning // its inevitable
   >
-    <Box as="span" color={"#64748b"} fontSize={"1.2rem"}>
+    <Box as="span" color={"background.500"} fontSize={"1.4rem"}>
       #
     </Box>
     {text}
@@ -123,7 +123,7 @@ const SkillsSlider = () => {
         position={"relative"}
         gap={"1rem 0"}
         maxWidth={"90vw"}
-        w={"60rem"}
+        w={"40rem"}
         overflow={"hidden"}
       >
         {[...new Array(ROWS)].map((_, i) => (
@@ -138,12 +138,12 @@ const SkillsSlider = () => {
         <Box
           pointerEvents={"none"}
           position={"absolute"}
-          height={"15rem"}
+          height={"16rem"}
           inset={0}
           background={
             "linear-gradient(90deg, #282c34, transparent 30%, transparent 70%, #282c34)"
           }
-        />{" "}
+        />
       </Flex>
     </Center>
   );

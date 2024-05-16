@@ -11,20 +11,30 @@ const ProjectCard = ({ imgUrl, title, description }: ProjectCard) => {
   return (
     <GridItem>
       <Image
-        roundedTop={"sm"}
+        roundedTop={"xl"}
         h={{ md: 72, base: 40 }}
+        w={"100%"}
         bgPos={"center"}
         pos={"relative"}
         overflow={"hidden"}
         src={imgUrl}
         alt={title}
-        style={{ background: `url(${imgUrl})`, backgroundSize: "contain" }}
+        objectFit={"cover"}
+        width={350}
+        maxWidth={350}
       ></Image>
-      <Box py={6} px={4} color={"white"} bg={"black"} roundedBottom={"xl"}>
+
+      <Box
+        py={6}
+        px={4}
+        color={"background.200"}
+        bg={"background.900"}
+        roundedBottom={"xl"}
+      >
         <Heading fontSize={"lg"} fontWeight={"semibold"}>
           {title}
         </Heading>
-        <Text fontSize={"md"} color={"beige"}>
+        <Text fontSize={"md"} color={"background.400"}>
           {description}
         </Text>
       </Box>

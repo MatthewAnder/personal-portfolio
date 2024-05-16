@@ -1,43 +1,53 @@
 "use client";
 import React, { useState } from "react";
 import ProjectCard from "@/components/ProjectCard";
-import { Heading, Flex, Box, Grid, GridItem } from "@chakra-ui/react";
+
+import { motion } from "framer-motion";
+import {
+  Heading,
+  Flex,
+  Box,
+  Grid,
+  GridItem,
+  Link,
+  Center,
+} from "@chakra-ui/react";
 
 const projectsData = [
   {
     id: 1,
-    title: "React Portfolio Website",
+    title: "Carture",
     description: "Project 1 description",
-    image: "/images/projects/1.png",
-    tag: ["All", "Web"],
+    image: "/images/profile.jpg",
+    tag: ["All", "Game"],
   },
   {
     id: 2,
-    title: "Potography Portfolio Website",
+    title: "Budget Planner",
     description: "Project 2 description",
     image: "/images/projects/2.png",
     tag: ["All", "Web"],
   },
   {
     id: 3,
-    title: "E-commerce Application",
+    title: "To-do List Application",
     description: "Project 3 description",
     image: "/images/projects/3.png",
     tag: ["All", "Web"],
   },
   {
     id: 4,
-    title: "Food Ordering Application",
-    description: "Project 4 description",
+    title: "PickUp Your Game",
+    description: "LALALALLALALA",
     image: "/images/projects/4.png",
-    tag: ["All", "Mobile"],
+    tag: ["All", "Web"],
   },
   {
     id: 5,
-    title: "React Firebase Template",
+    title: "Box War",
     description: "Authentication and CRUD operations",
     image: "/images/projects/5.png",
-    tag: ["All", "Web"],
+    tag: ["All", "Game"],
   },
   {
     id: 6,
@@ -59,7 +69,7 @@ const Projects = () => {
   };
 
   return (
-    <Box mx={10} id="projects">
+    <Flex mx={10} id="projects" direction={"column"} alignItems={"center"}>
       <Heading
         fontSize={"4xl"}
         fontWeight={"bold"}
@@ -78,21 +88,10 @@ const Projects = () => {
         my={6}
         color={"white"}
       >
-        <ProjectTag
-          name="All"
-          onClick={handleTagChange}
-          isSelected={tag === "All"}
-        />
-        <ProjectTag
-          name="Web"
-          onClick={handleTagChange}
-          isSelected={tag === "Web"}
-        />
-        <ProjectTag
-          name="Mobile"
-          onClick={handleTagChange}
-          isSelected={tag == "Mobile"}
-        />
+        <ProjectTag name="All" onClick={handleTagChange} tag={tag} />
+        <ProjectTag name="Web" onClick={handleTagChange} tag={tag} />
+        <ProjectTag name="Game" onClick={handleTagChange} tag={tag} />
+        <ProjectTag name="Cyber" onClick={handleTagChange} tag={tag} />
       </Flex>
       <Grid
         gap={{ md: 12, base: 8 }}
@@ -100,38 +99,66 @@ const Projects = () => {
         templateColumns={{ lg: "repeat(3, 1fr)" }}
         justifyContent={"center"}
       >
-        {filteredProjects.map((project, index) => (
-          <ProjectCard
-            key={project.id}
-            title={project.title}
-            description={project.description}
-            imgUrl={project.image}
-          />
-        ))}
+        {filteredProjects.length != 0 ? (
+          filteredProjects.map((project, index) => (
+            <ProjectCard
+              key={project.id}
+              title={project.title}
+              description={project.description}
+              imgUrl={project.image}
+            />
+          ))
+        ) : (
+          <EmptyCard />
+        )}
       </Grid>
-    </Box>
+    </Flex>
   );
 };
 
-const ProjectTag = ({ name, onClick, isSelected }: ProjectTag) => {
-  const buttonStyles = isSelected
-    ? "text-white border-purple-500"
-    : "text-[#ADB7BE] border-slate-600 hover:border-white";
+const EmptyCard = () => (
+  <Box>
+    <Center fontSize={"xl"} color={"text.main"}>
+      COMING SOON!
+    </Center>
+  </Box>
+);
 
+const ProjectTag = ({ name, onClick, tag }: ProjectTag) => {
   return (
-    <button
+    <Box
       onClick={() => onClick(name)}
-      className={`border-2 rounded-full px-6 py-3 text-xl cursor-pointer ${buttonStyles}`}
+      rounded={"full"}
+      px={5}
+      py={2}
+      fontSize={"xl"}
+      cursor={"pointer"}
+      position={"relative"}
+      zIndex={10}
     >
-      {name}
-    </button>
+      <motion.div layout>
+        {name}
+        {name === tag && (
+          <Box
+            as={motion.div}
+            layoutId="underline"
+            rounded={"full"}
+            h="100%"
+            bg={"primary.300"}
+            position={"absolute"}
+            inset={0}
+            zIndex={-1}
+          />
+        )}
+      </motion.div>
+    </Box>
   );
 };
 
 interface ProjectTag {
   name: string;
   onClick: (arg: string) => void;
-  isSelected: boolean;
+  tag: string;
 }
 
 export default Projects;

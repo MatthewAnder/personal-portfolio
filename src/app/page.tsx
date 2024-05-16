@@ -3,17 +3,20 @@
 import { Box, Center, Flex, Heading, Image, VStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { ReactChild } from "react";
+import Typewriter from "@/components/Typewriter";
 
 // Import Sections
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
 import Projects from "@/components/sections/Projects";
+import SkillsSlider from "@/components/SkillsSlider";
 
 const Page = () => {
   return (
     <Box>
       <Home />
       <About />
+      <SkillsSlider />
       <Projects />
       <Contact />
     </Box>
@@ -23,7 +26,12 @@ const Page = () => {
 const Home = () => {
   return (
     <Center id="home">
-      <Flex alignItems={"center"} mx={4} height={"100vh"}>
+      <Flex
+        flexDir={{ base: "column", lg: "row" }}
+        alignItems={"center"}
+        gap={5}
+        height={"100vh"}
+      >
         <Title />
         <Picture />
       </Flex>
@@ -42,7 +50,7 @@ const Title = () => {
         hidden: { opacity: 0, y: 100 },
       }}
     >
-      <VStack align={"end"} mx={6}>
+      <VStack align={{ base: "center", lg: "end" }} mx={6}>
         <Heading
           as="h1"
           fontSize={"3xl"}
@@ -55,7 +63,7 @@ const Title = () => {
         <AnimatedText />
         <Heading
           as="h2"
-          fontSize={"2xl"}
+          fontSize={{ base: "xl", lg: "2xl" }}
           lineHeight="tall"
           color={"primary.600"}
         >
@@ -67,53 +75,7 @@ const Title = () => {
 };
 
 const AnimatedText = () => {
-  return (
-    <Flex
-      direction="column"
-      align={"end"}
-      height="4.5em"
-      overflow={"hidden"}
-      zIndex={1}
-    >
-      <HighlightText color={"primary.100"}>Frontend</HighlightText>
-      <HighlightText color={"primary.200"}>Backend</HighlightText>
-      <HighlightText color={"primary.300"}>Game</HighlightText>
-      <HighlightText color={"primary.400"}>Cybersecurity?</HighlightText>
-      <HighlightText color={"primary.100"}>Frontend</HighlightText>
-    </Flex>
-  );
-};
-
-const HighlightText = ({
-  children,
-  color,
-}: {
-  children: ReactChild;
-  color: any;
-}) => {
-  return (
-    <motion.div
-      animate={{ y: ["0%", "-100%", "-200%", "-300%", "-400%"] }}
-      transition={{
-        y: {
-          repeat: Infinity,
-          repeatType: "loop",
-          duration: 10,
-          delay: 1,
-          ease: "backInOut",
-        },
-      }}
-    >
-      <Heading
-        lineHeight="1.2em"
-        fontSize="4em"
-        color={color}
-        letterSpacing={-4}
-      >
-        {children.toString()}
-      </Heading>
-    </motion.div>
-  );
+  return <Typewriter />;
 };
 
 const Picture = () => {
@@ -131,7 +93,7 @@ const Picture = () => {
       <Image
         src="/images/profile.jpg"
         alt="img"
-        boxSize={"md"}
+        boxSize={{ base: "sm", lg: "md" }}
         objectFit="cover"
         rounded={"full"}
         boxShadow={"2xl"}
