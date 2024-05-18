@@ -69,14 +69,14 @@ const Navbar = () => {
       animate="visible"
       variants={{ hidden: { y: -100 }, visible: { y: 0 } }}
     >
-      <Center zIndex={20}>
+      <Center>
         <Flex
           bg={"background.main"}
           top={5}
           rounded={"full"}
           boxShadow={"dark-lg"}
           my={{ base: "10", lg: "0" }}
-          zIndex={10}
+          zIndex={20}
           position={{ base: "sticky", lg: "fixed" }}
         >
           <Center mx={10}>

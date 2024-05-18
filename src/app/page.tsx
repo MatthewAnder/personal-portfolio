@@ -16,7 +16,6 @@ const Page = () => {
     <Box>
       <Home />
       <About />
-      <SkillsSlider />
       <Projects />
       <Contact />
     </Box>
