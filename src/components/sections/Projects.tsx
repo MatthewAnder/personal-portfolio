@@ -11,6 +11,7 @@ import {
   GridItem,
   Link,
   Center,
+  UnorderedList,
 } from "@chakra-ui/react";
 
 import { projectsData } from "@/lib/data";
@@ -29,7 +30,7 @@ const Projects = () => {
   };
 
   return (
-    <Flex mx={10} id="projects" direction={"column"} alignItems={"center"}>
+    <Flex id="projects" direction={"column"} alignItems={"center"} w={"100%"}>
       <Heading
         fontSize={"4xl"}
         fontWeight={"bold"}
@@ -54,17 +55,25 @@ const Projects = () => {
         <ProjectTag name="None" onClick={handleTagChange} tag={tag} />
       </Flex>
 
-      <motion.ul>
-        {projectsData.map((project, index) => (
-          <ProjectCard
-            key={project.id}
-            title={project.title}
-            description={project.description}
-            imgUrl={project.image}
-            isSelected={project.tag.includes(tag)}
-          />
-        ))}
-      </motion.ul>
+      <AnimatePresence>
+        <Grid
+          as={motion.div}
+          layout
+          layoutRoot
+          templateColumns={{ md: "repeat(2,1fr)", lg: "repeat(3, 1fr)" }}
+          gap={6}
+        >
+          {projectsData.map((project, index) => (
+            <ProjectCard
+              key={project.id}
+              title={project.title}
+              description={project.description}
+              imgUrl={project.image}
+              isSelected={project.tag.includes(tag)}
+            />
+          ))}
+        </Grid>
+      </AnimatePresence>
     </Flex>
   );
 };
@@ -82,7 +91,8 @@ const ProjectTag = ({ name, onClick, tag }: ProjectTag) => {
       zIndex={10}
     >
       <AnimatePresence>
-        <motion.div
+        <Box
+          as={motion.div}
           layout
           initial="hidden"
           whileInView="visible"
@@ -102,10 +112,10 @@ const ProjectTag = ({ name, onClick, tag }: ProjectTag) => {
               bg={"primary.300"}
               position={"absolute"}
               inset={0}
-              zIndex={-1}
+              zIndex={-10}
             />
           )}
-        </motion.div>
+        </Box>
       </AnimatePresence>
     </Box>
   );

@@ -1,11 +1,5 @@
-import React, { useRef } from "react";
-import { Image, Heading, Text, Box, GridItem } from "@chakra-ui/react";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { Box, GridItem, Heading, Image, Text } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 
 interface ProjectCard {
   imgUrl: string;
@@ -18,9 +12,12 @@ const cardVariants = {
   visible: {
     y: 0,
     opacity: 1,
-    display: "block",
   },
-  hidden: { y: 40, opacity: 0, display: "none" },
+  hidden: {
+    y: 50,
+    opacity: 0,
+    transition: { duration: 0.3 },
+  },
 };
 
 const ProjectCard = ({
@@ -29,23 +26,19 @@ const ProjectCard = ({
   description,
   isSelected,
 }: ProjectCard) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["0 1", "1.33 1"],
-  });
   return (
-    <AnimatePresence>
+    <>
       {isSelected && (
-        <motion.li
+        <GridItem
+          as={motion.div}
+          layout
+          w={{ base: "100%", lg: "23em" }}
           key={title}
           variants={cardVariants}
           initial="hidden"
-          animate="visible"
-          exit="hidden"
           whileInView="visible"
+          exit="hidden"
           viewport={{ once: true }}
-          style={{ width: "23em", display: "inline" }}
         >
           <Image
             roundedTop={"xl"}
@@ -73,9 +66,9 @@ const ProjectCard = ({
               {description}
             </Text>
           </Box>
-        </motion.li>
+        </GridItem>
       )}
-    </AnimatePresence>
+    </>
   );
 };
 
