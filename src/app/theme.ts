@@ -27,8 +27,8 @@ export const theme = extendTheme({
   },
 
   fonts: {
-    heading: `'Jetbrains Mono'`,
-    body: `'Jetbrains Mono'`,
+    heading: `'Khan', sans-serif`,
+    body: `'Hind', sans-serif`,
   },
 
   colors: {

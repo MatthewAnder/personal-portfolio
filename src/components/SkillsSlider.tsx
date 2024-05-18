@@ -31,7 +31,7 @@ const TAGS: string[] = [
   "R",
 ];
 const ROWS: number = 3;
-const TAGS_PER_ROW: number = 5;
+const TAGS_PER_ROW: number = 4;
 
 interface InfiniteLoop {
   children: ReactNode;

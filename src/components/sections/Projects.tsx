@@ -1,18 +1,10 @@
 "use client";
-import React, { useState } from "react";
 import ProjectCard from "@/components/ProjectCard";
+import SectionHeading from "@/components/SectionHeading";
+import { useState } from "react";
 
+import { Box, Flex, Grid } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  Heading,
-  Flex,
-  Box,
-  Grid,
-  GridItem,
-  Link,
-  Center,
-  UnorderedList,
-} from "@chakra-ui/react";
 
 import { projectsData } from "@/lib/data";
 
@@ -31,16 +23,7 @@ const Projects = () => {
 
   return (
     <Flex id="projects" direction={"column"} alignItems={"center"} w={"100%"}>
-      <Heading
-        fontSize={"4xl"}
-        fontWeight={"bold"}
-        color={"tect.main"}
-        mt={24}
-        mb={{ base: 2, md: 4 }}
-        textAlign={"center"}
-      >
-        My Projects
-      </Heading>
+      <SectionHeading label="My Projects" />
       <Flex
         direction={"row"}
         justify={"center"}
@@ -81,44 +64,42 @@ const Projects = () => {
 
 const ProjectTag = ({ name, onClick, tag }: ProjectTag) => {
   return (
-    <Box
-      onClick={() => onClick(name)}
-      rounded={"full"}
-      px={5}
-      py={2}
-      fontSize={"xl"}
-      cursor={"pointer"}
-      position={"relative"}
-      zIndex={1}
-    >
-      <AnimatePresence>
-        <Box
-          as={motion.div}
-          layout
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            visible: { opacity: 1 },
-            hidden: { opacity: 0 },
-          }}
-        >
-          {name === "None" ? "Cyber" : name}
-          {name === tag && (
-            <Box
-              as={motion.span}
-              layoutId="tag"
-              rounded={"full"}
-              h="100%"
-              bg={"primary.main"}
-              position={"absolute"}
-              inset={0}
-              zIndex={-1}
-            />
-          )}
-        </Box>
-      </AnimatePresence>
-    </Box>
+    <AnimatePresence>
+      <Box
+        as={motion.div}
+        layout
+        key={name}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={{
+          visible: { opacity: 1 },
+          hidden: { opacity: 0 },
+        }}
+        onClick={() => onClick(name)}
+        rounded={"full"}
+        px={5}
+        py={2}
+        fontSize={"xl"}
+        cursor={"pointer"}
+        position={"relative"}
+        zIndex={1}
+      >
+        {name === "None" ? "Cyber" : name}
+        {name === tag && (
+          <Box
+            as={motion.span}
+            layoutId="tag"
+            rounded={"full"}
+            h="100%"
+            bg={"primary.main"}
+            position={"absolute"}
+            inset={0}
+            zIndex={-1}
+          />
+        )}
+      </Box>
+    </AnimatePresence>
   );
 };
 

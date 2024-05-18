@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 // Import Sections
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
+import SkillsSlider from "@/components/SkillsSlider";
 import Projects from "@/components/sections/Projects";
 
 const Page = () => {
@@ -49,8 +50,8 @@ const Title = () => {
     >
       <VStack align={{ base: "center", lg: "end" }} mx={6}>
         <Heading
-          as="h1"
-          fontSize={"3xl"}
+          as={"h1"}
+          fontSize={{ base: "md", md: "3xl" }}
           lineHeight="tall"
           color={"primary.500"}
           letterSpacing={"3px"}

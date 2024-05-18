@@ -1,4 +1,5 @@
 import { Center, Flex, Heading } from "@chakra-ui/react";
+import SectionHeading from "@/components/SectionHeading";
 
 const About = () => {
   return (
@@ -9,7 +10,7 @@ const About = () => {
         id="about"
         direction={"column"}
       >
-        <Heading color={"text.main"}>Learn More!</Heading>
+        <SectionHeading label="Learn More!" />
       </Flex>
     </Center>
   );
