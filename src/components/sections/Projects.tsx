@@ -1,14 +1,18 @@
 "use client";
+import React, { useState } from "react";
 import ProjectCard from "@/components/ProjectCard";
-import { useRef, useState } from "react";
 
-import { Box, Flex, Grid, Heading } from "@chakra-ui/react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
-  AnimatePresence,
-  motion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+  Heading,
+  Flex,
+  Box,
+  Grid,
+  GridItem,
+  Link,
+  Center,
+  UnorderedList,
+} from "@chakra-ui/react";
 
 import { projectsData } from "@/lib/data";
 
