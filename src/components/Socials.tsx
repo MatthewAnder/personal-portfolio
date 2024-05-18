@@ -48,6 +48,7 @@ const Socials = () => {
       left={"-9em"}
       alignItems={"end"}
       width={"200px"}
+      zIndex={20}
     >
       {Items.map((item: SocialItems, index: number) => (
         <motion.div

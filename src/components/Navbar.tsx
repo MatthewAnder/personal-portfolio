@@ -36,7 +36,7 @@ const NavLink = ({ navItem, section, onClick }: NavLinks) => {
       color={section === navItem.label ? "background.50" : "background.700"}
       shadow={"inner"}
       fontWeight="bold"
-      fontSize="xl"
+      fontSize={{ base: "md", sm: "xl" }}
       _before={{
         content: "''",
         position: "absolute",
@@ -73,13 +73,13 @@ const Navbar = () => {
         <Flex
           bg={"background.main"}
           top={5}
-          rounded={"full"}
+          rounded={{ sm: "full" }}
           boxShadow={"dark-lg"}
           my={{ base: "10", lg: "0" }}
           zIndex={20}
           position={{ base: "sticky", lg: "fixed" }}
         >
-          <Center mx={10}>
+          <Center mx={{ sm: 10 }}>
             {Links.map((item) => (
               <NavLink
                 key={item.label}

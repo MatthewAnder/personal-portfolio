@@ -32,19 +32,20 @@ const ProjectCard = ({
         <GridItem
           as={motion.div}
           layout
-          w={{ base: "100%", lg: "23em" }}
+          w={{ base: "22em", sm: "28em", md: "23em" }}
           key={title}
           variants={cardVariants}
           initial="hidden"
           whileInView="visible"
           exit="hidden"
           viewport={{ once: true }}
+          boxShadow={"xl"}
+          rounded={"full"}
         >
           <Image
             roundedTop={"xl"}
-            h={{ md: 60, base: 40 }}
+            h={{ base: 52, md: 60 }}
             w={"100%"}
-            bgPos={"center"}
             pos={"relative"}
             overflow={"hidden"}
             src={imgUrl}
@@ -58,6 +59,7 @@ const ProjectCard = ({
             color={"background.200"}
             bg={"background.900"}
             roundedBottom={"xl"}
+            boxShadow={"2xl"}
           >
             <Heading fontSize={"lg"} fontWeight={"semibold"}>
               {title}

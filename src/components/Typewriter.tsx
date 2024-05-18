@@ -21,11 +21,11 @@ const Typewriter = () => {
   useEffect(() => {
     animate(count, 60, {
       type: "tween",
-      duration: 5,
+      duration: 3,
       ease: "easeIn",
       repeat: Infinity,
       repeatType: "reverse",
-      repeatDelay: 1,
+      repeatDelay: 0.5,
       onUpdate(latest) {
         if (updatedThisRound.get() === true && latest > 0) {
           updatedThisRound.set(false);
@@ -43,7 +43,13 @@ const Typewriter = () => {
   }, []);
 
   return (
-    <Box fontSize={"4xl"} color={"text.main"} height={14}>
+    <Box
+      fontSize={{ base: "4xl", lg: "6xl" }}
+      color={"text.main"}
+      height={20}
+      width={"8em"}
+      textAlign={{ base: "center", lg: "end" }}
+    >
       <motion.span>{displayText}</motion.span>
     </Box>
   );
