@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 // Chakra Provider Component
 import { Providers } from "@/app/providers";
 import Navbar from "@/components/Navbar";

@@ -1,15 +1,13 @@
 "use client";
 
+import Typewriter from "@/components/Typewriter";
 import { Box, Center, Flex, Heading, Image, VStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { ReactChild } from "react";
-import Typewriter from "@/components/Typewriter";
 
 // Import Sections
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
 import Projects from "@/components/sections/Projects";
-import SkillsSlider from "@/components/SkillsSlider";
 
 const Page = () => {
   return (
@@ -59,7 +57,8 @@ const Title = () => {
         >
           MATTHEW HARYANTO
         </Heading>
-        <AnimatedText />
+        <Typewriter />
+
         <Heading
           as="h2"
           fontSize={{ base: "xl", lg: "2xl" }}
@@ -71,10 +70,6 @@ const Title = () => {
       </VStack>
     </motion.div>
   );
-};
-
-const AnimatedText = () => {
-  return <Typewriter />;
 };
 
 const Picture = () => {
