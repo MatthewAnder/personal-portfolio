@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect } from "react";
 import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import { Box } from "@chakra-ui/react";
