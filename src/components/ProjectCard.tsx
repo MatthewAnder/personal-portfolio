@@ -1,5 +1,5 @@
 import { Box, GridItem, Heading, Image, Text } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface ProjectCard {
   imgUrl: string;
@@ -10,11 +10,11 @@ interface ProjectCard {
 
 const cardVariants = {
   visible: {
-    y: 0,
+    scale: 1,
     opacity: 1,
   },
   hidden: {
-    y: 50,
+    scale: 0.6,
     opacity: 0,
     transition: { duration: 0.3 },
   },
@@ -37,7 +37,6 @@ const ProjectCard = ({
           variants={cardVariants}
           initial="hidden"
           whileInView="visible"
-          exit="hidden"
           viewport={{ once: true }}
           boxShadow={"xl"}
           rounded={"full"}
