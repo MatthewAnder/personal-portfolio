@@ -34,9 +34,9 @@ const Projects = () => {
       <Heading
         fontSize={"4xl"}
         fontWeight={"bold"}
-        color={"white"}
-        mt={28}
-        mb={{ base: 8, md: 12 }}
+        color={"tect.main"}
+        mt={24}
+        mb={{ base: 2, md: 4 }}
         textAlign={"center"}
       >
         My Projects
@@ -47,7 +47,8 @@ const Projects = () => {
         alignItems={"center"}
         gap={2}
         my={6}
-        color={"white"}
+        color={"text.main"}
+        fontWeight={"bold"}
       >
         <ProjectTag name="All" onClick={handleTagChange} tag={tag} />
         <ProjectTag name="Web" onClick={handleTagChange} tag={tag} />
@@ -88,7 +89,7 @@ const ProjectTag = ({ name, onClick, tag }: ProjectTag) => {
       fontSize={"xl"}
       cursor={"pointer"}
       position={"relative"}
-      zIndex={10}
+      zIndex={1}
     >
       <AnimatePresence>
         <Box
@@ -105,14 +106,14 @@ const ProjectTag = ({ name, onClick, tag }: ProjectTag) => {
           {name === "None" ? "Cyber" : name}
           {name === tag && (
             <Box
-              as={motion.div}
-              layoutId="underline"
+              as={motion.span}
+              layoutId="tag"
               rounded={"full"}
               h="100%"
-              bg={"primary.300"}
+              bg={"primary.main"}
               position={"absolute"}
               inset={0}
-              zIndex={-10}
+              zIndex={-1}
             />
           )}
         </Box>

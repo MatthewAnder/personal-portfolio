@@ -1,9 +1,9 @@
 "use client";
 
-import { Center, Flex, Link } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { Box, Center, Flex } from "@chakra-ui/react";
+import { AnimatePresence, motion } from "framer-motion";
 import NextLink from "next/link";
-import { ReactPropTypes, useState } from "react";
+import { useState } from "react";
 
 interface NavLinkItem {
   label: string;
@@ -13,48 +13,65 @@ interface NavLinkItem {
 
 interface NavLinks {
   navItem: NavLinkItem;
-  section: string;
+  isSelected: boolean;
   onClick: () => void;
 }
 
 const Links: NavLinkItem[] = [
-  { label: "Home", link: "#home", color: "primary.500" },
-  { label: "About", link: "#about", color: "primary.200" },
-  { label: "Projects", link: "#projects", color: "primary.300" },
-  { label: "Contact", link: "#contact", color: "text.main" },
+  { label: "Home", link: "#top", color: "primary.500" },
+  { label: "About", link: "#about", color: "primary.500" },
+  { label: "Projects", link: "#projects", color: "primary.500" },
+  { label: "Contact", link: "#contact", color: "primary.500" },
 ];
 
-const NavLink = ({ navItem, section, onClick }: NavLinks) => {
+const NavLink = ({ navItem, isSelected, onClick }: NavLinks) => {
   return (
-    <Link
-      draggable="false"
-      py={3}
-      px={4}
-      as={NextLink}
-      href={navItem.link}
-      position="relative"
-      color={section === navItem.label ? "background.50" : "background.700"}
-      shadow={"inner"}
-      fontWeight="bold"
-      fontSize={{ base: "md", sm: "xl" }}
-      _before={{
-        content: "''",
-        position: "absolute",
-        bottom: "0",
-        left: "0",
-        bg: `${navItem.color}`,
-        zIndex: "-1",
-        width: "100%",
-        height: section == navItem.label ? "100%" : "6px",
-        transition: "all .3s ease-out",
-      }}
-      _hover={{
-        color: "background.50",
-      }}
-      onClick={onClick}
-    >
-      {navItem.label}
-    </Link>
+    <AnimatePresence>
+      <Box
+        as={NextLink}
+        key={navItem.label}
+        href={navItem.link}
+        onClick={onClick}
+        draggable="false"
+        py={3}
+        px={4}
+        height={"100%"}
+        position="relative"
+        fontWeight="bold"
+        fontSize={{ base: "md", sm: "xl" }}
+        color={"accent.main"}
+        textShadow={isSelected ? "0 0 20px #f5fff7" : 0}
+        transition={".5s ease-in"}
+      >
+        {navItem.label}
+
+        {isSelected && (
+          <Box
+            as={motion.span}
+            layoutId="section"
+            position={"absolute"}
+            height={"100%"}
+            width={"100%"}
+            zIndex={-1}
+            inset={0}
+            background={"text.main"}
+            color={"black"}
+            bgGradient={
+              "linear(to-t, rgba(106, 144, 128, 1) 0%, rgba(106, 144, 128, 0) 60%)"
+            }
+            _before={{
+              content: "''",
+              position: "absolute",
+              bottom: "-1px",
+              width: "100%",
+              height: "4px",
+              bg: "secondary.300",
+            }}
+          />
+        )}
+      </Box>
+      )
+    </AnimatePresence>
   );
 };
 
@@ -62,36 +79,33 @@ const Navbar = () => {
   const [section, setSection] = useState("Home");
 
   return (
-    <motion.div
-      initial="hidden"
-      whileInView={"visible"}
-      viewport={{ once: true }}
-      animate="visible"
-      variants={{ hidden: { y: -100 }, visible: { y: 0 } }}
-    >
-      <Center>
-        <Flex
-          bg={"background.main"}
-          top={5}
-          rounded={{ sm: "full" }}
-          boxShadow={"dark-lg"}
-          my={{ base: "10", lg: "0" }}
-          zIndex={20}
-          position={{ base: "sticky", lg: "fixed" }}
-        >
-          <Center mx={{ sm: 10 }}>
-            {Links.map((item) => (
-              <NavLink
-                key={item.label}
-                navItem={item}
-                section={section}
-                onClick={() => setSection(item.label)}
-              />
-            ))}
-          </Center>
-        </Flex>
-      </Center>
-    </motion.div>
+    <Center>
+      <Flex
+        as={motion.div}
+        layout
+        initial="hidden"
+        whileInView={"visible"}
+        viewport={{ once: true }}
+        animate="visible"
+        variants={{ hidden: { y: -100 }, visible: { y: 0 } }}
+        top={8}
+        px={{ base: 2, md: 8 }}
+        rounded={{ base: "md", md: "full" }}
+        boxShadow={"xl"}
+        zIndex={10}
+        position={"fixed"}
+        bg={"text.main"}
+      >
+        {Links.map((item) => (
+          <NavLink
+            key={item.label}
+            navItem={item}
+            isSelected={section === item.label}
+            onClick={() => setSection(item.label)}
+          />
+        ))}
+      </Flex>
+    </Center>
   );
 };
 

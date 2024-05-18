@@ -39,7 +39,6 @@ const ProjectCard = ({
           whileInView="visible"
           exit="hidden"
           viewport={{ once: true }}
-          boxShadow={"xl"}
           rounded={"full"}
         >
           <Image
@@ -56,15 +55,14 @@ const ProjectCard = ({
           <Box
             py={6}
             px={4}
-            color={"background.200"}
-            bg={"background.900"}
+            color={"text.main"}
+            bg={"accent.main"}
             roundedBottom={"xl"}
-            boxShadow={"2xl"}
           >
             <Heading fontSize={"lg"} fontWeight={"semibold"}>
               {title}
             </Heading>
-            <Text fontSize={"md"} color={"background.400"}>
+            <Text fontSize={"md"} color={"primary.main"}>
               {description}
             </Text>
           </Box>

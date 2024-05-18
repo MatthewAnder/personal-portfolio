@@ -22,7 +22,7 @@ const Page = () => {
 
 const Home = () => {
   return (
-    <Center id="home">
+    <Center mt={{ base: 28, lg: 0 }}>
       <Flex
         flexDir={{ base: "column", lg: "row" }}
         alignItems={"center"}
