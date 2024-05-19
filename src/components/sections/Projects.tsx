@@ -1,10 +1,15 @@
 "use client";
 import ProjectCard from "@/components/ProjectCard";
 import SectionHeading from "@/components/SectionHeading";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { Box, Flex, Grid } from "@chakra-ui/react";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 
 import { projectsData } from "@/lib/data";
 
@@ -21,9 +26,18 @@ const Projects = () => {
     setTag(newTag);
   };
 
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["0 1", "1.4 1"],
+  });
+  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
+  const x = useTransform(scrollYProgress, [0, 1], ["200%", "0%"]);
+
   return (
     <Flex id="projects" direction={"column"} alignItems={"center"} w={"100%"}>
-      <SectionHeading label="My Projects" />
+      <SectionHeading label="Behold My Creations!" />
       <Flex
         direction={"row"}
         justify={"center"}

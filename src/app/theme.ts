@@ -27,8 +27,8 @@ export const theme = extendTheme({
   },
 
   fonts: {
-    heading: `'Khan', sans-serif`,
-    body: `'Hind', sans-serif`,
+    heading: `'Khand-Bold', sans-serif`,
+    body: `'Hind-Regular', sans-serif`,
   },
 
   colors: {

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { animate, motion, useMotionValue, useTransform } from "framer-motion";
-import { Box } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 
 interface HomePage {
   label: string;
@@ -46,13 +46,14 @@ const Typewriter = () => {
 
   return (
     <Box
+      as={motion.h1}
       fontSize={{ base: "4xl", lg: "6xl" }}
       color={"text.main"}
       height={20}
       width={"8em"}
       textAlign={{ base: "center", lg: "end" }}
     >
-      <motion.span>{displayText}</motion.span>
+      {displayText}
     </Box>
   );
 };

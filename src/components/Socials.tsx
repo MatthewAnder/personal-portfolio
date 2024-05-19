@@ -23,7 +23,7 @@ const Items: SocialItems[] = [
     label: "Github",
     icon: <FaGithub />,
     link: "https://github.com/MatthewAnder",
-    bgColor: "background.800",
+    bgColor: "text.main",
   },
   {
     label: "LinkedIn",
@@ -85,13 +85,13 @@ const NavLink = ({ navItem }: { navItem: SocialItems }) => {
         my={1}
         rounded={"full"}
         alignItems={"center"}
-        background={"background.600"}
+        background={"primary.main"}
         opacity={0.7}
         transition={`${duration} ease-out`}
         pl={20}
         _hover={{
           transform: "translateX(6em)",
-          bg: "background.700",
+          bg: "secondary.main",
           opacity: "1",
         }}
         data-group

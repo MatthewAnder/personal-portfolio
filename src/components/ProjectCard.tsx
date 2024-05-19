@@ -59,9 +59,7 @@ const ProjectCard = ({
             bg={"accent.main"}
             roundedBottom={"xl"}
           >
-            <Heading fontSize={"lg"} fontWeight={"semibold"}>
-              {title}
-            </Heading>
+            <Heading fontSize={"xl"}>{title}</Heading>
             <Text fontSize={"md"} color={"primary.main"}>
               {description}
             </Text>
