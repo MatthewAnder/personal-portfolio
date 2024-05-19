@@ -1,13 +1,23 @@
 import { Heading } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 interface SectiongHeading {
   label: string;
 }
 
 const SectionHeading = ({ label }: SectiongHeading) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["0 0.9", "1.33 1"],
+  });
+  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
+  const x = useTransform(scrollYProgress, [0, 1], ["20%", "0%"]);
+
   return (
-    <motion.div>
+    <motion.span ref={ref} style={{ scale, opacity, x }}>
       <Heading
         as={"h1"}
         fontSize={"4xl"}
@@ -17,7 +27,7 @@ const SectionHeading = ({ label }: SectiongHeading) => {
       >
         {label}
       </Heading>
-    </motion.div>
+    </motion.span>
   );
 };
 

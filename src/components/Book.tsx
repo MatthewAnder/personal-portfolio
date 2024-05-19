@@ -1,18 +1,7 @@
 // components/Book.js
-import {
-  Box,
-  Center,
-  Image,
-  Text,
-  Heading,
-  Table,
-  Tbody,
-  Tr,
-  Td,
-  Stack,
-} from "@chakra-ui/react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { Box, Center, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
 
 const MotionBox = motion(Box);
 
@@ -26,6 +15,17 @@ const Book = () => {
   const handlePageClick = () => {
     setIsFlipped(!isFlipped);
   };
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["0 1", "1.33 1"],
+  });
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 0.6, 0.8, 1],
+    [0.5, 1, 1, 0.7],
+  );
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.6, 1]);
 
   return (
     <Center
@@ -33,14 +33,16 @@ const Book = () => {
       height="100vh"
       bg="gray.100"
       p={4}
-      mb={10}
+      mb={20}
     >
-      <Box
+      <MotionBox
+        ref={ref}
         position="relative"
         width={{ sm: "40rem", lg: "60rem" }}
         height={{ sm: "35rem", lg: "42.6rem" }}
         boxShadow="0 0 100px rgba(0, 0, 0, .3)"
         bg="white"
+        style={{ scale, opacity }}
       >
         <Page1 />
         <MotionBox
@@ -59,7 +61,7 @@ const Book = () => {
         </MotionBox>
 
         <Page4 />
-      </Box>
+      </MotionBox>
     </Center>
   );
 };
