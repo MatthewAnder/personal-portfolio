@@ -1,12 +1,20 @@
 "use client";
 
 import { useEffect } from "react";
-import { animate, motion, useMotionValue, useTransform } from "framer-motion";
+import {
+  MotionValue,
+  animate,
+  motion,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
 import { Box, Heading } from "@chakra-ui/react";
 
 interface HomePage {
   label: string;
 }
+
+const MotionHeading = motion(Heading);
 
 const Typewriter = () => {
   const textIndex = useMotionValue(0);
@@ -45,8 +53,7 @@ const Typewriter = () => {
   }, []);
 
   return (
-    <Box
-      as={motion.h1}
+    <MotionHeading
       fontSize={{ base: "4xl", lg: "6xl" }}
       color={"text.main"}
       height={20}
@@ -54,7 +61,7 @@ const Typewriter = () => {
       textAlign={{ base: "center", lg: "end" }}
     >
       {displayText}
-    </Box>
+    </MotionHeading>
   );
 };
 
