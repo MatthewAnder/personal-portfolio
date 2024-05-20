@@ -136,6 +136,12 @@ const Page2 = ({ handlePageClick }: Page) => {
           </Box>{" "}
           Indonesia
         </Text>
+        <Text fontSize="md">
+          <Box as="span" color={"primary.main"}>
+            Location
+          </Box>{" "}
+          Vancouver, Canada
+        </Text>
         <Text>
           <Box as="span" color={"primary.main"}>
             Languages
@@ -259,7 +265,7 @@ const SectionDivider = () => (
     initial={"hidden"}
     whileInView={"visible"}
     variants={{ visible: { scaleX: 1 }, hidden: { scaleX: 0 } }}
-    transition={{ duration: 1 }}
+    transition={{ duration: 2 }}
   >
     <Divider borderWidth={"2px"} borderColor={"primary.main"} />
     <AbsoluteCenter bg="rgba(247,247,247,1)" px={2}>
