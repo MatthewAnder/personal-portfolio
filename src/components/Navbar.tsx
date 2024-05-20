@@ -89,7 +89,7 @@ const Navbar = () => {
     useActiveSectionContext();
 
   return (
-    <Center position={"relative"}>
+    <Center>
       <Flex
         as={motion.div}
         layout
@@ -108,6 +108,7 @@ const Navbar = () => {
       >
         {links.map((link) => (
           <NavLink
+            key={link.hash}
             name={link.name}
             link={link.hash}
             isSelected={activeSection === link.name}

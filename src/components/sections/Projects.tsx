@@ -1,21 +1,16 @@
 "use client";
 import ProjectCard from "@/components/ProjectCard";
 import SectionHeading from "@/components/SectionHeading";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import { Box, Flex, Grid } from "@chakra-ui/react";
-import {
-  AnimatePresence,
-  motion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { projectsData } from "@/lib/data";
 import { useSectionInView } from "@/lib/hooks";
 
 interface ProjectTag {
-  id: any;
+  id: number;
   name: string;
   onClick: (arg: string) => void;
   tag: string;
@@ -49,6 +44,7 @@ const Projects = () => {
       >
         {["All", "Web", "Game", "None"].map((item, index) => (
           <ProjectTag
+            key={item}
             id={index}
             name={item}
             onClick={handleTagChange}
@@ -67,7 +63,7 @@ const Projects = () => {
         >
           {projectsData.map((project, index) => (
             <ProjectCard
-              key={project.id}
+              key={project.title}
               title={project.title}
               description={project.description}
               imgUrl={project.image}

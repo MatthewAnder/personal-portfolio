@@ -15,7 +15,7 @@ import Socials from "@/components/Socials";
 
 const Page = () => {
   return (
-    <Box position={"relative"}>
+    <Box>
       <Navbar />
       <Socials />
       <Home />
@@ -33,7 +33,7 @@ const Home = () => {
   return (
     <Center
       ref={ref}
-      mt={{ base: 28, lg: 0 }}
+      pt={{ base: 28, lg: 0 }}
       bgGradient={"linear(to-b, primary.200 0%, background.main 80%)"}
     >
       <Flex
