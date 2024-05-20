@@ -12,14 +12,19 @@ import {
 } from "framer-motion";
 
 import { projectsData } from "@/lib/data";
+import { useSectionInView } from "@/lib/hooks";
 
 interface ProjectTag {
+  id: any;
   name: string;
   onClick: (arg: string) => void;
   tag: string;
 }
 
+const MotionBox = motion(Box);
+
 const Projects = () => {
+  const { ref } = useSectionInView("Projects");
   const [tag, setTag] = useState("All");
 
   const handleTagChange = (newTag: string) => {
@@ -27,7 +32,13 @@ const Projects = () => {
   };
 
   return (
-    <Flex id="projects" direction={"column"} alignItems={"center"} w={"100%"}>
+    <Flex
+      ref={ref}
+      id="projects"
+      direction={"column"}
+      alignItems={"center"}
+      w={"100%"}
+    >
       <SectionHeading label="Behold My Creations!" />
       <Flex
         direction={"row"}
@@ -35,13 +46,15 @@ const Projects = () => {
         alignItems={"center"}
         gap={2}
         my={6}
-        color={"text.main"}
-        fontWeight={"bold"}
       >
-        <ProjectTag name="All" onClick={handleTagChange} tag={tag} />
-        <ProjectTag name="Web" onClick={handleTagChange} tag={tag} />
-        <ProjectTag name="Game" onClick={handleTagChange} tag={tag} />
-        <ProjectTag name="None" onClick={handleTagChange} tag={tag} />
+        {["All", "Web", "Game", "None"].map((item, index) => (
+          <ProjectTag
+            id={index}
+            name={item}
+            onClick={handleTagChange}
+            tag={tag}
+          />
+        ))}
       </Flex>
 
       <AnimatePresence>
@@ -67,20 +80,12 @@ const Projects = () => {
   );
 };
 
-const ProjectTag = ({ name, onClick, tag }: ProjectTag) => {
+const ProjectTag = ({ id, name, onClick, tag }: ProjectTag) => {
   return (
     <AnimatePresence>
-      <Box
-        as={motion.div}
+      <MotionBox
         layout
         key={name}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={{
-          visible: { opacity: 1 },
-          hidden: { opacity: 0 },
-        }}
         onClick={() => onClick(name)}
         rounded={"full"}
         px={5}
@@ -89,6 +94,13 @@ const ProjectTag = ({ name, onClick, tag }: ProjectTag) => {
         cursor={"pointer"}
         position={"relative"}
         zIndex={1}
+        fontWeight={"bold"}
+        color={"text.main"}
+        initial={"hidden"}
+        whileInView={"visible"}
+        animate={"hidden"}
+        transition={{ delay: 0.1 * id }}
+        variants={{ visible: { scale: 1 }, hidden: { scale: 0 } }}
       >
         {name === "None" ? "Cyber" : name}
         {name === tag && (
@@ -103,7 +115,7 @@ const ProjectTag = ({ name, onClick, tag }: ProjectTag) => {
             zIndex={-1}
           />
         )}
-      </Box>
+      </MotionBox>
     </AnimatePresence>
   );
 };

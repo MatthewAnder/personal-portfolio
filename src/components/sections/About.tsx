@@ -2,10 +2,12 @@ import SectionHeading from "@/components/SectionHeading";
 import Book from "@/components/Book";
 import { Center, Flex, Image } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { useSectionInView } from "@/lib/hooks";
 
 const About = () => {
+  const { ref } = useSectionInView("About");
   return (
-    <Center mb={10}>
+    <Center ref={ref} mb={10}>
       <Flex
         alignItems={"center"}
         height={"100vh"}

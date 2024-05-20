@@ -57,7 +57,6 @@ const Typewriter = () => {
       fontSize={{ base: "4xl", lg: "6xl" }}
       color={"text.main"}
       height={20}
-      width={"8em"}
       textAlign={{ base: "center", lg: "end" }}
     >
       {displayText}

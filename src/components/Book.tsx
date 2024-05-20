@@ -1,13 +1,26 @@
 // components/Book.js
-import { Box, Center, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  Divider,
+  AbsoluteCenter,
+} from "@chakra-ui/react";
+import { CloseIcon } from "@chakra-ui/icons";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
+import SkillsSlider from "./SkillsSlider";
 
 const MotionBox = motion(Box);
 
 interface Page {
   handlePageClick: () => void;
 }
+
+const customEase: number[] = [0.645, 0.045, 0.355, 1];
 
 const Book = () => {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -20,11 +33,7 @@ const Book = () => {
     target: ref,
     offset: ["0 1", "1.33 1"],
   });
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.6, 0.8, 1],
-    [0.5, 1, 1, 0.7],
-  );
+  const scale = useTransform(scrollYProgress, [0, 0.6, 1], [0.5, 1, 1]);
   const opacity = useTransform(scrollYProgress, [0, 1], [0.6, 1]);
 
   return (
@@ -54,7 +63,7 @@ const Book = () => {
           height="100%"
           style={{ transformStyle: "preserve-3d" }}
           animate={{ rotateY: isFlipped ? 0 : -180 }}
-          transition={{ duration: 1, ease: [0.645, 0.045, 0.355, 1] }}
+          transition={{ duration: 1, ease: customEase }}
         >
           <Page2 handlePageClick={handlePageClick} />
           <Page3 handlePageClick={handlePageClick} />
@@ -104,7 +113,7 @@ const Page2 = ({ handlePageClick }: Page) => {
       padding="3rem"
       display="flex"
       flexDirection="column"
-      transition={{ duration: 0.9, ease: [0.645, 0.045, 0.355, 1] }}
+      transition={{ duration: 0.9, ease: customEase }}
       style={{
         backfaceVisibility: "hidden",
         transform: "rotateY(180deg)",
@@ -112,31 +121,30 @@ const Page2 = ({ handlePageClick }: Page) => {
       onClick={handlePageClick}
     >
       <Stack spacing={4}>
-        <Heading as="h1" size="xl">
-          II
+        <Heading as="h1" size="lg">
+          About Me
         </Heading>
         <Text fontSize="md">
-          HARI SELDON — . . . born in the 11,988th year of the Galactic Era;
-          died 12,069...
+          <Box as="span" color={"primary.main"}>
+            Name
+          </Box>{" "}
+          Matthew Haryanto
         </Text>
         <Text fontSize="md">
-          Undoubtedly his greatest contributions were in the field of
-          psychohistory...
+          <Box as="span" color={"primary.main"}>
+            Nationality
+          </Box>{" "}
+          Indonesia
         </Text>
-        <Text fontSize="md">
-          The best existing authority we have for the details of his life...
+        <Text>
+          <Box as="span" color={"primary.main"}>
+            Languages
+          </Box>{" "}
+          English, Indonesian, Mandarin
         </Text>
-        <Text fontSize="sm" alignSelf="flex-end">
-          Encyclopedia Galactica*
-        </Text>
-        <Text fontSize="md">His name was Gaal Dornick...</Text>
-        <Text fontSize="md">
-          There were nearly twenty-five million inhabited planets...
-        </Text>
-        <Text fontSize="md">
-          To Gaal, this trip was the undoubted climax of his young...
-        </Text>
+        <Text>Eats ice cream on a daily basis.</Text>
       </Stack>
+      <SectionDivider />
       <Text fontSize="sm" alignSelf="flex-end" mt="auto">
         2
       </Text>
@@ -157,7 +165,7 @@ const Page3 = ({ handlePageClick }: Page) => {
       padding="3rem"
       display="flex"
       flexDirection="column"
-      transition={{ duration: 0.9, ease: [0.645, 0.045, 0.355, 1] }}
+      transition={{ duration: 0.9, ease: customEase }}
       style={{ backfaceVisibility: "hidden", transform: "rotateY(0deg)" }}
       onClick={handlePageClick}
     >
@@ -242,5 +250,22 @@ const Page4 = () => {
     </MotionBox>
   );
 };
+
+const SectionDivider = () => (
+  <MotionBox
+    position="relative"
+    py={4}
+    px={1}
+    initial={"hidden"}
+    whileInView={"visible"}
+    variants={{ visible: { scaleX: 1 }, hidden: { scaleX: 0 } }}
+    transition={{ duration: 1 }}
+  >
+    <Divider borderWidth={"2px"} borderColor={"primary.main"} />
+    <AbsoluteCenter bg="rgba(247,247,247,1)" px={2}>
+      <CloseIcon boxSize={4} color={"secondary.main"} />
+    </AbsoluteCenter>
+  </MotionBox>
+);
 
 export default Book;

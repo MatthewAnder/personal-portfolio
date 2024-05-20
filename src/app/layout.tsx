@@ -1,7 +1,5 @@
 // Chakra Provider Component
 import { Providers } from "@/app/providers";
-import Navbar from "@/components/Navbar";
-import Socials from "@/components/Socials";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -13,11 +11,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body>
-        <Providers>
-          <Navbar />
-          <Socials />
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

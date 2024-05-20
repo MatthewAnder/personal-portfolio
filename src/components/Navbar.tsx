@@ -5,32 +5,36 @@ import { AnimatePresence, motion } from "framer-motion";
 import NextLink from "next/link";
 import { useState } from "react";
 
+import { useActiveSectionContext } from "@/context/active-section-context";
+import { links } from "@/lib/data";
+import type { SectionName } from "@/lib/types";
+
 interface NavLinkItem {
   label: string;
   link: string;
-  color: string;
 }
 
 interface NavLinks {
-  navItem: NavLinkItem;
+  name: string;
+  link: string;
   isSelected: boolean;
   onClick: () => void;
 }
 
 const Links: NavLinkItem[] = [
-  { label: "Home", link: "#top", color: "primary.500" },
-  { label: "About", link: "#about", color: "primary.500" },
-  { label: "Projects", link: "#projects", color: "primary.500" },
-  { label: "Contact", link: "#contact", color: "primary.500" },
+  { label: "Home", link: "#top" },
+  { label: "About", link: "#about" },
+  { label: "Projects", link: "#projects" },
+  { label: "Contact", link: "#contact" },
 ];
 
-const NavLink = ({ navItem, isSelected, onClick }: NavLinks) => {
+const NavLink = ({ name, link, isSelected, onClick }: NavLinks) => {
   return (
     <AnimatePresence>
       <Box
         as={NextLink}
-        key={navItem.label}
-        href={navItem.link}
+        key={name}
+        href={link}
         onClick={onClick}
         draggable="false"
         py={3}
@@ -40,10 +44,13 @@ const NavLink = ({ navItem, isSelected, onClick }: NavLinks) => {
         fontWeight="bold"
         fontSize={{ base: "md", sm: "xl" }}
         color={"accent.main"}
-        textShadow={isSelected ? "0 0 20px #f5fff7" : 0}
+        textShadow={isSelected ? "0 0 10px #f5fff7" : 0}
+        _hover={{
+          textShadow: "0 0 10px white",
+        }}
         transition={".5s ease-in"}
       >
-        {navItem.label}
+        {name}
 
         {isSelected && (
           <Box
@@ -78,8 +85,11 @@ const NavLink = ({ navItem, isSelected, onClick }: NavLinks) => {
 const Navbar = () => {
   const [section, setSection] = useState("Home");
 
+  const { activeSection, setActiveSection, setTimeOfLastClick } =
+    useActiveSectionContext();
+
   return (
-    <Center>
+    <Center position={"relative"}>
       <Flex
         as={motion.div}
         layout
@@ -96,12 +106,15 @@ const Navbar = () => {
         position={"fixed"}
         bg={"text.main"}
       >
-        {Links.map((item) => (
+        {links.map((link) => (
           <NavLink
-            key={item.label}
-            navItem={item}
-            isSelected={section === item.label}
-            onClick={() => setSection(item.label)}
+            name={link.name}
+            link={link.hash}
+            isSelected={activeSection === link.name}
+            onClick={() => {
+              setActiveSection(link.name);
+              setTimeOfLastClick(Date.now());
+            }}
           />
         ))}
       </Flex>

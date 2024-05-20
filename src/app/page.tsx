@@ -3,16 +3,21 @@
 import Typewriter from "@/components/Typewriter";
 import { Box, Center, Flex, Heading, Image, VStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { useSectionInView } from "@/lib/hooks";
+import { useActiveSectionContext } from "@/context/active-section-context";
 
 // Import Sections
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
-import SkillsSlider from "@/components/SkillsSlider";
 import Projects from "@/components/sections/Projects";
+import Navbar from "@/components/Navbar";
+import Socials from "@/components/Socials";
 
 const Page = () => {
   return (
-    <Box>
+    <Box position={"relative"}>
+      <Navbar />
+      <Socials />
       <Home />
       <About />
       <Projects />
@@ -22,8 +27,15 @@ const Page = () => {
 };
 
 const Home = () => {
+  const { ref } = useSectionInView("Home", 0.5);
+  const { setActiveSection, setTimeOfLastClick } = useActiveSectionContext();
+
   return (
-    <Center mt={{ base: 28, lg: 0 }}>
+    <Center
+      ref={ref}
+      mt={{ base: 28, lg: 0 }}
+      bgGradient={"linear(to-b, primary.200 0%, background.main 80%)"}
+    >
       <Flex
         flexDir={{ base: "column", lg: "row" }}
         alignItems={"center"}
@@ -51,7 +63,7 @@ const Title = () => {
       <VStack align={{ base: "center", lg: "end" }} mx={6}>
         <Heading
           as={"h1"}
-          fontSize={{ base: "md", md: "3xl" }}
+          fontSize={{ base: "3xl", sm: "4xl" }}
           lineHeight="tall"
           color={"primary.500"}
           letterSpacing={"3px"}
@@ -62,7 +74,7 @@ const Title = () => {
 
         <Heading
           as="h2"
-          fontSize={{ base: "xl", lg: "2xl" }}
+          fontSize={{ base: "xl", lg: "4xl" }}
           lineHeight="tall"
           color={"primary.600"}
         >

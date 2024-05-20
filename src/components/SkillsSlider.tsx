@@ -122,7 +122,7 @@ const SkillsSlider = () => {
         flexDir={"column"}
         position={"relative"}
         gap={"1rem 0"}
-        maxWidth={"90vw"}
+        maxWidth={"100%"}
         w={"40rem"}
         overflow={"hidden"}
       >
@@ -141,7 +141,7 @@ const SkillsSlider = () => {
           height={"16rem"}
           inset={0}
           background={
-            "linear-gradient(90deg, #282c34, transparent 30%, transparent 70%, #282c34)"
+            "linear-gradient(90deg, #fff, transparent 30%, transparent 70%, #fff)"
           }
         />
       </Flex>
