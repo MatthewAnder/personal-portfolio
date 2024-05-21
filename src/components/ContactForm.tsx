@@ -1,7 +1,6 @@
 import { sendEmail } from "@/actions/sendEmail";
 import {
   Button,
-  ChakraComponent,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -11,7 +10,7 @@ import {
 import {
   ChangeHandler,
   FieldErrors,
-  FieldValue,
+  RegisterOptions,
   useForm,
 } from "react-hook-form";
 
@@ -115,7 +114,7 @@ interface TextInputProps {
   placeholder: string;
   register: (
     name: string,
-    RegisterOptions?,
+    RegisterOptions?: RegisterOptions,
   ) => {
     onChange: ChangeHandler;
     onBlur: ChangeHandler;
