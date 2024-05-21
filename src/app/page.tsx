@@ -34,7 +34,9 @@ const Home = () => {
     <Center
       ref={ref}
       pt={{ base: 28, lg: 0 }}
-      bgGradient={"linear(to-b, primary.200 0%, background.main 80%)"}
+      bgGradient={
+        "linear(164deg, background.200 0%, primary.main, background.main 50%)"
+      }
     >
       <Flex
         flexDir={{ base: "column", lg: "row" }}
@@ -65,7 +67,7 @@ const Title = () => {
           as={"h1"}
           fontSize={{ base: "3xl", sm: "4xl" }}
           lineHeight="tall"
-          color={"primary.500"}
+          color={"secondary.600"}
           letterSpacing={"3px"}
         >
           MATTHEW HARYANTO
@@ -76,9 +78,9 @@ const Title = () => {
           as="h2"
           fontSize={{ base: "xl", lg: "4xl" }}
           lineHeight="tall"
-          color={"primary.600"}
+          color={"primary.400"}
         >
-          {"<!--- Developer --->"}
+          {"<!- - - Developer - - ->"}
         </Heading>
       </VStack>
     </motion.div>

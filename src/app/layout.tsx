@@ -1,3 +1,5 @@
+import "./globals.css";
+
 // Chakra Provider Component
 import { Providers } from "@/app/providers";
 export default function RootLayout({

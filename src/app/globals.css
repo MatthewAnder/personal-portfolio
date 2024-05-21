@@ -1,0 +1,37 @@
+:root {
+  --primary: #ebf4f4;
+  --secondary: rgba(31, 209, 253, 0.4);
+  --tertiary: rgba(31, 209, 253, 0.6);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #bddbdb;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #9cc9c9;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition:
+    background-color 600000s 0s,
+    color 600000s 0s;
+}
+
+input[data-autocompleted] {
+  background-color: transparent !important;
+}

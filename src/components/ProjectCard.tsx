@@ -60,7 +60,7 @@ const ProjectCard = ({
             roundedBottom={"xl"}
           >
             <Heading fontSize={"xl"}>{title}</Heading>
-            <Text fontSize={"md"} color={"primary.main"}>
+            <Text fontSize={"md"} color={"text.main"}>
               {description}
             </Text>
           </Box>

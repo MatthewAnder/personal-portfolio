@@ -90,7 +90,7 @@ const Page1 = () => {
       style={{ transformOrigin: "left" }}
     >
       <Image
-        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/193203/1111.jpg"
+        src="/"
         alt="Book Cover"
         width="100%"
         height="100%"
@@ -166,7 +166,7 @@ const Page3 = ({ handlePageClick }: Page) => {
       position="absolute"
       width="50%"
       height="100%"
-      backgroundImage="linear-gradient(90deg, rgba(227,227,227,1) 0%, rgba(247,247,247,1) 18%)"
+      backgroundImage="linear-gradient(-90deg, rgba(227,227,227,1) 0%, rgba(247,247,247,1) 18%)"
       cursor="pointer"
       padding="3rem"
       display="flex"
