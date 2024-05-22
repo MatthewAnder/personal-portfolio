@@ -1,7 +1,15 @@
 "use client";
 
 import Typewriter from "@/components/Typewriter";
-import { Box, Center, Flex, Heading, Image, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Heading,
+  Image,
+  VStack,
+  Text,
+} from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useSectionInView } from "@/lib/hooks";
 import { useActiveSectionContext } from "@/context/active-section-context";
@@ -74,14 +82,13 @@ const Title = () => {
         </Heading>
         <Typewriter />
 
-        <Heading
-          as="h2"
-          fontSize={{ base: "xl", lg: "4xl" }}
+        <Text
+          fontSize={{ base: "xl", lg: "3xl" }}
           lineHeight="tall"
           color={"primary.400"}
         >
-          {"<!- - - Developer - - ->"}
-        </Heading>
+          {"<!--- Developer --->"}
+        </Text>
       </VStack>
     </motion.div>
   );
