@@ -19,7 +19,7 @@ interface ProjectTag {
 const MotionBox = motion(Box);
 
 const Projects = () => {
-  const { ref } = useSectionInView("Projects");
+  const { ref } = useSectionInView("Projects", 0.5);
   const [tag, setTag] = useState("All");
 
   const handleTagChange = (newTag: string) => {

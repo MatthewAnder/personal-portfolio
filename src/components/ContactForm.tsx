@@ -6,6 +6,7 @@ import {
   FormLabel,
   Input,
   Textarea,
+  Box,
 } from "@chakra-ui/react";
 import {
   ChangeHandler,
@@ -13,6 +14,11 @@ import {
   RegisterOptions,
   useForm,
 } from "react-hook-form";
+import { motion } from "framer-motion";
+import Reveal from "./Reveal";
+import { ReactNode } from "react";
+
+const MotionFormLabel = motion(FormLabel);
 
 const ContactForm = () => {
   const {
@@ -30,6 +36,7 @@ const ContactForm = () => {
       <FormControl
         width={{ base: "20em", md: "25em" }}
         mt={{ base: 10, lg: 0 }}
+        isInvalid={Boolean(errors.name)}
       >
         <TextInput
           id="name"
@@ -45,22 +52,13 @@ const ContactForm = () => {
           register={register}
           errors={errors}
         />
-        <FormLabel htmlFor={"message"} fontSize={"2xl"} fontWeight={"bold"}>
-          Message
-        </FormLabel>
-        <Textarea
+        <TextInput
           id="message"
-          variant={"flushed"}
+          label="Message"
           placeholder="Shoot me a message!"
-          {...register("message", {
-            required: "This is required",
-          })}
-          borderBottom={"2px"}
-          borderColor={"secondary.main"}
-          focusBorderColor="secondary.700"
-          fontSize={"lg"}
-          resize={"none"}
-          h={"10em"}
+          isTextArea={true}
+          register={register}
+          errors={errors}
         />
       </FormControl>
       <Button
@@ -81,26 +79,42 @@ const TextInput = ({
   id,
   label,
   placeholder,
+  isTextArea = false,
   register,
   errors,
 }: TextInputProps) => {
   return (
     <>
-      <FormLabel htmlFor={id} fontSize={"2xl"} fontWeight={"bold"}>
-        {label}
-      </FormLabel>
-      <Input
-        variant={"flushed"}
-        id={id}
-        placeholder={placeholder}
-        {...register(id, {
-          required: "This is required",
-        })}
-        fontSize={"lg"}
-        borderBottom={"2px"}
-        borderColor={"secondary.main"}
-        focusBorderColor="secondary.700"
-      />
+      <Label id={id}>{label}</Label>
+      {isTextArea ? (
+        <Textarea
+          id="message"
+          variant={"flushed"}
+          placeholder="Shoot me a message!"
+          {...register("message", {
+            required: "This is required",
+          })}
+          borderBottom={"2px"}
+          borderColor={"secondary.main"}
+          focusBorderColor="secondary.700"
+          fontSize={"lg"}
+          resize={"none"}
+          h={"10em"}
+        />
+      ) : (
+        <Input
+          variant={"flushed"}
+          id={id}
+          placeholder={placeholder}
+          {...register(id, {
+            required: "This is required",
+          })}
+          fontSize={"lg"}
+          borderBottom={"2px"}
+          borderColor={"secondary.main"}
+          focusBorderColor="secondary.700"
+        />
+      )}
       <FormErrorMessage>
         {errors.name && errors.name.message?.toString()}
       </FormErrorMessage>
@@ -112,6 +126,7 @@ interface TextInputProps {
   id: string;
   label: string;
   placeholder: string;
+  isTextArea?: boolean;
   register: (
     name: string,
     RegisterOptions?: RegisterOptions,
@@ -123,5 +138,28 @@ interface TextInputProps {
   };
   errors: FieldErrors;
 }
+
+interface LabelProps {
+  children: ReactNode;
+  id: string;
+}
+
+const Label = ({ children, id }: LabelProps) => {
+  return (
+    <Box overflow={"hidden"}>
+      <MotionFormLabel
+        htmlFor={id}
+        fontSize={"2xl"}
+        fontWeight={"bold"}
+        variants={{ visible: { y: 0 }, hidden: { y: 50 } }}
+        whileInView={"visible"}
+        initial={"hidden"}
+        animate={"visible"}
+      >
+        {children}
+      </MotionFormLabel>
+    </Box>
+  );
+};
 
 export default ContactForm;

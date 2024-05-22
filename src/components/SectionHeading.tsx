@@ -1,13 +1,5 @@
 import { Box, Heading } from "@chakra-ui/react";
-import {
-  MotionValue,
-  motion,
-  useAnimation,
-  useMotionValue,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-import { headers } from "next/headers";
+import { motion, useAnimation, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 interface SectiongHeading {
@@ -21,7 +13,7 @@ const SectionHeading = ({ label }: SectiongHeading) => {
   const headingRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: headingRef,
-    offset: ["0 1", "1 .8"],
+    offset: ["0 1", "1 .7"],
   });
 
   const scale = useTransform(scrollYProgress, [0, 1], [0.5, 1]);
@@ -63,7 +55,7 @@ const SectionHeading = ({ label }: SectiongHeading) => {
       <MotionBox
         variants={{
           visible: { x: 0, opacity: 1, type: "tween" },
-          hidden: { x: "100%", opacity: 0, transition: { duration: 0.1 } },
+          hidden: { x: "100%", opacity: 0 },
         }}
         initial={"hidden"}
         animate={slider}
