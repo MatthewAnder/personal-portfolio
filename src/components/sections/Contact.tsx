@@ -22,10 +22,11 @@ const Contact = () => {
     <Flex
       ref={ref}
       id="contact"
-      h={"100vh"}
       direction={"column"}
       alignItems={"center"}
+      h={"100vh"}
       w={"100%"}
+      mb={10}
     >
       <SectionHeading label="Contact Me!" />
       <Flex

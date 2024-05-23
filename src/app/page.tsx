@@ -15,11 +15,12 @@ import { useSectionInView } from "@/lib/hooks";
 import { useActiveSectionContext } from "@/context/active-section-context";
 
 // Import Sections
+import Navbar from "@/components/Navbar";
+import Socials from "@/components/Socials";
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
 import Projects from "@/components/sections/Projects";
-import Navbar from "@/components/Navbar";
-import Socials from "@/components/Socials";
+import Footer from "@/components/Footer";
 
 const Page = () => {
   return (
@@ -30,6 +31,7 @@ const Page = () => {
       <About />
       <Projects />
       <Contact />
+      <Footer />
     </Box>
   );
 };

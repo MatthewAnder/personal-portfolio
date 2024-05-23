@@ -17,7 +17,7 @@ const SectionHeading = ({ label }: SectiongHeading) => {
   });
 
   const scale = useTransform(scrollYProgress, [0, 1], [0.5, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.4, 1]);
   const x = useTransform(scrollYProgress, [0, 1], ["50%", "0%"]);
 
   const slider = useAnimation();
@@ -33,7 +33,7 @@ const SectionHeading = ({ label }: SectiongHeading) => {
 
     // Clean up the subscription on component unmount
     return () => unsubscribe();
-  }, [opacity]);
+  });
 
   return (
     <Box
@@ -54,12 +54,12 @@ const SectionHeading = ({ label }: SectiongHeading) => {
       </MotionHeading>
       <MotionBox
         variants={{
-          visible: { x: 0, opacity: 1, type: "tween" },
+          visible: { x: 0, opacity: 1 },
           hidden: { x: "100%", opacity: 0 },
         }}
         initial={"hidden"}
         animate={slider}
-        transition={{ ease: "easeIn" }}
+        transition={{ ease: "easeOut" }}
         bg={"primary.main"}
         zIndex={-1}
         bottom={0}

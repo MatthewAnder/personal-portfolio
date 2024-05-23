@@ -1,20 +1,20 @@
-// components/Book.js
+import { CloseIcon } from "@chakra-ui/icons";
 import {
+  AbsoluteCenter,
   Box,
   Center,
+  Divider,
   Heading,
+  Icon,
   Image,
   Stack,
   Text,
-  Divider,
-  AbsoluteCenter,
 } from "@chakra-ui/react";
-import { CloseIcon } from "@chakra-ui/icons";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
-import SkillsSlider from "./SkillsSlider";
 
 const MotionBox = motion(Box);
+const MotionImage = motion(Image);
 
 interface Page {
   handlePageClick: () => void;
@@ -76,6 +76,7 @@ const Book = () => {
 };
 
 const Page1 = () => {
+  const constraint = useRef(null);
   return (
     <MotionBox
       key="page1"
@@ -84,18 +85,34 @@ const Page1 = () => {
       left="0"
       width="50%"
       height="100%"
-      bg="var(--page-bg)"
       backgroundImage="linear-gradient(-90deg, rgba(227,227,227,1) 0%, rgba(247,247,247,0) 18%)"
       cursor="pointer"
       style={{ transformOrigin: "left" }}
     >
-      <Image
-        src="/"
-        alt="Book Cover"
-        width="100%"
-        height="100%"
-        objectFit="cover"
-      />
+      <Box position={"relative"} ref={constraint} height={"100%"}>
+        <Image
+          src="images/drawing.svg"
+          alt="Book Cover"
+          objectFit="cover"
+          zIndex={0}
+        />
+        <MotionImage
+          src="images/basketball.svg"
+          boxSize={"5em"}
+          zIndex={4}
+          position={"absolute"}
+          drag
+          dragConstraints={constraint}
+        />
+        <MotionImage
+          src="images/football.svg"
+          boxSize={"5em"}
+          zIndex={4}
+          position={"absolute"}
+          drag
+          dragConstraints={constraint}
+        />
+      </Box>
     </MotionBox>
   );
 };
@@ -103,7 +120,7 @@ const Page1 = () => {
 const Page2 = ({ handlePageClick }: Page) => {
   return (
     <MotionBox
-      zIndex={2}
+      zIndex={5}
       key="page2"
       position="absolute"
       width="50%"
@@ -149,8 +166,19 @@ const Page2 = ({ handlePageClick }: Page) => {
           English, Indonesian, Mandarin
         </Text>
         <Text>Eats ice cream on a daily basis.</Text>
+        <SectionDivider />
+        <Text>
+          I find programming to be a truly fascinating piece of art. The power
+          of simple 0s and 1s to construct sophisticated machines beyond this
+          world is nothing short of magical. Each line of code is like a
+          brushstroke on a digital canvas, creating intricate systems and
+          innovations that shape our future. My passion lies where creativity
+          and logic intertwine to transform abstract ideas into tangible
+          realities. Whether it's developing cutting-edge software or solving
+          complex problems, I am constantly inspired by the endless
+          possibilities that programming offers.
+        </Text>
       </Stack>
-      <SectionDivider />
       <Text fontSize="sm" alignSelf="flex-end" mt="auto">
         2
       </Text>
@@ -177,28 +205,11 @@ const Page3 = ({ handlePageClick }: Page) => {
     >
       <Stack spacing={4}>
         <Heading as="h1" size="xl">
-          III
+          Education
         </Heading>
         <Text fontSize="md">
           HARI SELDON — . . . born in the 11,988th year of the Galactic Era;
           died 12,069...
-        </Text>
-        <Text fontSize="md">
-          Undoubtedly his greatest contributions were in the field of
-          psychohistory...
-        </Text>
-        <Text fontSize="md">
-          The best existing authority we have for the details of his life...
-        </Text>
-        <Text fontSize="sm" alignSelf="flex-end">
-          Encyclopedia Galactica*
-        </Text>
-        <Text fontSize="md">His name was Gaal Dornick...</Text>
-        <Text fontSize="md">
-          There were nearly twenty-five million inhabited planets...
-        </Text>
-        <Text fontSize="md">
-          To Gaal, this trip was the undoubted climax of his young...
         </Text>
       </Stack>
       <Text fontSize="sm" alignSelf="flex-end" mt="auto">
@@ -226,28 +237,11 @@ const Page4 = () => {
     >
       <Stack spacing={4}>
         <Heading as="h1" size="xl">
-          IV
+          Experiences
         </Heading>
         <Text fontSize="md">
           HARI LDON — . . . born in the 11,988th year of the Galactic Era; died
           12,069...
-        </Text>
-        <Text fontSize="md">
-          Undoubtedly his greatest contributions were in the field of
-          psychohistory...
-        </Text>
-        <Text fontSize="md">
-          The best existing authority we have for the details of his life...
-        </Text>
-        <Text fontSize="sm" alignSelf="flex-end">
-          Encyclopedia Galactica*
-        </Text>
-        <Text fontSize="md">His name was Gaal Dornick...</Text>
-        <Text fontSize="md">
-          There were nearly twenty-five million inhabited planets...
-        </Text>
-        <Text fontSize="md">
-          To Gaal, this trip was the undoubted climax of his young...
         </Text>
       </Stack>
       <Text fontSize="sm" alignSelf="flex-end" mt="auto">

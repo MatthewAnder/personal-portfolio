@@ -6,19 +6,14 @@ import {
   FormLabel,
   Input,
   Textarea,
-  Box,
 } from "@chakra-ui/react";
+import { ReactNode } from "react";
 import {
   ChangeHandler,
   FieldErrors,
   RegisterOptions,
   useForm,
 } from "react-hook-form";
-import { motion } from "framer-motion";
-import Reveal from "./Reveal";
-import { ReactNode } from "react";
-
-const MotionFormLabel = motion(FormLabel);
 
 const ContactForm = () => {
   const {
@@ -146,19 +141,9 @@ interface LabelProps {
 
 const Label = ({ children, id }: LabelProps) => {
   return (
-    <Box overflow={"hidden"}>
-      <MotionFormLabel
-        htmlFor={id}
-        fontSize={"2xl"}
-        fontWeight={"bold"}
-        variants={{ visible: { y: 0 }, hidden: { y: 50 } }}
-        whileInView={"visible"}
-        initial={"hidden"}
-        animate={"visible"}
-      >
-        {children}
-      </MotionFormLabel>
-    </Box>
+    <FormLabel htmlFor={id} fontSize={"2xl"} fontWeight={"bold"}>
+      {children}
+    </FormLabel>
   );
 };
 
