@@ -24,7 +24,7 @@ const Contact = () => {
       id="contact"
       direction={"column"}
       alignItems={"center"}
-      h={"100vh"}
+      h={{ base: "fit-content", lg: "100vh" }}
       w={"100%"}
       mb={10}
     >

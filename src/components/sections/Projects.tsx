@@ -44,7 +44,10 @@ const Projects = () => {
       flexDirection={"column"}
       alignItems={"center"}
       w={"100%"}
-      h={"125vh"}
+      h={{
+        base: "fit-content",
+        lg: "125vh",
+      }}
       position={"relative"}
     >
       <SectionHeading label="Behold My Creations!" />
@@ -68,15 +71,15 @@ const Projects = () => {
         ))}
       </MotionFlex>
 
-      <Grid
-        as={motion.div}
-        layout
-        position={"relative"}
-        templateColumns={{ md: "repeat(2,1fr)", lg: "repeat(3, 1fr)" }}
-        gap={6}
-        w={"80%"}
-      >
-        <AnimatePresence>
+      <AnimatePresence>
+        <Grid
+          as={motion.div}
+          layout
+          position={"relative"}
+          templateColumns={{ md: "repeat(2,1fr)", lg: "repeat(3, 1fr)" }}
+          gap={6}
+          w={"80%"}
+        >
           {projectsData.map(
             (project, index) =>
               (project.tag === tag || tag === "All") && (
@@ -88,8 +91,8 @@ const Projects = () => {
                 />
               ),
           )}
-        </AnimatePresence>
-      </Grid>
+        </Grid>
+      </AnimatePresence>
     </Flex>
   );
 };

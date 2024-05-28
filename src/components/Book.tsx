@@ -5,7 +5,6 @@ import {
   Center,
   Divider,
   Heading,
-  Icon,
   Image,
   Stack,
   Text,
@@ -237,7 +236,7 @@ const Page4 = () => {
 };
 
 const SectionDivider = () => (
-  <Box
+  <MotionBox
     position="relative"
     py={4}
     px={1}
@@ -250,7 +249,7 @@ const SectionDivider = () => (
     <AbsoluteCenter bg="rgba(247,247,247,1)" px={2}>
       <CloseIcon boxSize={4} color={"secondary.main"} />
     </AbsoluteCenter>
-  </Box>
+  </MotionBox>
 );
 
 export default Book;
