@@ -1,5 +1,4 @@
 "use client";
-import MainProjectCard from "@/components/MainProjectCard";
 import ProjectCard from "@/components/ProjectCard";
 import SectionHeading from "@/components/SectionHeading";
 import { useState } from "react";

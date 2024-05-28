@@ -1,14 +1,6 @@
 import { ProjectData } from "@/lib/types";
-import {
-  Box,
-  ChakraProps,
-  GridItem,
-  Heading,
-  Image,
-  Text,
-} from "@chakra-ui/react";
-import { AnimatePresence, motion } from "framer-motion";
-import MainProjectCard from "./MainProjectCard";
+import { Box, GridItem, Heading, Image, Text } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 
 interface ProjectCard {
   project: ProjectData;
