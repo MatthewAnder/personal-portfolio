@@ -33,8 +33,8 @@ const Book = () => {
     target: ref,
     offset: ["0 1", "1.33 1"],
   });
-  const scale = useTransform(scrollYProgress, [0, 0.6, 1], [0.5, 1, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [0.6, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.6, 1], [0.7, 1, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
 
   return (
     <Center
@@ -58,7 +58,7 @@ const Book = () => {
           position="absolute"
           top="0"
           left="0"
-          zIndex={2}
+          zIndex={5}
           width="100%"
           height="100%"
           style={{ transformStyle: "preserve-3d" }}
@@ -80,57 +80,50 @@ const Page1 = () => {
   return (
     <MotionBox
       key="page1"
-      position="absolute"
-      top="0"
-      left="0"
+      ref={constraint}
+      position="relative"
       width="50%"
-      height="100%"
-      backgroundImage="linear-gradient(-90deg, rgba(227,227,227,1) 0%, rgba(247,247,247,0) 18%)"
+      height={"100%"}
+      bgGradient="linear-gradient(-90deg, rgba(227,227,227,1) 0%, rgba(247,247,247,0) 18%)"
       cursor="pointer"
-      style={{ transformOrigin: "left" }}
+      zIndex={1}
     >
-      <Box position={"relative"} ref={constraint} height={"100%"}>
-        <Image
-          src="images/drawing.svg"
-          alt="Book Cover"
-          objectFit="cover"
-          zIndex={0}
-        />
-        <MotionImage
-          src="images/basketball.svg"
-          boxSize={"5em"}
-          zIndex={4}
-          position={"absolute"}
-          drag
-          dragConstraints={constraint}
-        />
-        <MotionImage
-          src="images/football.svg"
-          boxSize={"5em"}
-          zIndex={4}
-          position={"absolute"}
-          drag
-          dragConstraints={constraint}
-        />
-      </Box>
+      <Image src="/images/drawing.svg" alt="Book Cover" height={"100%"} />
+      <MotionImage
+        src="images/basketball.svg"
+        boxSize={"5em"}
+        zIndex={7}
+        position={"absolute"}
+        drag
+        dragConstraints={constraint}
+        style={{ x: 175, y: -250 }}
+      />
+      <MotionImage
+        src="images/football.svg"
+        boxSize={"5em"}
+        zIndex={7}
+        position={"absolute"}
+        drag
+        dragConstraints={constraint}
+        style={{ x: 100, y: -550 }}
+      />
     </MotionBox>
   );
 };
 
 const Page2 = ({ handlePageClick }: Page) => {
   return (
-    <MotionBox
+    <Box
       zIndex={5}
       key="page2"
       position="absolute"
       width="50%"
       height="100%"
-      backgroundImage="linear-gradient(90deg, rgba(227,227,227,1) 0%, rgba(247,247,247,1) 18%)"
+      bgGradient="linear-gradient(90deg, rgba(227,227,227,1) 0%, rgba(247,247,247,1) 18%)"
       cursor="pointer"
       padding="3rem"
       display="flex"
       flexDirection="column"
-      transition={{ duration: 0.9, ease: customEase }}
       style={{
         backfaceVisibility: "hidden",
         transform: "rotateY(180deg)",
@@ -174,32 +167,31 @@ const Page2 = ({ handlePageClick }: Page) => {
           brushstroke on a digital canvas, creating intricate systems and
           innovations that shape our future. My passion lies where creativity
           and logic intertwine to transform abstract ideas into tangible
-          realities. Whether it's developing cutting-edge software or solving
-          complex problems, I am constantly inspired by the endless
+          realities. Whether it&#39;s developing cutting-edge software or
+          solving complex problems&#44; I am constantly inspired by the endless
           possibilities that programming offers.
         </Text>
       </Stack>
       <Text fontSize="sm" alignSelf="flex-end" mt="auto">
         2
       </Text>
-    </MotionBox>
+    </Box>
   );
 };
 
 const Page3 = ({ handlePageClick }: Page) => {
   return (
-    <MotionBox
+    <Box
       zIndex={2}
       key="page3"
       position="absolute"
       width="50%"
       height="100%"
-      backgroundImage="linear-gradient(-90deg, rgba(227,227,227,1) 0%, rgba(247,247,247,1) 18%)"
+      bgGradient="linear-gradient(-90deg, rgba(227,227,227,1) 0%, rgba(247,247,247,1) 18%)"
       cursor="pointer"
       padding="3rem"
       display="flex"
-      flexDirection="column"
-      transition={{ duration: 0.9, ease: customEase }}
+      flexDirection={"column"}
       style={{ backfaceVisibility: "hidden", transform: "rotateY(0deg)" }}
       onClick={handlePageClick}
     >
@@ -207,21 +199,18 @@ const Page3 = ({ handlePageClick }: Page) => {
         <Heading as="h1" size="xl">
           Education
         </Heading>
-        <Text fontSize="md">
-          HARI SELDON — . . . born in the 11,988th year of the Galactic Era;
-          died 12,069...
-        </Text>
+        <Text fontSize="md">a</Text>
       </Stack>
       <Text fontSize="sm" alignSelf="flex-end" mt="auto">
         3
       </Text>
-    </MotionBox>
+    </Box>
   );
 };
 
 const Page4 = () => {
   return (
-    <MotionBox
+    <Box
       key="page4"
       position="absolute"
       top="0"
@@ -233,26 +222,22 @@ const Page4 = () => {
       padding="3rem"
       display="flex"
       flexDirection="column"
-      transformOrigin="left"
     >
       <Stack spacing={4}>
         <Heading as="h1" size="xl">
           Experiences
         </Heading>
-        <Text fontSize="md">
-          HARI LDON — . . . born in the 11,988th year of the Galactic Era; died
-          12,069...
-        </Text>
+        <Text fontSize="md">a </Text>
       </Stack>
       <Text fontSize="sm" alignSelf="flex-end" mt="auto">
         4
       </Text>
-    </MotionBox>
+    </Box>
   );
 };
 
 const SectionDivider = () => (
-  <MotionBox
+  <Box
     position="relative"
     py={4}
     px={1}
@@ -265,7 +250,7 @@ const SectionDivider = () => (
     <AbsoluteCenter bg="rgba(247,247,247,1)" px={2}>
       <CloseIcon boxSize={4} color={"secondary.main"} />
     </AbsoluteCenter>
-  </MotionBox>
+  </Box>
 );
 
 export default Book;

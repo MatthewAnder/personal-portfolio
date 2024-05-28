@@ -1,88 +1,108 @@
 "use client";
+import MainProjectCard from "@/components/MainProjectCard";
 import ProjectCard from "@/components/ProjectCard";
 import SectionHeading from "@/components/SectionHeading";
 import { useState } from "react";
 
 import { Box, Flex, Grid } from "@chakra-ui/react";
+
 import { AnimatePresence, motion } from "framer-motion";
 
 import { projectsData } from "@/lib/data";
 import { useSectionInView } from "@/lib/hooks";
+import { ProjectData } from "@/lib/types";
 
 interface ProjectTag {
-  id: number;
   name: string;
   onClick: (arg: string) => void;
   tag: string;
 }
 
+interface Main {
+  selectedId: string;
+}
+
 const MotionBox = motion(Box);
+const MotionFlex = motion(Flex);
 
 const Projects = () => {
   const { ref } = useSectionInView("Projects", 0.5);
+
+  // tag refers to the category of the card
   const [tag, setTag] = useState("All");
+  // main refers to the card that is big
+  const [main, setMain] = useState<ProjectData | null>(null);
 
   const handleTagChange = (newTag: string) => {
     setTag(newTag);
+    setMain(null);
   };
 
   return (
     <Flex
       ref={ref}
       id="projects"
-      direction={"column"}
+      flexDirection={"column"}
       alignItems={"center"}
       w={"100%"}
+      h={"125vh"}
+      position={"relative"}
     >
       <SectionHeading label="Behold My Creations!" />
-      <Flex
+      <MotionFlex
         direction={"row"}
         justify={"center"}
         alignItems={"center"}
         gap={2}
         my={6}
+        initial={"hidden"}
+        whileInView={"visible"}
+        transition={{ staggerChildren: 0.3 }}
       >
-        {["All", "Web", "Game", "None"].map((item, index) => (
+        {["All", "Web", "Game", "Other"].map((item) => (
           <ProjectTag
             key={item}
-            id={index}
             name={item}
             onClick={handleTagChange}
             tag={tag}
           />
         ))}
-      </Flex>
+      </MotionFlex>
 
-      <AnimatePresence>
-        <Grid
-          as={motion.div}
-          layout
-          layoutRoot
-          templateColumns={{ md: "repeat(2,1fr)", lg: "repeat(3, 1fr)" }}
-          gap={6}
-        >
-          {projectsData.map((project, index) => (
-            <ProjectCard
-              key={project.title}
-              title={project.title}
-              description={project.description}
-              imgUrl={project.image}
-              isSelected={project.tag.includes(tag)}
-            />
-          ))}
-        </Grid>
-      </AnimatePresence>
+      <Grid
+        as={motion.div}
+        layout
+        position={"relative"}
+        templateColumns={{ md: "repeat(2,1fr)", lg: "repeat(3, 1fr)" }}
+        gap={6}
+        w={"80%"}
+      >
+        <AnimatePresence>
+          {projectsData.map(
+            (project, index) =>
+              (project.tag === tag || tag === "All") && (
+                <ProjectCard
+                  key={project.title}
+                  project={project}
+                  main={main}
+                  setMain={setMain}
+                />
+              ),
+          )}
+        </AnimatePresence>
+      </Grid>
     </Flex>
   );
 };
 
-const ProjectTag = ({ id, name, onClick, tag }: ProjectTag) => {
+const ProjectTag = ({ name, onClick, tag }: ProjectTag) => {
   return (
     <AnimatePresence>
       <MotionBox
         layout
         key={name}
         onClick={() => onClick(name)}
+        variants={{ visible: { scale: 1 }, hidden: { scale: 0 } }}
         rounded={"full"}
         px={5}
         py={2}
@@ -92,13 +112,8 @@ const ProjectTag = ({ id, name, onClick, tag }: ProjectTag) => {
         zIndex={1}
         fontWeight={"bold"}
         color={"text.main"}
-        initial={"hidden"}
-        whileInView={"visible"}
-        animate={"hidden"}
-        transition={{ delay: 0.1 * id }}
-        variants={{ visible: { scale: 1 }, hidden: { scale: 0 } }}
       >
-        {name === "None" ? "Cyber" : name}
+        {name}
         {name === tag && (
           <Box
             as={motion.span}
