@@ -81,7 +81,7 @@ const Projects = () => {
           w={"80%"}
         >
           {projectsData.map(
-            (project, index) =>
+            (project) =>
               (project.tag === tag || tag === "All") && (
                 <ProjectCard
                   key={project.title}

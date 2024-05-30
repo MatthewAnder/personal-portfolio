@@ -1,6 +1,16 @@
 import { ProjectData } from "@/lib/types";
-import { Box, GridItem, Heading, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  ChakraProps,
+  Flex,
+  GridItem,
+  Heading,
+  Icon,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { IconType } from "react-icons/lib";
 
 interface ProjectCard {
   project: ProjectData;
@@ -80,7 +90,11 @@ const ProjectCard = ({ project, main, setMain }: ProjectCard) => {
         layout="position"
       >
         <Heading fontSize={"xl"}>{project.title}</Heading>
-
+        <Flex my={2}>
+          {project.tools.map((path: string) => {
+            return <Image src={"icons/" + path} boxSize={5} mr={2} />;
+          })}
+        </Flex>
         <Text fontSize={"md"} color={"text.main"}>
           {project.description}
         </Text>

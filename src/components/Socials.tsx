@@ -39,9 +39,11 @@ const Items: SocialItems[] = [
   },
 ];
 
+const MotionFlex = motion(Flex);
+
 const Socials = () => {
   return (
-    <Flex
+    <MotionFlex
       direction={"column"}
       position={"fixed"}
       bottom={4}
@@ -49,24 +51,20 @@ const Socials = () => {
       alignItems={"end"}
       width={"200px"}
       zIndex={20}
+      initial="hidden"
+      whileInView={"visible"}
+      viewport={{ once: true }}
+      transition={{ staggerChildren: 0.2, delayChildren: 1.4 }}
     >
-      {Items.map((item: SocialItems, index: number) => (
+      {Items.map((item: SocialItems) => (
         <motion.div
           key={item.label}
-          initial="hidden"
-          whileInView={"visible"}
-          viewport={{ once: true }}
-          variants={{ hidden: { x: -56 }, visible: { x: 0 } }}
-          transition={{
-            type: "spring",
-            duration: 0.5,
-            delay: 1.4 + 0.2 * index,
-          }}
+          variants={{ hidden: { x: -55 }, visible: { x: 0 } }}
         >
-          <NavLink key={item.label} navItem={item} />
+          <NavLink navItem={item} />
         </motion.div>
       ))}
-    </Flex>
+    </MotionFlex>
   );
 };
 
@@ -99,7 +97,7 @@ const NavLink = ({ navItem }: { navItem: SocialItems }) => {
         <Box
           as="span"
           fontSize={"md"}
-          mr={2}
+          mr={4}
           fontWeight={"700"}
           transition={`${duration} ease-out`}
           _groupHover={{
