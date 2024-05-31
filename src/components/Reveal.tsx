@@ -22,7 +22,7 @@ const Reveal = ({ children, width, delay = 0.25 }: RevealProps) => {
       slideControls.start("visible");
       controls.start("visible");
     }
-  }, [isInView]);
+  }, [isInView, controls, slideControls]);
 
   return (
     <Box ref={ref} width={width} position={"relative"} overflow={"hidden"}>

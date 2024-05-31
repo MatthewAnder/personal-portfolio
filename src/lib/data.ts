@@ -7,7 +7,7 @@ export const projectsData: ProjectData[] = [
     description: "Car adventure game with dynamic handcrafted environments.",
     image: "/images/placeholder.svg",
     tag: "Game",
-    tools: ["next.svg"],
+    tools: ["unity.svg", "csharp.svg", "blender.svg"],
   },
   {
     id: 2,
@@ -16,7 +16,7 @@ export const projectsData: ProjectData[] = [
       "Budget planner to help you plan your way into university life.",
     image: "/images/placeholder.svg",
     tag: "Web",
-    tools: [],
+    tools: ["react.svg", "javascript.svg", "chakra.svg", "java.svg"],
   },
   {
     id: 3,
@@ -25,7 +25,7 @@ export const projectsData: ProjectData[] = [
       "To-do list application with authentication that ensures data privacy.",
     image: "/images/placeholder.svg",
     tag: "Web",
-    tools: [],
+    tools: ["svelte.svg", "typescript.svg", "tailwind.svg", "supabase.svg"],
   },
   {
     id: 4,
@@ -33,7 +33,7 @@ export const projectsData: ProjectData[] = [
     description: "Your way to find a pickup game to play your favorite sports.",
     image: "/images/placeholder.svg",
     tag: "Web",
-    tools: [],
+    tools: ["react.svg", "javascript.svg", "chakra.svg"],
   },
   {
     id: 5,
@@ -42,7 +42,7 @@ export const projectsData: ProjectData[] = [
       "Fight endless rounds of evil boxes with spears and watch them explode!",
     image: "/images/placeholder.svg",
     tag: "Game",
-    tools: [],
+    tools: ["unity.svg", "csharp.svg", "blender.svg"],
   },
   {
     id: 5,
@@ -65,6 +65,10 @@ export const links = [
   },
   {
     name: "About",
+    hash: "#about",
+  },
+  {
+    name: "Experience",
     hash: "#about",
   },
   {

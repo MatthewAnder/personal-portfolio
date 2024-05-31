@@ -41,13 +41,8 @@ const NavLink = ({ name, link, isSelected, onClick }: NavLinks) => {
         px={4}
         height={"100%"}
         position="relative"
-        fontWeight="bold"
         fontSize={{ base: "md", sm: "xl" }}
         color={"accent.main"}
-        textShadow={isSelected ? "0 0 10px #f5fff7" : 0}
-        _hover={{
-          textShadow: "0 0 10px white",
-        }}
         transition={".5s ease-in"}
       >
         {name}
@@ -62,7 +57,6 @@ const NavLink = ({ name, link, isSelected, onClick }: NavLinks) => {
             zIndex={-1}
             inset={0}
             background={"text.main"}
-            color={"black"}
             bgGradient={
               "linear(to-t, rgba(106, 144, 128, 1) 0%, rgba(106, 144, 128, 0) 60%)"
             }

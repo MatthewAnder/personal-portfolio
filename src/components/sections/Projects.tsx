@@ -3,7 +3,7 @@ import ProjectCard from "@/components/ProjectCard";
 import SectionHeading from "@/components/SectionHeading";
 import { useState } from "react";
 
-import { Box, Flex, Grid } from "@chakra-ui/react";
+import { Box, Center, Flex, Grid } from "@chakra-ui/react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -41,6 +41,7 @@ const Projects = () => {
     <Flex
       ref={ref}
       id="projects"
+      position={"relative"}
       flexDirection={"column"}
       alignItems={"center"}
       w={"100%"}
@@ -48,7 +49,7 @@ const Projects = () => {
         base: "fit-content",
         lg: "125vh",
       }}
-      position={"relative"}
+      my={14}
     >
       <SectionHeading label="Behold My Creations!" />
       <MotionFlex
@@ -59,7 +60,7 @@ const Projects = () => {
         my={6}
         initial={"hidden"}
         whileInView={"visible"}
-        transition={{ staggerChildren: 0.3 }}
+        transition={{ staggerChildren: 0.2 }}
       >
         {["All", "Web", "Game", "Other"].map((item) => (
           <ProjectTag
@@ -71,28 +72,25 @@ const Projects = () => {
         ))}
       </MotionFlex>
 
-      <AnimatePresence>
-        <Grid
-          as={motion.div}
-          layout
-          position={"relative"}
-          templateColumns={{ md: "repeat(2,1fr)", lg: "repeat(3, 1fr)" }}
-          gap={6}
-          w={"80%"}
-        >
-          {projectsData.map(
-            (project) =>
-              (project.tag === tag || tag === "All") && (
-                <ProjectCard
-                  key={project.title}
-                  project={project}
-                  main={main}
-                  setMain={setMain}
-                />
-              ),
-          )}
-        </Grid>
-      </AnimatePresence>
+      <Grid
+        templateColumns={{ md: "repeat(2,1fr)", lg: "repeat(3, 1fr)" }}
+        position={"relative"}
+        gap={10}
+        w={"80%"}
+        h={"100%"}
+      >
+        {projectsData.map(
+          (project) =>
+            (project.tag === tag || tag === "All") && (
+              <ProjectCard
+                key={project.title}
+                project={project}
+                main={main}
+                setMain={setMain}
+              />
+            ),
+        )}
+      </Grid>
     </Flex>
   );
 };

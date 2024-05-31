@@ -1,37 +1,33 @@
 "use client";
 
 import Typewriter from "@/components/Typewriter";
+import { useActiveSectionContext } from "@/context/active-section-context";
+import { useSectionInView } from "@/lib/hooks";
 import {
   Box,
   Center,
   Flex,
   Heading,
   Image,
-  VStack,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useSectionInView } from "@/lib/hooks";
-import { useActiveSectionContext } from "@/context/active-section-context";
 
 // Import Sections
-import Navbar from "@/components/Navbar";
-import Socials from "@/components/Socials";
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
+import Experience from "@/components/sections/Experience";
 import Projects from "@/components/sections/Projects";
-import Footer from "@/components/Footer";
 
 const Page = () => {
   return (
     <Box>
-      <Navbar />
-      <Socials />
       <Home />
       <About />
+      <Experience />
       <Projects />
       <Contact />
-      <Footer />
     </Box>
   );
 };

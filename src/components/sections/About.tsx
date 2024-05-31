@@ -1,5 +1,4 @@
 import SectionHeading from "@/components/SectionHeading";
-import Book from "@/components/Book";
 import { Center, Flex, Image } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useSectionInView } from "@/lib/hooks";
@@ -7,40 +6,18 @@ import { useSectionInView } from "@/lib/hooks";
 const About = () => {
   const { ref } = useSectionInView("About");
   return (
-    <Center ref={ref} mb={10}>
+    <Center ref={ref}>
       <Flex
+        id="about"
         alignItems={"center"}
         height={"100vh"}
-        id="about"
         direction={"column"}
       >
         <SectionHeading label="Learn More!" />
-        <Book />
+        afa
       </Flex>
     </Center>
   );
 };
-const Picture = () => {
-  return (
-    <motion.div
-      initial={"hidden"}
-      whileInView={"visible"}
-      viewport={{ once: true }}
-      transition={{ delay: 0.3 }}
-      variants={{
-        visible: { opacity: 1, scale: 1 },
-        hidden: { opacity: 0, scale: 0 },
-      }}
-    >
-      <Image
-        src="/images/profile.jpg"
-        alt="img"
-        boxSize={{ base: "sm", lg: "md" }}
-        objectFit="cover"
-        rounded={"full"}
-        boxShadow={"2xl"}
-      />
-    </motion.div>
-  );
-};
+
 export default About;
