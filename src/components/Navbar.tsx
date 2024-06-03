@@ -7,12 +7,6 @@ import { useState } from "react";
 
 import { useActiveSectionContext } from "@/context/active-section-context";
 import { links } from "@/lib/data";
-import type { SectionName } from "@/lib/types";
-
-interface NavLinkItem {
-  label: string;
-  link: string;
-}
 
 interface NavLinks {
   name: string;
@@ -20,13 +14,6 @@ interface NavLinks {
   isSelected: boolean;
   onClick: () => void;
 }
-
-const Links: NavLinkItem[] = [
-  { label: "Home", link: "#top" },
-  { label: "About", link: "#about" },
-  { label: "Projects", link: "#projects" },
-  { label: "Contact", link: "#contact" },
-];
 
 const NavLink = ({ name, link, isSelected, onClick }: NavLinks) => {
   return (

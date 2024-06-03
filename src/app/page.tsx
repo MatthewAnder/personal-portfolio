@@ -17,7 +17,6 @@ import { motion } from "framer-motion";
 // Import Sections
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
-import Experience from "@/components/sections/Experience";
 import Projects from "@/components/sections/Projects";
 
 const Page = () => {
@@ -25,7 +24,6 @@ const Page = () => {
     <Box>
       <Home />
       <About />
-      <Experience />
       <Projects />
       <Contact />
     </Box>

@@ -1,22 +1,43 @@
 import SectionHeading from "@/components/SectionHeading";
-import { Center, Flex, Image } from "@chakra-ui/react";
-import { motion } from "framer-motion";
 import { useSectionInView } from "@/lib/hooks";
+import { Box, Center, Flex } from "@chakra-ui/react";
+import Milestones from "../Timeline";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 const About = () => {
   const { ref } = useSectionInView("About");
+  const horizontalContainer = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: horizontalContainer,
+  });
+
+  const x = useTransform(scrollYProgress, [0, 1], ["20%", "-95%"]);
   return (
-    <Center ref={ref}>
-      <Flex
-        id="about"
-        alignItems={"center"}
-        height={"100vh"}
-        direction={"column"}
-      >
-        <SectionHeading label="Learn More!" />
-        afa
-      </Flex>
-    </Center>
+    <Flex
+      id="about"
+      ref={horizontalContainer}
+      alignItems={"center"}
+      justifyContent={"center"}
+      direction={"column"}
+      w={"100%"}
+    >
+      <SectionHeading label="Learn More!" />
+      <Box position={"relative"} w={"100%"} h={"400vh"}>
+        <Flex
+          position={"sticky"}
+          w={"100%"}
+          top={0}
+          h={"100vh"}
+          overflow={"hidden"}
+          alignItems={"center"}
+        >
+          <motion.div style={{ x }}>
+            <Milestones />
+          </motion.div>
+        </Flex>
+      </Box>
+    </Flex>
   );
 };
 

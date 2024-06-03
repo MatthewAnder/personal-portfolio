@@ -40,7 +40,7 @@ const Milestones = () => {
   return (
     <Flex maxWidth="7xl" p={{ base: 2, sm: 10 }}>
       {milestones.map((milestone) => (
-        <Flex key={milestone.id} my="10px" flexDir={"column"}>
+        <Flex key={milestone.id} mt="10px" flexDir={"column"}>
           {/* Desktop view(left card) */}
           {isDesktop && milestone.id % 2 === 0 && (
             <>
@@ -83,37 +83,39 @@ const Card = ({ id, title, description, date }: CardProps) => {
   // For even id show card on left side
   // For odd id show card on right side
   const isEvenId = id % 2 == 0;
-  let borderWidthValue = isEvenId ? "15px 15px 15px 0" : "15px 0 15px 15px";
-  let leftValue = isEvenId ? "-15px" : "unset";
-  let rightValue = isEvenId ? "unset" : "-15px";
+  let borderWidthValue = isEvenId ? "0 15px 15px 15px" : "15px 15px 0 15px";
+  let topValue = isEvenId ? "-15px" : "unset";
+  let botValue = isEvenId ? "unset" : "-15px";
 
   const isMobile = useBreakpointValue({ base: true, md: false });
   if (isMobile) {
-    leftValue = "-15px";
-    rightValue = "unset";
-    borderWidthValue = "15px 15px 15px 0";
+    topValue = "0";
+    botValue = "unset";
+    borderWidthValue = "0 15px 15px 15px";
   }
 
   return (
     <HStack
       p={{ base: 3, sm: 6 }}
-      bg={useColorModeValue("gray.100", "gray.800")}
+      my={5}
+      bg={useColorModeValue("accent.main", "gray.800")}
       spacing={5}
       rounded="lg"
       alignItems="center"
       pos="relative"
       width={"30em"}
-      h={"fit-content"}
+      h={"13em"}
       _before={{
         content: `""`,
         w: "0",
         h: "0",
-        borderColor: `transparent ${useColorModeValue("#edf2f6", "#1a202c")} transparent`,
+        borderColor: `#f5fff7 transparent #f5fff7`,
         borderStyle: "solid",
         borderWidth: borderWidthValue,
         position: "absolute",
-        left: leftValue,
-        right: rightValue,
+        top: topValue,
+        bot: botValue,
+        left: "35px",
         display: "block",
       }}
     >
@@ -176,8 +178,11 @@ const EmptyCard = () => {
     <Box
       flex={{ base: 0, md: 1 }}
       p={{ base: 0, md: 6 }}
-      bg="transparent"
-    ></Box>
+      h={"1000px"}
+      bg="beige"
+    >
+      a
+    </Box>
   );
 };
 
