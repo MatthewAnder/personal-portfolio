@@ -114,7 +114,7 @@ const Card = ({ id, title, description, date }: CardProps) => {
         borderWidth: borderWidthValue,
         position: "absolute",
         top: topValue,
-        bot: botValue,
+        bot: "0px",
         left: "35px",
         display: "block",
       }}
@@ -156,8 +156,6 @@ const LineWithDot = () => {
           pos="absolute"
           top="0"
           left="0"
-          bottom="0"
-          right="0"
           width="100%"
           height="100%"
           backgroundSize="cover"

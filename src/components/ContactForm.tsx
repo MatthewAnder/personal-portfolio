@@ -1,4 +1,3 @@
-import { sendEmail } from "@/actions/sendEmail";
 import {
   Button,
   FormControl,
@@ -8,26 +7,63 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import {
-  ChangeHandler,
-  FieldErrors,
-  RegisterOptions,
-  useForm,
-} from "react-hook-form";
+import { FieldErrors, UseFormRegister, useForm } from "react-hook-form";
+
+interface FormInput {
+  name: string;
+  email: string;
+  message: string;
+}
+
+interface TextInputProps {
+  id: "name" | "email" | "message";
+  label: string;
+  placeholder: string;
+  isTextArea?: boolean;
+  register: UseFormRegister<FormInput>;
+  errors: FieldErrors;
+}
+
+interface LabelProps {
+  children: ReactNode;
+  id: string;
+}
 
 const ContactForm = () => {
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm();
+    reset,
+  } = useForm<FormInput>();
+
+  // function for submitting form
+  const submitForm = async (formData: FormInput) => {
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      if (res.ok) {
+        // do something
+      } else {
+        // show an error
+      }
+    } catch (error) {
+      console.log("Email not working!");
+    }
+
+    reset();
+  };
 
   return (
-    <form
-      action={async (formData: FormData) => {
-        const { data, error } = await sendEmail(formData);
-      }}
-    >
+    <form onSubmit={handleSubmit(submitForm)}>
       <FormControl
         width={{ base: "20em", md: "25em" }}
         mt={{ base: 10, lg: 0 }}
@@ -62,6 +98,7 @@ const ContactForm = () => {
         color={"text.main"}
         fontFamily={"Hind-Regular"}
         isLoading={isSubmitting}
+        disabled={isSubmitting}
         type="submit"
       >
         Submit
@@ -83,10 +120,10 @@ const TextInput = ({
       <Label id={id}>{label}</Label>
       {isTextArea ? (
         <Textarea
-          id="message"
+          id={id}
           variant={"flushed"}
-          placeholder="Shoot me a message!"
-          {...register("message", {
+          placeholder={placeholder}
+          {...register(id, {
             required: "This is required",
           })}
           borderBottom={"2px"}
@@ -98,8 +135,8 @@ const TextInput = ({
         />
       ) : (
         <Input
-          variant={"flushed"}
           id={id}
+          variant={"flushed"}
           placeholder={placeholder}
           {...register(id, {
             required: "This is required",
@@ -116,28 +153,6 @@ const TextInput = ({
     </>
   );
 };
-
-interface TextInputProps {
-  id: string;
-  label: string;
-  placeholder: string;
-  isTextArea?: boolean;
-  register: (
-    name: string,
-    RegisterOptions?: RegisterOptions,
-  ) => {
-    onChange: ChangeHandler;
-    onBlur: ChangeHandler;
-    name: string;
-    ref: any;
-  };
-  errors: FieldErrors;
-}
-
-interface LabelProps {
-  children: ReactNode;
-  id: string;
-}
 
 const Label = ({ children, id }: LabelProps) => {
   return (

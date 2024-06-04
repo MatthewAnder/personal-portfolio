@@ -14,26 +14,28 @@ import {
   Preview,
 } from "@react-email/components";
 
-export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
+const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   name,
   email,
   message,
-}) => (
-  <Html>
-    <Head />
-    <Preview>A Message from Your Personal Portfolio</Preview>
-    <Body style={main}>
-      <Container style={container}>
-        <Heading style={h1}>Message</Heading>
-        <Text>
-          From {name} ({email})
-        </Text>
+}) => {
+  return (
+    <Html>
+      <Head />
+      <Preview>A Message from Your Personal Portfolio</Preview>
+      <Body style={main}>
+        <Container style={container}>
+          <Heading style={h1}>Message</Heading>
+          <Text>
+            From {name} ({email})
+          </Text>
 
-        <code style={code}>{message}</code>
-      </Container>
-    </Body>
-  </Html>
-);
+          <code style={code}>{message}</code>
+        </Container>
+      </Body>
+    </Html>
+  );
+};
 
 const main = {
   backgroundColor: "#ffffff",
@@ -64,3 +66,5 @@ const code = {
   border: "1px solid #eee",
   color: "#333",
 };
+
+export default EmailTemplate;
