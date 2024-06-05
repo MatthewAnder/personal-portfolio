@@ -1,5 +1,7 @@
 import {
+  Box,
   Button,
+  Center,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -126,14 +128,18 @@ const ContactForm = () => {
           errors={errors}
         />
       </FormControl>
+
       <Button
-        mt={4}
-        bg={"primary.main"}
-        color={"text.main"}
-        fontFamily={"Hind-Regular"}
+        type="submit"
+        loadingText={"Submitting"}
         isLoading={isSubmitting}
         disabled={isSubmitting}
-        type="submit"
+        position={"relative"}
+        mt={4}
+        px={8}
+        color={"accent.main"}
+        bg={"secondary.main"}
+        _hover={{ background: "#8aa89c" }}
       >
         Submit
       </Button>
