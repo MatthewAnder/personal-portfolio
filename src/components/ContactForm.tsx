@@ -5,8 +5,12 @@ import {
   FormLabel,
   Input,
   Textarea,
+  ToastId,
+  ToastProviderProps,
+  ToastState,
+  useToast,
 } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { FieldErrors, UseFormRegister, useForm } from "react-hook-form";
 
 interface FormInput {
@@ -24,6 +28,12 @@ interface TextInputProps {
   errors: FieldErrors;
 }
 
+interface ToastProps {
+  title: string;
+  description: string;
+  status: "info" | "warning" | "success" | "error";
+}
+
 interface LabelProps {
   children: ReactNode;
   id: string;
@@ -36,6 +46,18 @@ const ContactForm = () => {
     formState: { errors, isSubmitting },
     reset,
   } = useForm<FormInput>();
+
+  const toast = useToast();
+  const resultToast = ({ title, description, status }: ToastProps) => {
+    return toast({
+      title,
+      description,
+      status,
+      duration: 5000,
+      isClosable: true,
+      position: "bottom",
+    });
+  };
 
   // function for submitting form
   const submitForm = async (formData: FormInput) => {
@@ -51,12 +73,24 @@ const ContactForm = () => {
       });
 
       if (res.ok) {
-        // do something
+        resultToast({
+          title: "Email sent!",
+          description: "Happy to talk to you!",
+          status: "success",
+        });
       } else {
-        // show an error
+        resultToast({
+          title: "Error",
+          description: "Email is not sent!",
+          status: "error",
+        });
       }
     } catch (error) {
-      console.log("Email not working!");
+      resultToast({
+        title: "Something is wrong!",
+        description: "Email is not sent!",
+        status: "error",
+      });
     }
 
     reset();
@@ -124,7 +158,7 @@ const TextInput = ({
           variant={"flushed"}
           placeholder={placeholder}
           {...register(id, {
-            required: "This is required",
+            required: "This is required!",
           })}
           borderBottom={"2px"}
           borderColor={"secondary.main"}
