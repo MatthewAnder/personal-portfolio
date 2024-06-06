@@ -1,37 +1,49 @@
-import React from "react";
 import {
   Box,
-  chakra,
-  Container,
-  Text,
-  HStack,
-  VStack,
+  ChakraProps,
   Flex,
-  useColorModeValue,
+  HStack,
+  Text,
+  VStack,
+  chakra,
   useBreakpointValue,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 const milestones = [
   {
     id: 1,
-    date: "MARCH 30, 2022",
-    title: "Chakra Hackathon",
-    description: `Winner of first ever ChakraUI Hackathon. On sait depuis longtemps que travailler avec du texte lisible et contenant du sens.`,
+    date: "March 30, 2023",
+    title: "First ever hackathon",
+    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
   },
   {
     id: 2,
-    date: "July 30, 2021",
-    title: "Open Source, first contribution",
-    description: `Fixing a typo, to fix a bug, contributing to Open Source and collaborating to improve technology for everyone, Ahmad's world changed again!.`,
+    date: "July 30, 2023",
+    title: "Title",
+    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
   },
   {
     id: 3,
-    date: "July 30, 2018",
-    title: "Freelancing, started working for myself",
-    description:
-      "Ahmad starts his own business consulting for companies as a fullstack developer. Clients include UK Government departments, UK banks, global fintechs and startups.",
+    date: "July 30, 2024",
+    title: "Title",
+    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
+  },
+  {
+    id: 4,
+    date: "July 30, 2024",
+    title: "Title",
+    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
+  },
+  {
+    id: 5,
+    date: "July 30, 2024",
+    title: "Title",
+    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
   },
 ];
+
+const cardSize: ChakraProps = { p: { base: 3, sm: 6 }, my: 5, h: "13em" };
 
 const Milestones = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -40,7 +52,7 @@ const Milestones = () => {
   return (
     <Flex maxWidth="7xl" p={{ base: 2, sm: 10 }}>
       {milestones.map((milestone) => (
-        <Flex key={milestone.id} mt="10px" flexDir={"column"}>
+        <Flex key={milestone.id} mt="10px" mx={5} flexDir={"column"}>
           {/* Desktop view(left card) */}
           {isDesktop && milestone.id % 2 === 0 && (
             <>
@@ -82,50 +94,54 @@ interface CardProps {
 const Card = ({ id, title, description, date }: CardProps) => {
   // For even id show card on left side
   // For odd id show card on right side
-  const isEvenId = id % 2 == 0;
+  const isEvenId = id % 2 === 0;
   let borderWidthValue = isEvenId ? "0 15px 15px 15px" : "15px 15px 0 15px";
   let topValue = isEvenId ? "-15px" : "unset";
   let botValue = isEvenId ? "unset" : "-15px";
 
   const isMobile = useBreakpointValue({ base: true, md: false });
   if (isMobile) {
-    topValue = "0";
+    topValue = "-15px";
     botValue = "unset";
     borderWidthValue = "0 15px 15px 15px";
   }
 
   return (
     <HStack
-      p={{ base: 3, sm: 6 }}
-      my={5}
-      bg={useColorModeValue("accent.main", "gray.800")}
+      {...cardSize}
+      pos="relative"
+      bg={"accent.main"}
       spacing={5}
       rounded="lg"
       alignItems="center"
-      pos="relative"
-      width={"30em"}
-      h={"13em"}
+      width={"25em"}
       _before={{
         content: `""`,
-        w: "0",
-        h: "0",
+        position: "absolute",
         borderColor: `#f5fff7 transparent #f5fff7`,
         borderStyle: "solid",
         borderWidth: borderWidthValue,
-        position: "absolute",
         top: topValue,
-        bot: "0px",
+        bottom: botValue,
         left: "35px",
         display: "block",
       }}
     >
       <Box>
-        <Text fontSize="lg" color={isEvenId ? "teal.400" : "blue.400"}>
+        <Text
+          fontSize="lg"
+          color={isEvenId ? "secondary.main" : "primary.main"}
+        >
           {date}
         </Text>
 
         <VStack spacing={2} mb={3} textAlign="left">
-          <chakra.h1 fontSize="2xl" lineHeight={1.2} fontWeight="bold" w="100%">
+          <chakra.h1
+            fontSize="2xl"
+            lineHeight={1.2}
+            w="100%"
+            fontFamily={"Khand-Bold"}
+          >
             {title}
           </chakra.h1>
           <Text fontSize="md">{description}</Text>
@@ -148,7 +164,7 @@ const LineWithDot = () => {
         left={0}
         width="100vw"
         border="1px solid"
-        borderColor={useColorModeValue("gray.200", "gray.700")}
+        borderColor={"primary.100"}
         top={"50%"}
       ></chakra.span>
       <Box pos="relative" p="10px">
@@ -161,7 +177,7 @@ const LineWithDot = () => {
           backgroundSize="cover"
           backgroundRepeat="no-repeat"
           backgroundPosition="center center"
-          bg={useColorModeValue("gray.600", "gray.200")}
+          bg={"text.main"}
           borderRadius="100px"
           backgroundImage="none"
           opacity={1}
@@ -172,16 +188,7 @@ const LineWithDot = () => {
 };
 
 const EmptyCard = () => {
-  return (
-    <Box
-      flex={{ base: 0, md: 1 }}
-      p={{ base: 0, md: 6 }}
-      h={"1000px"}
-      bg="beige"
-    >
-      a
-    </Box>
-  );
+  return <Box {...cardSize} bg="transparent"></Box>;
 };
 
 export default Milestones;
