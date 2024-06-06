@@ -1,4 +1,4 @@
-import { ProjectData } from "./types";
+import { ProjectData } from "@/lib/types";
 
 export const projectsData: ProjectData[] = [
   {
@@ -74,5 +74,38 @@ export const links = [
   {
     name: "Contact",
     hash: "#contact",
+  },
+] as const;
+
+export const milestones = [
+  {
+    id: 1,
+    date: "September 1, 2023",
+    title: "Start of a New Journey",
+    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
+  },
+  {
+    id: 2,
+    date: "October 1, 2023",
+    title: "Title",
+    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
+  },
+  {
+    id: 3,
+    date: "October 23, 2023",
+    title: "Title",
+    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
+  },
+  {
+    id: 4,
+    date: "November, 2023",
+    title: "Title",
+    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
+  },
+  {
+    id: 5,
+    date: "July 30, 2024",
+    title: "Title",
+    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
   },
 ] as const;

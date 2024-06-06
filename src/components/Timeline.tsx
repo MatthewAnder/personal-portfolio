@@ -7,41 +7,10 @@ import {
   VStack,
   chakra,
   useBreakpointValue,
-  useColorModeValue,
 } from "@chakra-ui/react";
 
-const milestones = [
-  {
-    id: 1,
-    date: "March 30, 2023",
-    title: "First ever hackathon",
-    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
-  },
-  {
-    id: 2,
-    date: "July 30, 2023",
-    title: "Title",
-    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
-  },
-  {
-    id: 3,
-    date: "July 30, 2024",
-    title: "Title",
-    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
-  },
-  {
-    id: 4,
-    date: "July 30, 2024",
-    title: "Title",
-    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
-  },
-  {
-    id: 5,
-    date: "July 30, 2024",
-    title: "Title",
-    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
-  },
-];
+import { milestones } from "@/lib/data";
+import { useRef } from "react";
 
 const cardSize: ChakraProps = { p: { base: 3, sm: 6 }, my: 5, h: "13em" };
 
@@ -99,6 +68,8 @@ const Card = ({ id, title, description, date }: CardProps) => {
   let topValue = isEvenId ? "-15px" : "unset";
   let botValue = isEvenId ? "unset" : "-15px";
 
+  const ref = useRef(null);
+
   const isMobile = useBreakpointValue({ base: true, md: false });
   if (isMobile) {
     topValue = "-15px";
@@ -108,7 +79,7 @@ const Card = ({ id, title, description, date }: CardProps) => {
 
   return (
     <HStack
-      {...cardSize}
+      sx={cardSize}
       pos="relative"
       bg={"accent.main"}
       spacing={5}
@@ -188,7 +159,7 @@ const LineWithDot = () => {
 };
 
 const EmptyCard = () => {
-  return <Box {...cardSize} bg="transparent"></Box>;
+  return <Box sx={cardSize} bg="transparent"></Box>;
 };
 
 export default Milestones;

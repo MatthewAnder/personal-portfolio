@@ -23,6 +23,7 @@ const About = () => {
       w={"100%"}
     >
       <SectionHeading label="Learn More!" />
+      <Box w={"100em"}></Box>
       <Box position={"relative"} w={"100%"} h={"400vh"}>
         <Flex
           position={"sticky"}

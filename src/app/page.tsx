@@ -19,6 +19,9 @@ import { motion } from "framer-motion";
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
 import Projects from "@/components/sections/Projects";
+import Tilt from "@/components/Tilt";
+
+const MotionBox = motion(Box);
 
 const Page = () => {
   return (
@@ -75,9 +78,7 @@ const Title = () => {
           color={"secondary.600"}
           letterSpacing={"3px"}
         >
-          {"MATTHEW HARYANTO".split("").map((child, i) => {
-            return <chakra.span className="hoverText">{child}</chakra.span>;
-          })}
+          {"MATTHEW HARYANTO"}
         </Heading>
         <Typewriter />
 
@@ -95,25 +96,48 @@ const Title = () => {
 
 const Picture = () => {
   return (
-    <motion.div
-      initial={"hidden"}
-      whileInView={"visible"}
-      viewport={{ once: true }}
-      transition={{ delay: 0.3 }}
-      variants={{
-        visible: { opacity: 1, scale: 1 },
-        hidden: { opacity: 0, scale: 0 },
-      }}
-    >
-      <Image
-        src="/images/profile.jpg"
-        alt="img"
-        boxSize={{ base: "sm", lg: "md" }}
-        objectFit="cover"
-        rounded={"full"}
-        boxShadow={"2xl"}
-      />
-    </motion.div>
+    <Tilt>
+      <MotionBox
+        position="relative"
+        transformOrigin={"bottom right"}
+        initial={"hidden"}
+        whileInView={"visible"}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3 }}
+        variants={{
+          visible: { opacity: 1, scale: 1 },
+          hidden: { opacity: 0, scale: 0 },
+        }}
+        style={{
+          transformStyle: "preserve-3d",
+          transform: "translateZ(75px)",
+        }}
+        _before={{
+          content: "''",
+          position: "absolute",
+          top: "1.5em",
+          left: "1.5em",
+          transformOrigin: "center",
+          height: "100%",
+          width: "100%",
+          background: "text.main",
+          borderRadius: "full",
+          transformStyle: "preserve-3d",
+          transform: "translateZ(-50px)",
+        }}
+      >
+        <Image
+          src="/images/profile.jpg"
+          alt="img"
+          position={"relative"}
+          boxSize={{ base: "sm", lg: "md" }}
+          objectFit="cover"
+          rounded={"full"}
+          boxShadow={"2xl"}
+          zIndex={3}
+        />
+      </MotionBox>
+    </Tilt>
   );
 };
 
