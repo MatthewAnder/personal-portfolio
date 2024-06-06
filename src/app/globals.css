@@ -35,3 +35,21 @@ input:-webkit-autofill:focus {
 input[data-autocompleted] {
   background-color: transparent !important;
 }
+
+.hoverText {
+  transition: 0.35s color;
+}
+
+.hoverText:hover {
+  color: #83af97;
+}
+
+/* To the right */
+.hoverText:hover + .hoverText {
+  color: #a2c3b1;
+}
+
+/* To the left */
+.hoverText:has(+ .hoverText:hover) {
+  color: #a2c3b1;
+}

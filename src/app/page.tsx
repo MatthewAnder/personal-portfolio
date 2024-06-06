@@ -11,6 +11,7 @@ import {
   Image,
   Text,
   VStack,
+  chakra,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
@@ -68,13 +69,15 @@ const Title = () => {
     >
       <VStack align={{ base: "center", lg: "end" }} mx={6}>
         <Heading
-          as={"h1"}
+          cursor={"default"}
           fontSize={{ base: "3xl", sm: "4xl" }}
           lineHeight="tall"
           color={"secondary.600"}
           letterSpacing={"3px"}
         >
-          MATTHEW HARYANTO
+          {"MATTHEW HARYANTO".split("").map((child, i) => {
+            return <chakra.span className="hoverText">{child}</chakra.span>;
+          })}
         </Heading>
         <Typewriter />
 
