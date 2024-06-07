@@ -47,7 +47,7 @@ const SectionHeading = ({ label }: SectiongHeading) => {
         ref={headingRef}
         style={{ opacity, x, scale }}
         as={"h1"}
-        fontSize={"4xl"}
+        fontSize={{ base: "3xl", md: "4xl" }}
         color={"text.main"}
       >
         {label}

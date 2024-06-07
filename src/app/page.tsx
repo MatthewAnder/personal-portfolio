@@ -12,6 +12,7 @@ import {
   Text,
   VStack,
   chakra,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
@@ -25,7 +26,7 @@ const MotionBox = motion(Box);
 
 const Page = () => {
   return (
-    <Box>
+    <Box position="relative" w={"100%"}>
       <Home />
       <About />
       <Projects />
@@ -45,6 +46,7 @@ const Home = () => {
       bgGradient={
         "linear(164deg, background.200 0%, primary.main, background.main 50%)"
       }
+      userSelect={"none"}
     >
       <Flex
         flexDir={{ base: "column", lg: "row" }}
@@ -95,6 +97,7 @@ const Title = () => {
 };
 
 const Picture = () => {
+  const isMobile = useBreakpointValue({ base: true, lg: false });
   return (
     <Tilt>
       <MotionBox
@@ -115,15 +118,15 @@ const Picture = () => {
         _before={{
           content: "''",
           position: "absolute",
-          top: "1.5em",
-          left: "1.5em",
+          top: isMobile ? "0px" : "1em",
+          left: isMobile ? "0px" : "1em",
           transformOrigin: "center",
           height: "100%",
           width: "100%",
           background: "text.main",
           borderRadius: "full",
           transformStyle: "preserve-3d",
-          transform: "translateZ(-50px)",
+          transform: "translateZ(-50px) ",
         }}
       >
         <Image

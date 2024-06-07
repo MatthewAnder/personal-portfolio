@@ -70,7 +70,7 @@ const Navbar = () => {
     useActiveSectionContext();
 
   return (
-    <Center>
+    <Center userSelect={"none"}>
       <Flex
         as={motion.div}
         layout

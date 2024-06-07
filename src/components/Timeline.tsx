@@ -11,19 +11,21 @@ import {
 
 import { milestones } from "@/lib/data";
 import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-const cardSize: ChakraProps = { p: { base: 3, sm: 6 }, my: 5, h: "13em" };
+const cardSize: ChakraProps = {
+  px: { base: 3, sm: 6 },
+  my: 5,
+  h: { base: "11em", md: "13em" },
+};
 
 const Milestones = () => {
-  const isMobile = useBreakpointValue({ base: true, md: false });
-  const isDesktop = useBreakpointValue({ base: false, md: true });
-
   return (
-    <Flex maxWidth="7xl" p={{ base: 2, sm: 10 }}>
+    <Flex maxWidth={"7xl"} p={{ base: 7, sm: 10 }}>
       {milestones.map((milestone) => (
-        <Flex key={milestone.id} mt="10px" mx={5} flexDir={"column"}>
-          {/* Desktop view(left card) */}
-          {isDesktop && milestone.id % 2 === 0 && (
+        <Flex key={milestone.id} flexDir={"column"}>
+          {/* Desktop view(bottom card) */}
+          {milestone.id % 2 === 0 && (
             <>
               <EmptyCard />
               <LineWithDot />
@@ -31,16 +33,8 @@ const Milestones = () => {
             </>
           )}
 
-          {/* Mobile view */}
-          {isMobile && (
-            <>
-              <LineWithDot />
-              <Card {...milestone} />
-            </>
-          )}
-
-          {/* Desktop view(right card) */}
-          {isDesktop && milestone.id % 2 !== 0 && (
+          {/* Desktop view(top card) */}
+          {milestone.id % 2 !== 0 && (
             <>
               <Card {...milestone} />
               <LineWithDot />
@@ -61,31 +55,28 @@ interface CardProps {
 }
 
 const Card = ({ id, title, description, date }: CardProps) => {
-  // For even id show card on left side
-  // For odd id show card on right side
+  // For even id show card on bottom side
+  // For odd id show card on top side
   const isEvenId = id % 2 === 0;
   let borderWidthValue = isEvenId ? "0 15px 15px 15px" : "15px 15px 0 15px";
   let topValue = isEvenId ? "-15px" : "unset";
   let botValue = isEvenId ? "unset" : "-15px";
 
-  const ref = useRef(null);
+  const MotionStack = motion(HStack);
+
+  const target = useRef<HTMLDivElement>(null);
 
   const isMobile = useBreakpointValue({ base: true, md: false });
-  if (isMobile) {
-    topValue = "-15px";
-    botValue = "unset";
-    borderWidthValue = "0 15px 15px 15px";
-  }
 
   return (
-    <HStack
+    <MotionStack
       sx={cardSize}
       pos="relative"
       bg={"accent.main"}
-      spacing={5}
+      spacing={isMobile ? 3 : 5}
       rounded="lg"
       alignItems="center"
-      width={"25em"}
+      width={isMobile ? "20em" : "25em"}
       _before={{
         content: `""`,
         position: "absolute",
@@ -95,45 +86,39 @@ const Card = ({ id, title, description, date }: CardProps) => {
         top: topValue,
         bottom: botValue,
         left: "35px",
-        display: "block",
       }}
     >
       <Box>
         <Text
-          fontSize="lg"
+          fontSize={isMobile ? "md" : "lg"}
           color={isEvenId ? "secondary.main" : "primary.main"}
         >
           {date}
         </Text>
 
-        <VStack spacing={2} mb={3} textAlign="left">
+        <VStack spacing={2} mb={isMobile ? 0 : 3} textAlign="left">
           <chakra.h1
-            fontSize="2xl"
-            lineHeight={1.2}
+            fontSize={isMobile ? "xl" : "2xl"}
+            lineHeight={{ md: 1.2 }}
             w="100%"
             fontFamily={"Khand-Bold"}
           >
             {title}
           </chakra.h1>
-          <Text fontSize="md">{description}</Text>
+          <Text fontSize={isMobile ? "sm" : "md"}> {description}</Text>
         </VStack>
       </Box>
-    </HStack>
+    </MotionStack>
   );
 };
 
 const LineWithDot = () => {
   return (
-    <Flex
-      pos="relative"
-      alignItems="center"
-      mr={{ base: "40px", md: "40px" }}
-      ml={{ base: "0", md: "40px" }}
-    >
+    <Flex pos="relative" alignItems="center" mx={"40px"}>
       <chakra.span
         position="absolute"
         left={0}
-        width="100vw"
+        width="150%"
         border="1px solid"
         borderColor={"primary.100"}
         top={"50%"}
@@ -149,7 +134,7 @@ const LineWithDot = () => {
           backgroundRepeat="no-repeat"
           backgroundPosition="center center"
           bg={"text.main"}
-          borderRadius="100px"
+          borderRadius="full"
           backgroundImage="none"
           opacity={1}
         ></Box>

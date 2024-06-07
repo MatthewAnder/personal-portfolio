@@ -12,7 +12,7 @@ const About = () => {
     target: horizontalContainer,
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["20%", "-95%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["20%", "-100%"]);
   return (
     <Flex
       id="about"
@@ -23,15 +23,15 @@ const About = () => {
       w={"100%"}
     >
       <SectionHeading label="Learn More!" />
-      <Box w={"100em"}></Box>
-      <Box position={"relative"} w={"100%"} h={"400vh"}>
+      <Box h={"10vh"}>alo</Box>
+      <Box position={"relative"} w={"100%"} h={"500vh"}>
         <Flex
           position={"sticky"}
           w={"100%"}
           top={0}
           h={"100vh"}
-          overflow={"hidden"}
           alignItems={"center"}
+          overflowX={"hidden"}
         >
           <motion.div style={{ x }}>
             <Milestones />

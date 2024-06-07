@@ -75,8 +75,8 @@ const Projects = () => {
       <Grid
         templateColumns={{ md: "repeat(2,1fr)", lg: "repeat(3, 1fr)" }}
         position={"relative"}
-        gap={10}
-        w={"80%"}
+        gridRowGap={{ base: 2, md: 8 }}
+        gridColumnGap={{ md: 10 }}
         h={"100%"}
       >
         {projectsData.map(
