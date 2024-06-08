@@ -1,11 +1,9 @@
 import { ProjectData } from "@/lib/types";
 import {
   Box,
-  ChakraProps,
   Flex,
   GridItem,
   Heading,
-  Icon,
   Image,
   Text,
   Tooltip,
@@ -14,8 +12,6 @@ import { motion } from "framer-motion";
 
 interface ProjectCard {
   project: ProjectData;
-  main: ProjectData | null;
-  setMain: (args: ProjectData | null) => void;
 }
 
 interface CustomIcon {
@@ -37,52 +33,32 @@ const cardVariants = {
 const MotionGridItem = motion(GridItem);
 const MotionBox = motion(Box);
 
-const baseStyles: ChakraProps = {
-  position: "relative",
-  top: 0,
-  left: 0,
-  zIndex: 1,
-  h: { base: "22em", sm: "28em", md: "22em" },
-  w: { base: "22em", sm: "28em", md: "23em" },
-};
-
-const selectedStyles: ChakraProps = {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  zIndex: 20,
-  h: { base: "22em", sm: "28em", md: "30em" },
-  w: { base: "22em", sm: "28em", md: "30em" },
-};
-
-const ProjectCard = ({ project, main, setMain }: ProjectCard) => {
-  const isSelected: boolean = main === project;
-  const selectedStyle: ChakraProps = isSelected ? selectedStyles : baseStyles;
-
+const ProjectCard = ({ project }: ProjectCard) => {
   return (
     <MotionGridItem
       layout
       layoutId={project}
-      onClick={isSelected ? () => setMain(null) : () => setMain(project)}
       cursor={"pointer"}
       variants={cardVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      {...selectedStyle}
+      position={"relative"}
+      zIndex={1}
+      h={{ base: "22em", sm: "28em", md: "22em" }}
+      w={{ base: "22em", sm: "28em", md: "23em" }}
     >
       <MotionBox color={"text.main"} bg={"accent.main"} rounded={"md"}>
         <Image
           roundedTop={"md"}
           h={{ base: 52, md: 60 }}
           w={"100%"}
-          pos={"relative"}
-          overflow={"hidden"}
           src={project.image}
           alt={project.title}
           color={"white"}
           objectFit={"cover"}
-        ></Image>
+          overflow={"hidden"}
+        />
 
         <MotionBox px={6} py={3}>
           <Heading fontSize={"xl"}>{project.title}</Heading>
@@ -98,6 +74,10 @@ const ProjectCard = ({ project, main, setMain }: ProjectCard) => {
       </MotionBox>
     </MotionGridItem>
   );
+};
+
+const SelectedModal = () => {
+  return;
 };
 
 const CustomIcon = ({ src }: CustomIcon) => {

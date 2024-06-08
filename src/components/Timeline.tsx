@@ -5,6 +5,7 @@ import {
   HStack,
   Text,
   VStack,
+  Image,
   chakra,
   useBreakpointValue,
 } from "@chakra-ui/react";
@@ -22,6 +23,7 @@ const cardSize: ChakraProps = {
 const Milestones = () => {
   return (
     <Flex maxWidth={"7xl"} p={{ base: 7, sm: 10 }}>
+      <CustomArrow />
       {milestones.map((milestone) => (
         <Flex key={milestone.id} flexDir={"column"}>
           {/* Desktop view(bottom card) */}
@@ -77,6 +79,7 @@ const Card = ({ id, title, description, date }: CardProps) => {
       rounded="lg"
       alignItems="center"
       width={isMobile ? "20em" : "25em"}
+      boxShadow={"rgba(0, 0, 0, 0.1) 0px 1px 2px 0px"}
       _before={{
         content: `""`,
         position: "absolute",
@@ -145,6 +148,30 @@ const LineWithDot = () => {
 
 const EmptyCard = () => {
   return <Box sx={cardSize} bg="transparent"></Box>;
+};
+
+const CustomArrow = () => {
+  return (
+    <HStack
+      position={"absolute"}
+      top={0}
+      left={0}
+      zIndex={5}
+      userSelect={"none"}
+    >
+      <Image src="images/arrow.svg" boxSize={"4.5em"} color={"text.main"} />
+      <Text
+        position={"absolute"}
+        top={"-20%"}
+        right={"-190%"}
+        fontSize={"md"}
+        fontWeight={"bold"}
+        width={"8.5em"}
+      >
+        Once upon a time...
+      </Text>
+    </HStack>
+  );
 };
 
 export default Milestones;

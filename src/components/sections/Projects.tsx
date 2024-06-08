@@ -29,12 +29,9 @@ const Projects = () => {
 
   // tag refers to the category of the card
   const [tag, setTag] = useState("All");
-  // main refers to the card that is big
-  const [main, setMain] = useState<ProjectData | null>(null);
 
   const handleTagChange = (newTag: string) => {
     setTag(newTag);
-    setMain(null);
   };
 
   return (
@@ -82,12 +79,7 @@ const Projects = () => {
         {projectsData.map(
           (project) =>
             (project.tag === tag || tag === "All") && (
-              <ProjectCard
-                key={project.title}
-                project={project}
-                main={main}
-                setMain={setMain}
-              />
+              <ProjectCard key={project.title} project={project} />
             ),
         )}
       </Grid>
