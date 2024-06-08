@@ -159,7 +159,12 @@ const CustomArrow = () => {
       zIndex={5}
       userSelect={"none"}
     >
-      <Image src="images/arrow.svg" boxSize={"4.5em"} color={"text.main"} />
+      <Image
+        src="images/arrow.svg"
+        alt="arrow"
+        boxSize={"4.5em"}
+        color={"text.main"}
+      />
       <Text
         position={"absolute"}
         top={"-20%"}

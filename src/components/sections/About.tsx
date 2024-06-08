@@ -48,22 +48,10 @@ const About = () => {
       >
         <Stickman />
         <Content />
-        <Balls src="images/football.svg" topValue={"0"} leftValue={"2em"} />
-        <Balls
-          src="images/basketball.svg"
-          topValue={"2em"}
-          leftValue={"0.5em"}
-        />
       </Stack>
-      <Box
-        position={"relative"}
-        w={"100%"}
-        h={"500vh"}
-        ref={horizontalContainer}
-      >
+      <Box w={"100%"} h={"500vh"} ref={horizontalContainer}>
         <Flex
           position={"sticky"}
-          w={"100%"}
           top={0}
           h={"100vh"}
           alignItems={"center"}
@@ -82,6 +70,7 @@ const Stickman = () => {
   return (
     <Image
       src="images/person.svg"
+      alt="stickman"
       boxSize={{ base: "20em", md: "sm" }}
       objectFit={"cover"}
       background={"primary.50"}
@@ -95,9 +84,11 @@ const Stickman = () => {
 
 const Content = () => {
   return (
-    <VStack alignItems={"start"} w={{ base: "20em", md: "25em" }}>
+    <VStack alignItems={"start"} w={{ base: "20em", sm: "23em", md: "25em" }}>
       <Reveal>
-        <Heading fontSize={{ base: "4xl", md: "6xl" }}>I'M MATTHEW</Heading>
+        <Heading fontSize={{ base: "4xl", md: "6xl" }}>
+          {"I'M MATTHEW!"}
+        </Heading>
       </Reveal>
       <Text as="b">Based in Vancouver, Canada</Text>
       <Text as="i">
@@ -117,21 +108,21 @@ const Content = () => {
   );
 };
 
-const Balls = ({ src, topValue, leftValue }: Balls) => {
-  return (
-    <Box position={"absolute"} top={topValue} left={leftValue}>
-      <Image src={src} boxSize={"4em"} alt={src} />
-    </Box>
-  );
-};
-
 const HashTags = () => {
   return (
-    <Flex alignItems={"start"} gap={4}>
+    <Flex
+      alignItems={"start"}
+      gap={{ base: 4, md: 6 }}
+      flexWrap={{ base: "wrap", md: "nowrap" }}
+    >
       {["#ambitious", "#idrewthestickman", "#chocolateicecream4lyfe"].map(
         (tag: string) => {
           return (
-            <Text key={tag} color={"primary.main"}>
+            <Text
+              key={tag}
+              color={"primary.main"}
+              lineHeight={{ base: 0.6, md: 1 }}
+            >
               {tag}
             </Text>
           );
