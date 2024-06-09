@@ -88,24 +88,24 @@ export const milestones = [
     id: 2,
     date: "October 1, 2023",
     title: "Game Development Club",
-    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
+    description: `I joined this club to have a fun and educational experience, allowing me to work on a 2D platformer where the player must run away from a dragon.`,
   },
   {
     id: 3,
     date: "October 23, 2023",
     title: "Hackcamp: Beginner's Day",
-    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
+    description: `This was my first hackathon and my first with React. It was a fun 6 hours long experience, working with my peers on a Budget Planner`,
   },
   {
     id: 4,
     date: "January 24, 2024",
     title: "NWHacks: 24 Hours of Sitting Down",
-    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
+    description: `My second hackathon has arrived and it was winter. The coldness from outside made me sit down for 24 hours inside and made a web application called Pickup Your Game.`,
   },
   {
     id: 5,
     date: "June 6, 2024",
     title: "UBC Orbit: Frontend Developer",
-    description: `Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.`,
+    description: `Just like the title, I got in as a developer! I am truly excited for this position and to write beautiful lines of codes.`,
   },
 ] as const;
