@@ -20,6 +20,8 @@ interface Balls {
   leftValue: number | string;
 }
 
+const MotionBox = motion(Box);
+
 const About = () => {
   const { ref } = useSectionInView("About", 0.5);
   const horizontalContainer = useRef<HTMLDivElement>(null);
@@ -36,6 +38,7 @@ const About = () => {
       justifyContent={"center"}
       direction={"column"}
       w={"100%"}
+      mb={36}
     >
       <SectionHeading label="Learn More!" />
       {/* About description section */}
@@ -140,35 +143,61 @@ const HashTags = () => {
 
 const FoodSection = () => {
   return (
-    <Box w={"100%"} h={"200vh"}>
+    <Box w={"100%"} h={"fit-content"} overflow={"visible"}>
       <Flex
-        direction={"row"}
+        direction={{ base: "column", md: "row" }}
         w={"100%"}
-        justifyContent={"space-evenly"}
-        position={"sticky"}
-        top={"25%"}
+        alignItems={{ base: "center", md: "unset" }}
+        justifyContent={{ base: "center", md: "space-evenly" }}
       >
-        <Heading fontSize={"6xl"}>I LOVE COOKING TOO!</Heading>
-        <Flex direction={"column"}>
-          <FoodCard path="images/oyakodon.svg" />
-          <FoodCard path="images/fried-rice.svg" />
+        <Heading
+          fontSize={{ base: "5xl", lg: "6xl" }}
+          h={"fit-content"}
+          color={"text.main"}
+          position={"sticky"}
+          top={120}
+        >
+          I LOVE COOKING TOO!
+        </Heading>
+        <Flex direction={"column"} h={"fit-content"}>
+          <FoodCard path="images/oyakodon.svg" rotate="0deg" />
+          <FoodCard path="images/fried-rice.svg" rotate="16deg" />
+          <FoodCard path="images/noodle.svg" rotate="-16deg" />
         </Flex>
       </Flex>
     </Box>
   );
 };
 
-const FoodCard = ({ path }: { path: string }) => {
+interface FoodCard {
+  path: string;
+  rotate: string;
+}
+
+const FoodCard = ({ path, rotate }: FoodCard) => {
+  const { scrollYProgress } = useScroll();
+  const rotateTransform = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0deg", rotate],
+  );
   return (
-    <Box
+    <MotionBox
       width="fit-content"
       borderRadius="16px"
       overflow="hidden"
       position={"sticky"}
-      top={0}
+      top={{ base: 240, md: 120 }}
+      style={{ rotate: rotateTransform }}
     >
-      <Image src={path} alt="food" boxSize="md" objectFit="cover" />
-    </Box>
+      <Image
+        src={path}
+        alt="food"
+        boxSize={{ base: "xs", sm: "sm", lg: "lg" }}
+        objectFit="cover"
+        rotate={rotate}
+      />
+    </MotionBox>
   );
 };
 export default About;
