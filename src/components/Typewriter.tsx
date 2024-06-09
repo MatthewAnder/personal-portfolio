@@ -18,7 +18,7 @@ const MotionHeading = motion(Heading);
 
 const Typewriter = () => {
   const textIndex = useMotionValue(0);
-  const texts = ["Frontend", "Backend", "Game", "Cybersecurity?"];
+  const texts = ["Frontend", "Backend", "Game", "Cybersecurity"];
 
   const baseText = useTransform(textIndex, (latest) => texts[latest] || "");
   const count = useMotionValue(0);
@@ -54,9 +54,8 @@ const Typewriter = () => {
 
   return (
     <MotionHeading
-      fontSize={{ base: "4xl", lg: "6xl" }}
       color={"text.main"}
-      height={20}
+      fontSize={{ base: "3xl", lg: "5xl" }}
       textAlign={{ base: "center", lg: "end" }}
     >
       {displayText}

@@ -38,10 +38,11 @@ const About = () => {
       w={"100%"}
     >
       <SectionHeading label="Learn More!" />
+      {/* About description section */}
       <Stack
         position={"relative"}
         h={"fit-content"}
-        mt={5}
+        my={10}
         spacing={10}
         direction={{ base: "column", md: "row" }}
         alignItems={"center"}
@@ -49,6 +50,8 @@ const About = () => {
         <Stickman />
         <Content />
       </Stack>
+
+      {/* Horizontal Scroll */}
       <Box w={"100%"} h={"500vh"} ref={horizontalContainer}>
         <Flex
           position={"sticky"}
@@ -62,6 +65,9 @@ const About = () => {
           </motion.div>
         </Flex>
       </Box>
+
+      {/* Food Section */}
+      <FoodSection />
     </Flex>
   );
 };
@@ -73,7 +79,7 @@ const Stickman = () => {
       alt="stickman"
       boxSize={{ base: "20em", md: "sm" }}
       objectFit={"cover"}
-      background={"primary.50"}
+      background={"accent.main"}
       rounded={"full"}
       boxShadow={
         " rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(239, 245, 242, 0.5) -3px -3px 6px 1px inset"
@@ -129,6 +135,40 @@ const HashTags = () => {
         },
       )}
     </Flex>
+  );
+};
+
+const FoodSection = () => {
+  return (
+    <Box w={"100%"} h={"200vh"}>
+      <Flex
+        direction={"row"}
+        w={"100%"}
+        justifyContent={"space-evenly"}
+        position={"sticky"}
+        top={"25%"}
+      >
+        <Heading fontSize={"6xl"}>I LOVE COOKING TOO!</Heading>
+        <Flex direction={"column"}>
+          <FoodCard path="images/oyakodon.svg" />
+          <FoodCard path="images/fried-rice.svg" />
+        </Flex>
+      </Flex>
+    </Box>
+  );
+};
+
+const FoodCard = ({ path }: { path: string }) => {
+  return (
+    <Box
+      width="fit-content"
+      borderRadius="16px"
+      overflow="hidden"
+      position={"sticky"}
+      top={0}
+    >
+      <Image src={path} alt="food" boxSize="md" objectFit="cover" />
+    </Box>
   );
 };
 export default About;

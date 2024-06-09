@@ -3,26 +3,29 @@
 import Typewriter from "@/components/Typewriter";
 import { useActiveSectionContext } from "@/context/active-section-context";
 import { useSectionInView } from "@/lib/hooks";
+import { DownloadIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Center,
+  Button,
   Flex,
+  HStack,
   Heading,
   Image,
   Text,
   VStack,
-  chakra,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 // Import Sections
+import Tilt from "@/components/Tilt";
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
 import Projects from "@/components/sections/Projects";
-import Tilt from "@/components/Tilt";
 
 const MotionBox = motion(Box);
+const MotionFlex = motion(Flex);
+const MotionVStack = motion(VStack);
 
 const Page = () => {
   return (
@@ -40,59 +43,61 @@ const Home = () => {
   const { setActiveSection, setTimeOfLastClick } = useActiveSectionContext();
 
   return (
-    <Center
+    <MotionFlex
       ref={ref}
+      initial={"hidden"}
+      whileInView={"visible"}
+      viewport={{ once: true }}
+      flexDir={{ base: "column", lg: "row" }}
+      alignItems={"center"}
+      justifyContent={"center"}
+      gap={10}
+      height={"100vh"}
+      w={"100%"}
       pt={{ base: 28, lg: 0 }}
       bgGradient={
         "linear(164deg, background.200 0%, primary.main, background.main 50%)"
       }
       userSelect={"none"}
     >
-      <Flex
-        flexDir={{ base: "column", lg: "row" }}
-        alignItems={"center"}
-        gap={5}
-        height={"100vh"}
-      >
-        <Title />
-        <Picture />
-      </Flex>
-    </Center>
+      <Title />
+      <Picture />
+    </MotionFlex>
   );
 };
 
 const Title = () => {
   return (
-    <motion.div
-      initial={"hidden"}
-      whileInView={"visible"}
-      viewport={{ once: true }}
+    <MotionVStack
       variants={{
         visible: { opacity: 1, y: 0 },
         hidden: { opacity: 0, y: 100 },
       }}
+      align={{ base: "center", lg: "start" }}
+      mx={6}
     >
-      <VStack align={{ base: "center", lg: "end" }} mx={6}>
-        <Heading
-          cursor={"default"}
-          fontSize={{ base: "3xl", sm: "4xl" }}
-          lineHeight="tall"
-          color={"secondary.600"}
-          letterSpacing={"3px"}
-        >
-          {"MATTHEW HARYANTO"}
-        </Heading>
+      <Heading
+        cursor={"default"}
+        fontSize={{ base: "4xl", sm: "6xl" }}
+        lineHeight="tall"
+        color={"secondary.600"}
+      >
+        {"Matthew Haryanto"}
+      </Heading>
+      <HStack alignItems={"center"}>
+        <Heading fontSize={{ base: "3xl", lg: "5xl" }}>is a</Heading>
         <Typewriter />
-
-        <Text
-          fontSize={{ base: "xl", lg: "3xl" }}
-          lineHeight="tall"
-          color={"primary.400"}
-        >
-          {"<!--- Developer --->"}
-        </Text>
-      </VStack>
-    </motion.div>
+      </HStack>
+      <Text
+        fontSize={{ base: "xl", lg: "3xl" }}
+        color={"primary.400"}
+        fontWeight={"bold"}
+      >
+        {"Developer!"}
+      </Text>
+      <br />
+      <DownloadBtn />
+    </MotionVStack>
   );
 };
 
@@ -103,9 +108,6 @@ const Picture = () => {
       <MotionBox
         position="relative"
         transformOrigin={"bottom right"}
-        initial={"hidden"}
-        whileInView={"visible"}
-        viewport={{ once: true }}
         transition={{ delay: 0.3 }}
         variants={{
           visible: { opacity: 1, scale: 1 },
@@ -141,6 +143,51 @@ const Picture = () => {
         />
       </MotionBox>
     </Tilt>
+  );
+};
+
+const DownloadBtn = () => {
+  return (
+    <Button
+      as="a"
+      href="/resume.pdf"
+      target="_blank"
+      size={"lg"}
+      position={"relative"}
+      bg="text.main"
+      border="solid transparent"
+      borderRadius="16px"
+      borderWidth={"0 0 4px"}
+      color="accent.main"
+      cursor="pointer"
+      transform="translateZ(0)"
+      transition="filter .2s"
+      userSelect="none"
+      _after={{
+        content: '""',
+        bgClip: "padding-box",
+        backgroundColor: "secondary.main",
+        border: "solid transparent",
+        borderRadius: "16px",
+        borderWidth: "0 0 4px",
+        bottom: "-4px",
+        left: "0",
+        position: "absolute",
+        right: "0",
+        top: "0",
+        zIndex: "-1",
+      }}
+      _hover={{
+        filter: "brightness(1.2)",
+      }}
+      _active={{
+        borderWidth: "4px 0 0",
+        background: "none",
+      }}
+      rightIcon={<DownloadIcon />}
+    >
+      My Resume
+    </Button>
   );
 };
 
