@@ -78,7 +78,7 @@ const About = () => {
 const Stickman = () => {
   return (
     <Image
-      src="images/person.svg"
+      src="/images/person.svg"
       alt="stickman"
       boxSize={{ base: "20em", md: "sm" }}
       objectFit={"cover"}
@@ -160,9 +160,9 @@ const FoodSection = () => {
           I LOVE COOKING TOO!
         </Heading>
         <Flex direction={"column"} h={"fit-content"}>
-          <FoodCard path="images/oyakodon.svg" rotate="0deg" />
-          <FoodCard path="images/fried-rice.svg" rotate="16deg" />
-          <FoodCard path="images/noodle.svg" rotate="-16deg" />
+          <FoodCard path="/images/oyakodon.svg" rotate="0deg" />
+          <FoodCard path="/images/fried-rice.svg" rotate="16deg" />
+          <FoodCard path="/images/noodle.svg" rotate="-16deg" />
         </Flex>
       </Flex>
     </Box>

@@ -160,7 +160,7 @@ const CustomArrow = () => {
       userSelect={"none"}
     >
       <Image
-        src="images/arrow.svg"
+        src="/images/arrow.svg"
         alt="arrow"
         boxSize={"4.5em"}
         color={"text.main"}
