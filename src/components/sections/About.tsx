@@ -23,7 +23,7 @@ interface Balls {
 const MotionBox = motion(Box);
 
 const About = () => {
-  const { ref } = useSectionInView("About", 0.5);
+  const { ref } = useSectionInView("About", 0.1);
   const horizontalContainer = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: horizontalContainer,
@@ -38,6 +38,7 @@ const About = () => {
       justifyContent={"center"}
       direction={"column"}
       w={"100%"}
+      h={"fit-content"}
       mb={36}
     >
       <SectionHeading label="Learn More!" />
