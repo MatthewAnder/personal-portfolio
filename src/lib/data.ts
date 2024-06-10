@@ -5,7 +5,7 @@ export const projectsData: ProjectData[] = [
     id: 1,
     title: "Carture",
     description: "Car adventure game with dynamic handcrafted environments.",
-    image: "/images/placeholder.svg",
+    image: "/images/carture.svg",
     tag: "Game",
     tools: ["unity.svg", "csharp.svg", "blender.svg"],
   },
@@ -14,7 +14,7 @@ export const projectsData: ProjectData[] = [
     title: "Budget Planner",
     description:
       "Budget planner to help you plan your way into university life.",
-    image: "/images/placeholder.svg",
+    image: "/images/budget.svg",
     tag: "Web",
     tools: ["react.svg", "javascript.svg", "chakra.svg", "java.svg"],
   },
@@ -23,7 +23,7 @@ export const projectsData: ProjectData[] = [
     title: "To-do List Application",
     description:
       "To-do list application with authentication that ensures data privacy.",
-    image: "/images/placeholder.svg",
+    image: "/images/todo.svg",
     tag: "Web",
     tools: ["svelte.svg", "typescript.svg", "tailwind.svg", "supabase.svg"],
   },
@@ -31,16 +31,16 @@ export const projectsData: ProjectData[] = [
     id: 4,
     title: "PickUp Your Game",
     description: "Your way to find a pickup game to play your favorite sports.",
-    image: "/images/placeholder.svg",
+    image: "/images/pickup.svg",
     tag: "Web",
     tools: ["react.svg", "javascript.svg", "chakra.svg"],
   },
   {
     id: 5,
-    title: "Box War",
+    title: "Box Invasion",
     description:
       "Fight endless rounds of evil boxes with spears and watch them explode!",
-    image: "/images/placeholder.svg",
+    image: "/images/box.svg",
     tag: "Game",
     tools: ["unity.svg", "csharp.svg", "blender.svg"],
   },
@@ -50,7 +50,7 @@ export const projectsData: ProjectData[] = [
     description: "Progress ...",
     image: "/images/placeholder.svg",
     tag: "Other",
-    tools: [],
+    tools: ["next.svg"],
   },
 ] as const;
 
@@ -86,13 +86,13 @@ export const milestones = [
   },
   {
     id: 2,
-    date: "October 1, 2023",
+    date: "October 4, 2023 - Present",
     title: "Game Development Club",
     description: `I joined this club to have a fun and educational experience, allowing me to work on a 2D platformer where the player must run away from a dragon.`,
   },
   {
     id: 3,
-    date: "October 23, 2023",
+    date: "November 23, 2023",
     title: "Hackcamp: Beginner's Day",
     description: `This was my first hackathon and my first with React. It was a fun 6 hours long experience, working with my peers on a Budget Planner`,
   },
@@ -104,7 +104,7 @@ export const milestones = [
   },
   {
     id: 5,
-    date: "June 6, 2024",
+    date: "June 6, 2024 - Present",
     title: "UBC Orbit: Frontend Developer",
     description: `Just like the title, I got in as a developer! I am truly excited for this position and to write beautiful lines of codes.`,
   },
