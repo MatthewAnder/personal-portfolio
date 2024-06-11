@@ -3,16 +3,16 @@ import {
   ChakraProps,
   Flex,
   HStack,
+  Image,
   Text,
   VStack,
-  Image,
   chakra,
   useBreakpointValue,
 } from "@chakra-ui/react";
 
 import { milestones } from "@/lib/data";
+import { motion } from "framer-motion";
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
 
 const cardSize: ChakraProps = {
   px: { base: 3, sm: 6 },
