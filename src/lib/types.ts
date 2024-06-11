@@ -7,7 +7,11 @@ export interface ProjectData {
   id: number;
   title: string;
   description: string;
+  feature: string;
+  lessons: string;
   image: string;
   tag: string;
   tools: string[];
+  github: string;
+  demo: string;
 }
