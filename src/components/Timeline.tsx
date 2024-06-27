@@ -3,6 +3,7 @@ import {
   ChakraProps,
   Flex,
   HStack,
+  Heading,
   Image,
   Text,
   VStack,
@@ -100,14 +101,13 @@ const Card = ({ id, title, description, date }: CardProps) => {
         </Text>
 
         <VStack spacing={2} mb={isMobile ? 0 : 3} textAlign="left">
-          <chakra.h1
+          <Heading
             fontSize={isMobile ? "xl" : "2xl"}
             lineHeight={{ md: 1.2 }}
             w="100%"
-            fontFamily={"Khand-Bold"}
           >
             {title}
-          </chakra.h1>
+          </Heading>
           <Text fontSize={isMobile ? "sm" : "md"}> {description}</Text>
         </VStack>
       </Box>
