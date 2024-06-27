@@ -7,8 +7,7 @@ import { ReactElement } from "react";
 import {
   FaGithub,
   FaInstagram,
-  FaLinkedinIn,
-  FaRegEnvelope,
+  FaLinkedinIn
 } from "react-icons/fa6";
 
 interface SocialItems {

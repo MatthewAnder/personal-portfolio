@@ -13,7 +13,6 @@ import {
 
 import { milestones } from "@/lib/data";
 import { motion } from "framer-motion";
-import { useRef } from "react";
 
 const cardSize: ChakraProps = {
   px: { base: 3, sm: 6 },
@@ -66,8 +65,6 @@ const Card = ({ id, title, description, date }: CardProps) => {
   let botValue = isEvenId ? "unset" : "-15px";
 
   const MotionStack = motion(HStack);
-
-  const target = useRef<HTMLDivElement>(null);
 
   const isMobile = useBreakpointValue({ base: true, md: false });
 
