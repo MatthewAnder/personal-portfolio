@@ -4,7 +4,6 @@ import {
   Flex,
   GridItem,
   Heading,
-  Icon,
   Image,
   Link,
   Modal,
@@ -15,7 +14,7 @@ import {
   ModalOverlay,
   Text,
   Tooltip,
-  useDisclosure,
+  useDisclosure
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 

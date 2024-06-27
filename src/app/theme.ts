@@ -1,5 +1,16 @@
 import { extendTheme } from "@chakra-ui/react";
 
+import { Hind, Khand } from "next/font/google";
+
+const headingFont = Khand({
+  subsets: ["latin"],
+  weight: "700",
+});
+const bodyFont = Hind({
+  subsets: ["latin"],
+  weight: "400",
+});
+
 export const theme = extendTheme({
   Link: {
     baseStyle: {
@@ -27,8 +38,8 @@ export const theme = extendTheme({
   },
 
   fonts: {
-    heading: `'Khand-Bold', sans-serif`,
-    body: `'Hind-Regular', sans-serif`,
+    heading: headingFont.style.fontFamily,
+    body: bodyFont.style.fontFamily,
   },
 
   colors: {

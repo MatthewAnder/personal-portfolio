@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { Heading } from "@chakra-ui/react";
 import {
-  MotionValue,
   animate,
   motion,
   useMotionValue,
-  useTransform,
+  useTransform
 } from "framer-motion";
-import { Box, Heading } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 interface HomePage {
   label: string;

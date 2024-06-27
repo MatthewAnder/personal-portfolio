@@ -3,13 +3,12 @@ import ProjectCard from "@/components/ProjectCard";
 import SectionHeading from "@/components/SectionHeading";
 import { useState } from "react";
 
-import { Box, Center, Flex, Grid } from "@chakra-ui/react";
+import { Box, Flex, Grid } from "@chakra-ui/react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
 import { projectsData } from "@/lib/data";
 import { useSectionInView } from "@/lib/hooks";
-import { ProjectData } from "@/lib/types";
 
 interface ProjectTag {
   name: string;
