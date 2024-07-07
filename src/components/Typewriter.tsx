@@ -1,12 +1,7 @@
 "use client";
 
 import { Heading } from "@chakra-ui/react";
-import {
-  animate,
-  motion,
-  useMotionValue,
-  useTransform
-} from "framer-motion";
+import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import { useEffect } from "react";
 
 interface HomePage {
@@ -17,7 +12,7 @@ const MotionHeading = motion(Heading);
 
 const Typewriter = () => {
   const textIndex = useMotionValue(0);
-  const texts = ["Frontend", "Backend", "Game", "Cybersecurity"];
+  const texts = ["Frontend", "Backend", "Game", "Graphics"];
 
   const baseText = useTransform(textIndex, (latest) => texts[latest] || "");
   const count = useMotionValue(0);
@@ -30,7 +25,7 @@ const Typewriter = () => {
   useEffect(() => {
     animate(count, 60, {
       type: "tween",
-      duration: 3,
+      duration: 2,
       ease: "easeIn",
       repeat: Infinity,
       repeatType: "reverse",
