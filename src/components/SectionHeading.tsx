@@ -1,72 +1,72 @@
+"use client";
 import { Box, Heading } from "@chakra-ui/react";
-import { motion, useAnimation, useScroll, useTransform } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
 
-interface SectiongHeading {
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+interface SectionHeadingProps {
   label: string;
 }
 
-const MotionBox = motion(Box);
-const MotionHeading = motion(Heading);
+const SectionHeading = ({ label }: SectionHeadingProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
-const SectionHeading = ({ label }: SectiongHeading) => {
-  const headingRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: headingRef,
-    offset: ["0 1", "1 .7"],
-  });
+  useGSAP(
+    () => {
+      gsap.set(sliderRef.current, { x: "100%", opacity: 0 });
 
-  const scale = useTransform(scrollYProgress, [0, 1], [0.5, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [0.4, 1]);
-  const x = useTransform(scrollYProgress, [0, 1], ["50%", "0%"]);
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: headingRef.current,
+          start: "top 88%",
+          once: true,
+        },
+      });
 
-  const slider = useAnimation();
-
-  useEffect(() => {
-    const unsubscribe = opacity.on("change", (value) => {
-      if (value === 1) {
-        slider.start("visible");
-      } else {
-        slider.start("hidden");
-      }
-    });
-
-    // Clean up the subscription on component unmount
-    return () => unsubscribe();
-  });
+      tl.fromTo(
+        headingRef.current,
+        { scale: 0.7, opacity: 0, x: "40%" },
+        { scale: 1, opacity: 1, x: "0%", duration: 0.8, ease: "expo.out" },
+      ).to(
+        sliderRef.current,
+        { x: 0, opacity: 1, duration: 0.6, ease: "expo.out" },
+        "-=0.3",
+      );
+    },
+    { scope: containerRef },
+  );
 
   return (
     <Box
-      position={"relative"}
-      width={"fit-content"}
-      mt={24}
+      ref={containerRef}
+      position="relative"
+      width="fit-content"
+      mt={{ base: 12, md: 20 }}
       mb={{ base: 2, md: 4 }}
       zIndex={1}
     >
-      <MotionHeading
+      <Heading
         ref={headingRef}
-        style={{ opacity, x, scale }}
-        as={"h1"}
+        as="h1"
         fontSize={{ base: "3xl", md: "4xl" }}
-        color={"text.main"}
+        color="text.main"
       >
         {label}
-      </MotionHeading>
-      <MotionBox
-        variants={{
-          visible: { x: 0, opacity: 1 },
-          hidden: { x: "100%", opacity: 0 },
-        }}
-        initial={"hidden"}
-        animate={slider}
-        transition={{ ease: "easeOut" }}
-        bg={"primary.main"}
+      </Heading>
+      <Box
+        ref={sliderRef}
+        bg="primary.main"
         zIndex={-1}
         bottom={0}
         right={-2}
-        position={"absolute"}
-        width={"100%"}
-        h={"20px"}
+        position="absolute"
+        width="100%"
+        h="20px"
       />
     </Box>
   );

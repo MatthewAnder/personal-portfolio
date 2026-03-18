@@ -1,103 +1,121 @@
 "use client";
 
 import { Box, Center, Flex } from "@chakra-ui/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import NextLink from "next/link";
-import { useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { useActiveSectionContext } from "@/context/active-section-context";
 import { links } from "@/lib/data";
 
-interface NavLinks {
-  name: string;
-  link: string;
-  isSelected: boolean;
-  onClick: () => void;
-}
-
-const NavLink = ({ name, link, isSelected, onClick }: NavLinks) => {
-  return (
-    <AnimatePresence>
-      <Box
-        as={NextLink}
-        key={name}
-        href={link}
-        onClick={onClick}
-        draggable="false"
-        py={3}
-        px={4}
-        height={"100%"}
-        position="relative"
-        fontSize={{ base: "md", sm: "xl" }}
-        color={"accent.main"}
-        transition={".5s ease-in"}
-      >
-        {name}
-
-        {isSelected && (
-          <Box
-            as={motion.span}
-            layoutId="section"
-            position={"absolute"}
-            height={"100%"}
-            width={"100%"}
-            zIndex={-1}
-            inset={0}
-            background={"text.main"}
-            bgGradient={
-              "linear(to-t, rgba(106, 144, 128, 1) 0%, rgba(106, 144, 128, 0) 60%)"
-            }
-            _before={{
-              content: "''",
-              position: "absolute",
-              bottom: "-1px",
-              width: "100%",
-              height: "4px",
-              bg: "secondary.300",
-            }}
-          />
-        )}
-      </Box>
-      )
-    </AnimatePresence>
-  );
-};
+gsap.registerPlugin(useGSAP);
 
 const Navbar = () => {
-  const [section, setSection] = useState("Home");
+  const navRef = useRef<HTMLDivElement>(null);
+  const indicatorRef = useRef<HTMLSpanElement>(null);
+  const linkRefs = useRef<(HTMLElement | null)[]>([]);
 
   const { activeSection, setActiveSection, setTimeOfLastClick } =
     useActiveSectionContext();
 
+  useGSAP(
+    () => {
+      gsap.from(navRef.current, {
+        y: -20,
+        opacity: 0,
+        duration: 0.6,
+        ease: "expo.out",
+      });
+    },
+    { scope: navRef },
+  );
+
+  useEffect(() => {
+    const activeIndex = links.findIndex((l) => l.name === activeSection);
+    const activeLink = linkRefs.current[activeIndex];
+    if (!activeLink || !indicatorRef.current) return;
+
+    gsap.to(indicatorRef.current, {
+      x: activeLink.offsetLeft,
+      width: activeLink.offsetWidth,
+      height: activeLink.offsetHeight,
+      duration: 0.4,
+      ease: "expo.out",
+    });
+  }, [activeSection]);
+
+  const setLinkRef = useCallback(
+    (index: number) => (el: HTMLElement | null) => {
+      linkRefs.current[index] = el;
+    },
+    [],
+  );
+
   return (
-    <Center userSelect={"none"}>
+    <Center userSelect="none">
       <Flex
-        as={motion.div}
-        layout
-        initial="hidden"
-        whileInView={"visible"}
-        viewport={{ once: true }}
-        animate="visible"
-        variants={{ hidden: { y: -100 }, visible: { y: 0 } }}
-        top={8}
-        px={{ base: 2, md: 8 }}
-        rounded={{ base: "md", md: "full" }}
-        boxShadow={"xl"}
+        ref={navRef}
+        top={4}
+        mx={3}
+        px={{ base: 1, md: 4 }}
+        rounded="full"
         zIndex={10}
-        position={"fixed"}
-        bg={"text.main"}
+        position="fixed"
+        alignItems="center"
+        overflow="hidden"
+        style={{
+          background: "rgba(42, 30, 40, 0.72)",
+          backdropFilter: "blur(20px) saturate(160%)",
+          WebkitBackdropFilter: "blur(20px) saturate(160%)",
+          border: "1px solid rgba(150, 187, 167, 0.18)",
+          boxShadow:
+            "0 8px 32px rgba(0,0,0,0.18), 0 1px 0 rgba(150,187,167,0.12) inset",
+        }}
       >
-        {links.map((link) => (
-          <NavLink
+        <Box
+          as="span"
+          ref={indicatorRef}
+          position="absolute"
+          left={0}
+          zIndex={0}
+          bgGradient="linear(to-t, rgba(94, 138, 121, 0.9) 0%, rgba(94, 138, 121, 0) 70%)"
+          _before={{
+            content: "''",
+            position: "absolute",
+            bottom: "0",
+            width: "100%",
+            height: "2px",
+            bg: "primary.300",
+            borderRadius: "full",
+          }}
+          style={{ width: 0, height: 0 }}
+        />
+        {links.map((link, i) => (
+          <Box
             key={link.hash}
-            name={link.name}
-            link={link.hash}
-            isSelected={activeSection === link.name}
+            as={NextLink}
+            href={link.hash}
+            ref={setLinkRef(i)}
             onClick={() => {
               setActiveSection(link.name);
               setTimeOfLastClick(Date.now());
             }}
-          />
+            draggable="false"
+            py={{ base: 2, md: 3 }}
+            px={{ base: 3, sm: 4, md: 5 }}
+            height="100%"
+            position="relative"
+            zIndex={1}
+            fontSize={{ base: "xs", sm: "sm", md: "md" }}
+            fontWeight="600"
+            letterSpacing={{ base: "0.02em", md: "0.06em" }}
+            color="accent.main"
+            transition="color 0.3s ease"
+            _hover={{ color: "primary.200" }}
+          >
+            {link.name}
+          </Box>
         ))}
       </Flex>
     </Center>

@@ -1,8 +1,11 @@
+"use client";
 import { Box } from "@chakra-ui/react";
-import { motion, useAnimation, useInView } from "framer-motion";
-import { ReactNode, useEffect, useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ReactNode, useRef } from "react";
 
-const MotionBox = motion(Box);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 interface RevealProps {
   children: ReactNode;
@@ -11,47 +14,49 @@ interface RevealProps {
 }
 
 const Reveal = ({ children, width, delay = 0.25 }: RevealProps) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: false });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
-  const controls = useAnimation();
-  const slideControls = useAnimation();
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 88%",
+          once: true,
+        },
+      });
 
-  useEffect(() => {
-    if (isInView) {
-      slideControls.start("visible");
-      controls.start("visible");
-    }
-  }, [isInView, controls, slideControls]);
+      tl.fromTo(
+        sliderRef.current,
+        { left: "0%" },
+        { left: "100%", duration: delay * 2, ease: "expo.inOut" },
+        0,
+      );
+
+      tl.fromTo(
+        contentRef.current,
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: delay * 2, ease: "expo.out" },
+        delay * 0.6,
+      );
+    },
+    { scope: containerRef },
+  );
 
   return (
-    <Box ref={ref} width={width} position={"relative"} overflow={"hidden"}>
-      <MotionBox
-        variants={{
-          visible: { y: 0, opacity: 1 },
-          hidden: { y: 75, opacity: 0 },
-        }}
-        initial={"hidden"}
-        animate={controls}
-        transition={{ duration: delay * 2, delay }}
-      >
-        {children}
-      </MotionBox>
-      <MotionBox
-        variants={{
-          visible: { left: "100%" },
-          hidden: { left: 0 },
-        }}
-        initial={"hidden"}
-        animate={slideControls}
-        transition={{ duration: delay * 2, ease: "easeIn" }}
+    <Box ref={containerRef} width={width} position="relative" overflow="hidden">
+      <Box ref={contentRef}>{children}</Box>
+      <Box
+        ref={sliderRef}
         top={4}
         bottom={4}
         left={0}
         right={0}
-        position={"absolute"}
-        bg={"primary.main"}
-        height={"100%"}
+        position="absolute"
+        bg="primary.main"
+        height="100%"
       />
     </Box>
   );

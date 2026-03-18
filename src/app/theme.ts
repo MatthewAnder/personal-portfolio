@@ -14,9 +14,7 @@ const bodyFont = Hind({
 export const theme = extendTheme({
   Link: {
     baseStyle: {
-      // normal styling
       textDecoration: "none",
-      // hover styling goes here
       _hover: {
         textDecoration: "none",
       },
@@ -26,13 +24,16 @@ export const theme = extendTheme({
   styles: {
     global: {
       "html, body": {
-        background: "#EAF4F4",
+        backgroundColor: "#edf4f0",
+        backgroundImage:
+          "radial-gradient(circle, rgba(94, 138, 121, 0.22) 1px, transparent 1px)",
+        backgroundSize: "28px 28px",
       },
       p: {
-        color: "#34252f",
+        color: "#2a1e28",
       },
       h1: {
-        color: "#34252f",
+        color: "#2a1e28",
       },
     },
   },
@@ -42,61 +43,80 @@ export const theme = extendTheme({
     body: bodyFont.style.fontFamily,
   },
 
+  components: {
+    Button: {
+      baseStyle: {
+        letterSpacing: "0.04em",
+        fontWeight: "700",
+        _focus: { boxShadow: "none" },
+      },
+    },
+    Input: {
+      variants: {
+        flushed: {
+          field: {
+            _focus: { boxShadow: "none" },
+          },
+        },
+      },
+    },
+  },
+
   colors: {
     text: {
-      main: "#33242e",
+      main: "#2a1e28",
     },
     background: {
-      main: "#ebf4f4",
-      50: "#eff6f6",
-      100: "#deeded",
-      200: "#bddbdb",
-      300: "#9cc9c9",
-      400: "#7bb7b7",
-      500: "#5ba4a4",
-      600: "#488484",
-      700: "#366363",
-      800: "#244242",
-      900: "#122121",
+      main: "#edf4f0",
+      50: "#f4f9f6",
+      100: "#e2ede8",
+      200: "#c5dbd1",
+      300: "#a8c9ba",
+      400: "#8bb7a3",
+      500: "#6ea58c",
+      600: "#588470",
+      700: "#426354",
+      800: "#2c4238",
+      900: "#16211c",
     },
     primary: {
-      main: "#a2c3b1",
-      50: "#eff5f2",
-      100: "#e0ebe5",
-      200: "#c1d7cb",
-      300: "#a2c3b1",
-      400: "#83af97",
-      500: "#639c7d",
-      600: "#507c64",
-      700: "#3c5d4b",
-      800: "#283e32",
-      900: "#141f19",
+      main: "#96bba7",
+      50: "#f0f6f3",
+      100: "#d9ece4",
+      200: "#b3d9c9",
+      300: "#96bba7",
+      400: "#72a288",
+      500: "#538b6c",
+      600: "#426f56",
+      700: "#325341",
+      800: "#21382b",
+      900: "#111c16",
     },
     secondary: {
-      main: "#6a9080",
-      50: "#f0f4f3",
-      100: "#e2e9e6",
-      200: "#c4d4cd",
-      300: "#a7beb4",
-      400: "#8aa89c",
-      500: "#6c9383",
-      600: "#577569",
-      700: "#41584e",
-      800: "#2b3b34",
-      900: "#161d1a",
+      main: "#5e8a79",
+      50: "#eef4f2",
+      100: "#d4e6e0",
+      200: "#a9cdc1",
+      300: "#7eb4a2",
+      400: "#5e8a79",
+      500: "#4a6e60",
+      600: "#3a5749",
+      700: "#2b4136",
+      800: "#1c2b24",
+      900: "#0e1612",
     },
     accent: {
-      main: "#f5fff7",
-      50: "#e5ffeb",
-      100: "#ccffd6",
-      200: "#99ffad",
-      300: "#66ff85",
-      400: "#33ff5c",
-      500: "#00ff33",
-      600: "#00cc29",
-      700: "#00991f",
-      800: "#006614",
-      900: "#00330a",
+      main: "#f7fdf9",
+      50: "#edfaf2",
+      100: "#d4f2e3",
+      200: "#a9e5c7",
+      300: "#7dd8ab",
+      400: "#52cb8f",
+      500: "#27be73",
+      600: "#1f985c",
+      700: "#177245",
+      800: "#0f4c2e",
+      900: "#082617",
     },
   },
 });

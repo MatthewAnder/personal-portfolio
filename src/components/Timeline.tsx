@@ -1,178 +1,122 @@
-import {
-  Box,
-  ChakraProps,
-  Flex,
-  HStack,
-  Heading,
-  Image,
-  Text,
-  VStack,
-  chakra,
-  useBreakpointValue,
-} from "@chakra-ui/react";
-
+"use client";
 import { milestones } from "@/lib/data";
-import { motion } from "framer-motion";
+import { Box, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
 
-const cardSize: ChakraProps = {
-  px: { base: 3, sm: 6 },
-  my: 5,
-  h: { base: "11em", md: "13em" },
-};
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const Milestones = () => {
   return (
-    <Flex maxWidth={"7xl"} p={{ base: 7, sm: 10 }}>
-      <CustomArrow />
-      {milestones.map((milestone) => (
-        <Flex key={milestone.id} flexDir={"column"}>
-          {/* Desktop view(bottom card) */}
-          {milestone.id % 2 === 0 && (
-            <>
-              <EmptyCard />
-              <LineWithDot />
-              <Card {...milestone} />
-            </>
-          )}
+    <Box position="relative" w="100%" maxW="4xl" mx="auto" px={{ base: 6, md: 10 }} py={4}>
+      {/* Vertical line — desktop center */}
+      <Box
+        position="absolute"
+        left="50%"
+        top={0}
+        bottom={0}
+        w="1px"
+        bgGradient="linear(to-b, transparent, primary.200 8%, primary.200 92%, transparent)"
+        transform="translateX(-50%)"
+        display={{ base: "none", md: "block" }}
+      />
+      {/* Vertical line — mobile left */}
+      <Box
+        position="absolute"
+        left="28px"
+        top={0}
+        bottom={0}
+        w="1px"
+        bgGradient="linear(to-b, transparent, primary.200 8%, primary.200 92%, transparent)"
+        display={{ base: "block", md: "none" }}
+      />
 
-          {/* Desktop view(top card) */}
-          {milestone.id % 2 !== 0 && (
-            <>
-              <Card {...milestone} />
-              <LineWithDot />
-              <EmptyCard />
-            </>
-          )}
-        </Flex>
-      ))}
-    </Flex>
+      <VStack spacing={0} align="stretch">
+        {milestones.map((milestone, i) => (
+          <MilestoneItem key={milestone.id} milestone={milestone} isRight={i % 2 === 0} />
+        ))}
+      </VStack>
+    </Box>
   );
 };
 
-interface CardProps {
-  id: number;
-  title: string;
-  description: string;
-  date: string;
+interface MilestoneProps {
+  milestone: { id: number; date: string; title: string; description: string };
+  isRight: boolean;
 }
 
-const Card = ({ id, title, description, date }: CardProps) => {
-  // For even id show card on bottom side
-  // For odd id show card on top side
-  const isEvenId = id % 2 === 0;
-  let borderWidthValue = isEvenId ? "0 15px 15px 15px" : "15px 15px 0 15px";
-  let topValue = isEvenId ? "-15px" : "unset";
-  let botValue = isEvenId ? "unset" : "-15px";
+const MilestoneItem = ({ milestone, isRight }: MilestoneProps) => {
+  const itemRef = useRef<HTMLDivElement>(null);
 
-  const MotionStack = motion(HStack);
-
-  const isMobile = useBreakpointValue({ base: true, md: false });
-
-  return (
-    <MotionStack
-      sx={cardSize}
-      pos="relative"
-      bg={"accent.main"}
-      spacing={isMobile ? 3 : 5}
-      rounded="lg"
-      alignItems="center"
-      width={isMobile ? "20em" : "25em"}
-      boxShadow={"rgba(0, 0, 0, 0.1) 0px 1px 2px 0px"}
-      _before={{
-        content: `""`,
-        position: "absolute",
-        borderColor: `#f5fff7 transparent #f5fff7`,
-        borderStyle: "solid",
-        borderWidth: borderWidthValue,
-        top: topValue,
-        bottom: botValue,
-        left: "35px",
-      }}
-    >
-      <Box>
-        <Text
-          fontSize={isMobile ? "md" : "lg"}
-          color={isEvenId ? "secondary.main" : "primary.main"}
-        >
-          {date}
-        </Text>
-
-        <VStack spacing={2} mb={isMobile ? 0 : 3} textAlign="left">
-          <Heading
-            fontSize={isMobile ? "xl" : "2xl"}
-            lineHeight={{ md: 1.2 }}
-            w="100%"
-          >
-            {title}
-          </Heading>
-          <Text fontSize={isMobile ? "sm" : "md"}> {description}</Text>
-        </VStack>
-      </Box>
-    </MotionStack>
+  useGSAP(
+    () => {
+      gsap.from(itemRef.current, {
+        opacity: 0,
+        x: isRight ? 36 : -36,
+        duration: 0.65,
+        ease: "expo.out",
+        scrollTrigger: {
+          trigger: itemRef.current,
+          start: "top 88%",
+          once: true,
+        },
+      });
+    },
+    { scope: itemRef },
   );
-};
 
-const LineWithDot = () => {
   return (
-    <Flex pos="relative" alignItems="center" mx={"40px"}>
-      <chakra.span
+    <Flex
+      ref={itemRef}
+      position="relative"
+      justify={{ base: "flex-start", md: isRight ? "flex-end" : "flex-start" }}
+      mb={8}
+      pl={{ base: "52px", md: 0 }}
+    >
+      {/* Dot */}
+      <Box
         position="absolute"
-        left={0}
-        width="150%"
+        left={{ base: "22px", md: "calc(50% - 5px)" }}
+        top="20px"
+        w="10px"
+        h="10px"
+        borderRadius="full"
+        bg={isRight ? "secondary.main" : "primary.300"}
+        border="2px solid"
+        borderColor="background.main"
+        zIndex={1}
+      />
+
+      {/* Card */}
+      <Box
+        w={{ base: "100%", md: "46%" }}
+        bg="accent.main"
         border="1px solid"
-        borderColor={"primary.100"}
-        top={"50%"}
-      ></chakra.span>
-      <Box pos="relative" p="10px">
-        <Box
-          pos="absolute"
-          top="0"
-          left="0"
-          width="100%"
-          height="100%"
-          backgroundSize="cover"
-          backgroundRepeat="no-repeat"
-          backgroundPosition="center center"
-          bg={"text.main"}
-          borderRadius="full"
-          backgroundImage="none"
-          opacity={1}
-        ></Box>
+        borderColor="primary.100"
+        borderRadius="xl"
+        px={{ base: 3, md: 5 }}
+        py={{ base: 3, md: 4 }}
+        boxShadow="0 2px 12px rgba(42,30,40,0.05)"
+      >
+        <Text
+          fontSize="xs"
+          fontWeight="700"
+          color="secondary.400"
+          letterSpacing="0.1em"
+          mb={1}
+        >
+          {milestone.date.toUpperCase()}
+        </Text>
+        <Heading fontSize={{ base: "md", md: "xl" }} mb={1}>
+          {milestone.title}
+        </Heading>
+        <Text fontSize={{ base: "xs", md: "sm" }} color="text.main" opacity={0.72} lineHeight={1.6}>
+          {milestone.description}
+        </Text>
       </Box>
     </Flex>
-  );
-};
-
-const EmptyCard = () => {
-  return <Box sx={cardSize} bg="transparent"></Box>;
-};
-
-const CustomArrow = () => {
-  return (
-    <HStack
-      position={"absolute"}
-      top={0}
-      left={0}
-      zIndex={5}
-      userSelect={"none"}
-    >
-      <Image
-        src="/images/arrow.svg"
-        alt="arrow"
-        boxSize={"4.5em"}
-        color={"text.main"}
-      />
-      <Text
-        position={"absolute"}
-        top={"-20%"}
-        right={"-190%"}
-        fontSize={"md"}
-        fontWeight={"bold"}
-        width={"8.5em"}
-      >
-        Once upon a time...
-      </Text>
-    </HStack>
   );
 };
 

@@ -1,3 +1,4 @@
+"use client";
 import SectionHeading from "@/components/SectionHeading";
 import { useSectionInView } from "@/lib/hooks";
 import {
@@ -9,68 +10,46 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
 import Reveal from "../Reveal";
 import Milestones from "../Timeline";
 
-interface Balls {
-  src: string;
-  topValue: number | string;
-  leftValue: number | string;
-}
-
-const MotionBox = motion(Box);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const About = () => {
-  const { ref } = useSectionInView("About", 0.1);
-  const horizontalContainer = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: horizontalContainer,
-  });
+  const { ref: inViewRef } = useSectionInView("About", 0.1);
 
-  const x = useTransform(scrollYProgress, [0, 1], ["20%", "-100%"]);
   return (
     <Flex
       id="about"
-      ref={ref}
-      alignItems={"center"}
-      justifyContent={"center"}
-      direction={"column"}
-      w={"100%"}
-      h={"fit-content"}
-      mb={36}
+      ref={inViewRef}
+      alignItems="center"
+      justifyContent="center"
+      direction="column"
+      w="100%"
+      h="fit-content"
+      mb={{ base: 10, md: 24 }}
     >
       <SectionHeading label="Learn More!" />
-      {/* About description section */}
       <Stack
-        position={"relative"}
-        h={"fit-content"}
-        my={10}
-        spacing={10}
+        position="relative"
+        h="fit-content"
+        my={{ base: 6, md: 10 }}
+        spacing={{ base: 6, md: 10 }}
         direction={{ base: "column", md: "row" }}
-        alignItems={"center"}
+        alignItems="center"
       >
         <Stickman />
         <Content />
       </Stack>
 
-      {/* Horizontal Scroll */}
-      <Box w={"100%"} h={"500vh"} ref={horizontalContainer}>
-        <Flex
-          position={"sticky"}
-          top={0}
-          h={"100vh"}
-          alignItems={"center"}
-          overflowX={"hidden"}
-        >
-          <motion.div style={{ x }}>
-            <Milestones />
-          </motion.div>
-        </Flex>
+      <Box w="100%" mt={6} mb={4}>
+        <Milestones />
       </Box>
 
-      {/* Food Section */}
       <FoodSection />
     </Flex>
   );
@@ -81,22 +60,20 @@ const Stickman = () => {
     <Image
       src="/images/person.svg"
       alt="stickman"
-      boxSize={{ base: "20em", md: "sm" }}
-      objectFit={"cover"}
-      background={"accent.main"}
-      rounded={"full"}
-      boxShadow={
-        " rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(239, 245, 242, 0.5) -3px -3px 6px 1px inset"
-      }
+      boxSize={{ base: "11em", sm: "15em", md: "sm" }}
+      objectFit="cover"
+      background="accent.main"
+      rounded="full"
+      boxShadow=" rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(239, 245, 242, 0.5) -3px -3px 6px 1px inset"
     />
   );
 };
 
 const Content = () => {
   return (
-    <VStack alignItems={"start"} w={{ base: "20em", sm: "23em", md: "25em" }}>
+    <VStack alignItems="start" w={{ base: "90%", sm: "23em", md: "25em" }} maxW="25em">
       <Reveal>
-        <Heading fontSize={{ base: "4xl", md: "6xl" }}>
+        <Heading fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}>
           {"I'M MATTHEW!"}
         </Heading>
       </Reveal>
@@ -109,8 +86,8 @@ const Content = () => {
       </Text>
       <HashTags />
       <br />
-      <VStack alignItems={"start"} lineHeight={0.7}>
-        <Text fontWeight={"bold"}>EDUCATION</Text>
+      <VStack alignItems="start" lineHeight={0.7}>
+        <Text fontWeight="bold">EDUCATION</Text>
         <Text>University of British Columbia</Text>
         <Text>Bachelor of Science</Text>
       </VStack>
@@ -121,7 +98,7 @@ const Content = () => {
 const HashTags = () => {
   return (
     <Flex
-      alignItems={"start"}
+      alignItems="start"
       gap={{ base: 4, md: 6 }}
       flexWrap={{ base: "wrap", md: "nowrap" }}
     >
@@ -130,7 +107,7 @@ const HashTags = () => {
           return (
             <Text
               key={tag}
-              color={"primary.main"}
+              color="primary.main"
               lineHeight={{ base: 0.6, md: 1 }}
             >
               {tag}
@@ -144,23 +121,23 @@ const HashTags = () => {
 
 const FoodSection = () => {
   return (
-    <Box w={"100%"} h={"fit-content"} overflow={"visible"}>
+    <Box w="100%" h="fit-content" overflow="visible">
       <Flex
         direction={{ base: "column", md: "row" }}
-        w={"100%"}
+        w="100%"
         alignItems={{ base: "center", md: "unset" }}
         justifyContent={{ base: "center", md: "space-evenly" }}
       >
         <Heading
-          fontSize={{ base: "5xl", lg: "6xl" }}
-          h={"fit-content"}
-          color={"text.main"}
-          position={"sticky"}
+          fontSize={{ base: "2xl", sm: "3xl", lg: "5xl" }}
+          h="fit-content"
+          color="text.main"
+          position="sticky"
           top={120}
         >
           I LOVE COOKING TOO!
         </Heading>
-        <Flex direction={"column"} h={"fit-content"}>
+        <Flex direction="column" h="fit-content">
           <FoodCard path="/images/oyakodon.svg" rotate="0deg" />
           <FoodCard path="/images/fried-rice.svg" rotate="16deg" />
           <FoodCard path="/images/noodle.svg" rotate="-16deg" />
@@ -176,29 +153,45 @@ interface FoodCard {
 }
 
 const FoodCard = ({ path, rotate }: FoodCard) => {
-  const { scrollYProgress } = useScroll();
-  const rotateTransform = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["0deg", rotate],
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        cardRef.current,
+        { rotate: "0deg" },
+        {
+          rotate,
+          ease: "none",
+          scrollTrigger: {
+            trigger: "body",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1,
+          },
+        },
+      );
+    },
+    { scope: cardRef },
   );
+
   return (
-    <MotionBox
+    <Box
+      ref={cardRef}
       width="fit-content"
       borderRadius="16px"
       overflow="hidden"
-      position={"sticky"}
+      position="sticky"
       top={{ base: 240, md: 120 }}
-      style={{ rotate: rotateTransform }}
     >
       <Image
         src={path}
         alt="food"
-        boxSize={{ base: "xs", sm: "sm", lg: "lg" }}
+        boxSize={{ base: "2xs", sm: "xs", lg: "lg" }}
         objectFit="cover"
-        rotate={rotate}
       />
-    </MotionBox>
+    </Box>
   );
 };
+
 export default About;
