@@ -1,64 +1,66 @@
+"use client";
 import { Box } from "@chakra-ui/react";
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useSpring,
-} from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { ReactElement, useRef } from "react";
+
+gsap.registerPlugin(useGSAP);
 
 const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = 32.5 / 2;
 
-const MotionBox = motion(Box);
-
 const Tilt = ({ children }: { children: ReactElement }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  useGSAP(
+    () => {
+      const el = ref.current;
+      if (!el) return;
 
-  const xSpring = useSpring(x);
-  const ySpring = useSpring(y);
+      const handleMouseMove = (e: MouseEvent) => {
+        const rect = el.getBoundingClientRect();
+        const mouseX = (e.clientX - rect.left) * ROTATION_RANGE;
+        const mouseY = (e.clientY - rect.top) * ROTATION_RANGE;
+        const rX = (mouseY / rect.height - HALF_ROTATION_RANGE) * -1;
+        const rY = mouseX / rect.width - HALF_ROTATION_RANGE;
 
-  const transform = useMotionTemplate`rotateX(${xSpring}deg) rotateY(${ySpring}deg)`;
+        gsap.to(el, {
+          rotateX: rX,
+          rotateY: rY,
+          duration: 0.5,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!ref.current) return [0, 0];
+      const handleMouseLeave = () => {
+        gsap.to(el, {
+          rotateX: 0,
+          rotateY: 0,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      };
 
-    const rect = ref.current.getBoundingClientRect();
+      el.addEventListener("mousemove", handleMouseMove);
+      el.addEventListener("mouseleave", handleMouseLeave);
 
-    const width = rect.width;
-    const height = rect.height;
-
-    const mouseX = (e.clientX - rect.left) * ROTATION_RANGE;
-    const mouseY = (e.clientY - rect.top) * ROTATION_RANGE;
-
-    const rX = (mouseY / height - HALF_ROTATION_RANGE) * -1;
-    const rY = mouseX / width - HALF_ROTATION_RANGE;
-
-    x.set(rX);
-    y.set(rY);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+      return () => {
+        el.removeEventListener("mousemove", handleMouseMove);
+        el.removeEventListener("mouseleave", handleMouseLeave);
+      };
+    },
+    { scope: ref },
+  );
 
   return (
-    <MotionBox
+    <Box
       ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transformStyle: "preserve-3d",
-        transform,
-      }}
-      position={"relative"}
+      position="relative"
+      style={{ transformStyle: "preserve-3d" }}
     >
       {children}
-    </MotionBox>
+    </Box>
   );
 };
 

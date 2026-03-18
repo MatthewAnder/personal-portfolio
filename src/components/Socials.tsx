@@ -1,14 +1,13 @@
 "use client";
 
 import { Box, Flex, Link } from "@chakra-ui/react";
-import { motion } from "framer-motion";
-import { ReactElement } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ReactElement, useRef } from "react";
 
-import {
-  FaGithub,
-  FaInstagram,
-  FaLinkedinIn
-} from "react-icons/fa6";
+import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
+
+gsap.registerPlugin(useGSAP);
 
 interface SocialItems {
   label: string;
@@ -38,32 +37,40 @@ const Items: SocialItems[] = [
   },
 ];
 
-const MotionFlex = motion(Flex);
-
 const Socials = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.from(".social-item", {
+        x: -25,
+        opacity: 0,
+        stagger: 0.1,
+        delay: 0.8,
+        duration: 0.5,
+        ease: "expo.out",
+      });
+    },
+    { scope: containerRef },
+  );
+
   return (
-    <MotionFlex
-      direction={"column"}
-      position={"fixed"}
+    <Flex
+      ref={containerRef}
+      direction="column"
+      position="fixed"
       bottom={4}
-      left={"-9em"}
-      alignItems={"end"}
-      width={"200px"}
+      left="-9em"
+      alignItems="end"
+      width="200px"
       zIndex={20}
-      initial="hidden"
-      whileInView={"visible"}
-      viewport={{ once: true }}
-      transition={{ staggerChildren: 0.2, delayChildren: 1.4 }}
     >
       {Items.map((item: SocialItems) => (
-        <motion.div
-          key={item.label}
-          variants={{ hidden: { x: -55 }, visible: { x: 0 } }}
-        >
+        <div key={item.label} className="social-item">
           <NavLink navItem={item} />
-        </motion.div>
+        </div>
       ))}
-    </MotionFlex>
+    </Flex>
   );
 };
 
@@ -80,9 +87,9 @@ const NavLink = ({ navItem }: { navItem: SocialItems }) => {
       <Flex
         p={2}
         my={1}
-        rounded={"full"}
-        alignItems={"center"}
-        background={"primary.main"}
+        rounded="full"
+        alignItems="center"
+        background="primary.main"
         opacity={0.7}
         transition={`${duration} ease-out`}
         pl={20}
@@ -95,9 +102,9 @@ const NavLink = ({ navItem }: { navItem: SocialItems }) => {
       >
         <Box
           as="span"
-          fontSize={"md"}
+          fontSize="md"
           mr={4}
-          fontWeight={"700"}
+          fontWeight="700"
           transition={`${duration} ease-out`}
           _groupHover={{
             color: "white",
@@ -108,10 +115,10 @@ const NavLink = ({ navItem }: { navItem: SocialItems }) => {
         </Box>
         <Box
           as="span"
-          fontSize={"2xl"}
-          rounded={"full"}
+          fontSize="2xl"
+          rounded="full"
           p={2}
-          bg={"white"}
+          bg="white"
           transition={`${duration} ease-in-out`}
           _groupHover={{
             color: "white",

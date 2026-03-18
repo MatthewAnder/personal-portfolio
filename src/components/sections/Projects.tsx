@@ -1,79 +1,122 @@
 "use client";
 import ProjectCard from "@/components/ProjectCard";
 import SectionHeading from "@/components/SectionHeading";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Box, Flex, Grid } from "@chakra-ui/react";
-
-import { AnimatePresence, motion } from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { projectsData } from "@/lib/data";
 import { useSectionInView } from "@/lib/hooks";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 interface ProjectTag {
   name: string;
   onClick: (arg: string) => void;
   tag: string;
+  tagRef: (el: HTMLElement | null) => void;
 }
 
-interface Main {
-  selectedId: string;
-}
-
-const MotionBox = motion(Box);
-const MotionFlex = motion(Flex);
+const tagNames = ["All", "Web", "Game", "Other"];
 
 const Projects = () => {
   const { ref } = useSectionInView("Projects", 0.5);
-
-  // tag refers to the category of the card
   const [tag, setTag] = useState("All");
 
-  const handleTagChange = (newTag: string) => {
-    setTag(newTag);
-  };
+  const tagsContainerRef = useRef<HTMLDivElement>(null);
+  const indicatorRef = useRef<HTMLDivElement>(null);
+  const tagRefs = useRef<(HTMLElement | null)[]>([]);
+
+  useGSAP(
+    () => {
+      gsap.from(".project-tag", {
+        scale: 0,
+        duration: 0.3,
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: tagsContainerRef.current,
+          start: "top 90%",
+          once: true,
+        },
+      });
+    },
+    { scope: tagsContainerRef },
+  );
+
+  useEffect(() => {
+    const activeIndex = tagNames.indexOf(tag);
+    const activeTag = tagRefs.current[activeIndex];
+    if (!activeTag || !indicatorRef.current) return;
+
+    gsap.to(indicatorRef.current, {
+      x: activeTag.offsetLeft,
+      width: activeTag.offsetWidth,
+      height: activeTag.offsetHeight,
+      duration: 0.3,
+      ease: "power1.inOut",
+    });
+  }, [tag]);
+
+  const setTagRef = useCallback(
+    (index: number) => (el: HTMLElement | null) => {
+      tagRefs.current[index] = el;
+    },
+    [],
+  );
 
   return (
     <Flex
       ref={ref}
       id="projects"
-      position={"relative"}
-      flexDirection={"column"}
-      alignItems={"center"}
-      w={"100%"}
-      h={{
-        base: "fit-content",
-        lg: "125vh",
-      }}
-      my={14}
+      position="relative"
+      flexDirection="column"
+      alignItems="center"
+      w="100%"
+      py={{ base: 10, lg: 16 }}
+      my={0}
     >
       <SectionHeading label="Behold My Creations!" />
-      <MotionFlex
-        direction={"row"}
-        justify={"center"}
-        alignItems={"center"}
+      <Flex
+        ref={tagsContainerRef}
+        direction="row"
+        justify="center"
+        alignItems="center"
         gap={2}
         my={6}
-        initial={"hidden"}
-        whileInView={"visible"}
-        transition={{ staggerChildren: 0.2 }}
+        position="relative"
       >
-        {["All", "Web", "Game", "Other"].map((item) => (
+        <Box
+          ref={indicatorRef}
+          rounded="full"
+          bg="primary.main"
+          position="absolute"
+          top={0}
+          left={0}
+          zIndex={0}
+          style={{ width: 0, height: 0 }}
+        />
+        {tagNames.map((name, i) => (
           <ProjectTag
-            key={item}
-            name={item}
-            onClick={handleTagChange}
+            key={name}
+            name={name}
+            onClick={setTag}
             tag={tag}
+            tagRef={setTagRef(i)}
           />
         ))}
-      </MotionFlex>
+      </Flex>
 
       <Grid
-        templateColumns={{ md: "repeat(2,1fr)", lg: "repeat(3, 1fr)" }}
-        position={"relative"}
-        gridRowGap={{ base: 2, md: 8 }}
-        gridColumnGap={{ md: 10 }}
-        h={"100%"}
+        templateColumns={{ base: "1fr", sm: "repeat(2,1fr)", lg: "repeat(3, 1fr)" }}
+        position="relative"
+        w="100%"
+        maxW="5xl"
+        px={{ base: 4, sm: 6, md: 8, lg: 4 }}
+        gridRowGap={{ base: 5, md: 8 }}
+        gridColumnGap={{ base: 4, md: 6 }}
       >
         {projectsData.map(
           (project) =>
@@ -86,39 +129,24 @@ const Projects = () => {
   );
 };
 
-const ProjectTag = ({ name, onClick, tag }: ProjectTag) => {
+const ProjectTag = ({ name, onClick, tagRef }: ProjectTag) => {
   return (
-    <AnimatePresence>
-      <MotionBox
-        layout
-        key={name}
-        onClick={() => onClick(name)}
-        variants={{ visible: { scale: 1 }, hidden: { scale: 0 } }}
-        rounded={"full"}
-        px={5}
-        py={2}
-        fontSize={"xl"}
-        cursor={"pointer"}
-        position={"relative"}
-        zIndex={1}
-        fontWeight={"bold"}
-        color={"text.main"}
-      >
-        {name}
-        {name === tag && (
-          <Box
-            as={motion.span}
-            layoutId="tag"
-            rounded={"full"}
-            h="100%"
-            bg={"primary.main"}
-            position={"absolute"}
-            inset={0}
-            zIndex={-1}
-          />
-        )}
-      </MotionBox>
-    </AnimatePresence>
+    <Box
+      className="project-tag"
+      ref={tagRef}
+      onClick={() => onClick(name)}
+      rounded="full"
+      px={5}
+      py={2}
+      fontSize="xl"
+      cursor="pointer"
+      position="relative"
+      zIndex={1}
+      fontWeight="bold"
+      color="text.main"
+    >
+      {name}
+    </Box>
   );
 };
 

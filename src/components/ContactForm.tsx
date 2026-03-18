@@ -96,7 +96,8 @@ const ContactForm = () => {
   return (
     <form onSubmit={handleSubmit(submitForm)}>
       <FormControl
-        width={{ base: "20em", md: "25em" }}
+        width={{ base: "90vw", sm: "25em" }}
+        maxWidth="25em"
         mt={{ base: 10, lg: 0 }}
         isInvalid={Boolean(errors.name)}
       >
@@ -126,17 +127,27 @@ const ContactForm = () => {
 
       <Button
         type="submit"
-        loadingText={"Submitting"}
+        loadingText="Submitting"
         isLoading={isSubmitting}
         disabled={isSubmitting}
-        position={"relative"}
-        mt={4}
-        px={8}
-        color={"accent.main"}
-        bg={"secondary.main"}
-        _hover={{ background: "#8aa89c" }}
+        mt={6}
+        px={10}
+        py={6}
+        color="accent.main"
+        bg="secondary.main"
+        rounded="full"
+        letterSpacing="0.08em"
+        fontSize="sm"
+        boxShadow="0 4px 16px rgba(94,138,121,0.3)"
+        _hover={{
+          bg: "secondary.400",
+          boxShadow: "0 6px 24px rgba(94,138,121,0.45)",
+          transform: "translateY(-1px)",
+        }}
+        _active={{ transform: "translateY(0)" }}
+        transition="all 0.2s ease"
       >
-        Submit
+        SEND MESSAGE
       </Button>
     </form>
   );
