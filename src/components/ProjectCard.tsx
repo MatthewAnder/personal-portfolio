@@ -21,6 +21,51 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
+import { DiJava } from "react-icons/di";
+import {
+  SiBlender,
+  SiChakraui,
+  SiCplusplus,
+  SiDotnet,
+  SiGo,
+  SiJavascript,
+  SiNextdotjs,
+  SiOpengl,
+  SiPostgresql,
+  SiReact,
+  SiSolidity,
+  SiSupabase,
+  SiSvelte,
+  SiTailwindcss,
+  SiTypescript,
+  SiUnity,
+} from "react-icons/si";
+import { TbBrandCSharp } from "react-icons/tb";
+import { IconType } from "react-icons";
+
+const ICON_MAP: Record<
+  string,
+  { icon: IconType; color: string; label: string }
+> = {
+  react: { icon: SiReact, color: "#61DAFB", label: "React" },
+  next: { icon: SiNextdotjs, color: "#2a1e28", label: "Next.js" },
+  typescript: { icon: SiTypescript, color: "#3178C6", label: "TypeScript" },
+  javascript: { icon: SiJavascript, color: "#F7DF1E", label: "JavaScript" },
+  tailwind: { icon: SiTailwindcss, color: "#06B6D4", label: "Tailwind CSS" },
+  svelte: { icon: SiSvelte, color: "#FF3E00", label: "SvelteKit" },
+  supabase: { icon: SiSupabase, color: "#3ECF8E", label: "Supabase" },
+  chakra: { icon: SiChakraui, color: "#319795", label: "Chakra UI" },
+  java: { icon: DiJava, color: "#F8981D", label: "Java" },
+  csharp: { icon: TbBrandCSharp, color: "#9B4F96", label: "C#" },
+  unity: { icon: SiUnity, color: "#2a1e28", label: "Unity" },
+  blender: { icon: SiBlender, color: "#F5792A", label: "Blender" },
+  cpp: { icon: SiCplusplus, color: "#00599C", label: "C++" },
+  opengl: { icon: SiOpengl, color: "#5586A4", label: "OpenGL" },
+  go: { icon: SiGo, color: "#00ACD7", label: "Go" },
+  solidity: { icon: SiSolidity, color: "#555", label: "Solidity" },
+  dotnet: { icon: SiDotnet, color: "#512BD4", label: ".NET" },
+  postgresql: { icon: SiPostgresql, color: "#336791", label: "PostgreSQL" },
+};
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -57,7 +102,7 @@ const ProjectCard = ({ project }: ProjectCard) => {
         },
       });
     },
-    { scope: cardRef },
+    { scope: cardRef }
   );
 
   return (
@@ -193,11 +238,31 @@ const SelectedModal = ({ project, isOpen, onClose }: SelectedModal) => {
 };
 
 const CustomIcon = ({ src }: CustomIcon) => {
-  const label = src.split("/")[1]?.split(".")[0];
+  const name = src.split("/").pop()?.replace(".svg", "") ?? "";
+  const entry = ICON_MAP[name];
 
+  if (!entry) {
+    return (
+      <Tooltip hasArrow label={name} fontSize="sm">
+        <Image src={src} boxSize={6} mr={2} alt={name} />
+      </Tooltip>
+    );
+  }
+
+  const { icon: Icon, color, label } = entry;
   return (
     <Tooltip hasArrow label={label} fontSize="sm">
-      <Image src={src} boxSize={6} mr={2} alt="icon" />
+      <Box
+        as="span"
+        fontSize="22px"
+        color={color}
+        mr={2}
+        lineHeight={1}
+        display="inline-flex"
+        alignItems="center"
+      >
+        <Icon />
+      </Box>
     </Tooltip>
   );
 };
