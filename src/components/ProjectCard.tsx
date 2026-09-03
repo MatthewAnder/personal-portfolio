@@ -2,6 +2,7 @@
 import { ProjectData } from "@/lib/types";
 import {
   Box,
+  Button,
   Flex,
   GridItem,
   Heading,
@@ -43,28 +44,25 @@ import {
 import { TbBrandCSharp } from "react-icons/tb";
 import { IconType } from "react-icons";
 
-const ICON_MAP: Record<
-  string,
-  { icon: IconType; color: string; label: string }
-> = {
-  react: { icon: SiReact, color: "#61DAFB", label: "React" },
-  next: { icon: SiNextdotjs, color: "#2a1e28", label: "Next.js" },
-  typescript: { icon: SiTypescript, color: "#3178C6", label: "TypeScript" },
-  javascript: { icon: SiJavascript, color: "#F7DF1E", label: "JavaScript" },
-  tailwind: { icon: SiTailwindcss, color: "#06B6D4", label: "Tailwind CSS" },
-  svelte: { icon: SiSvelte, color: "#FF3E00", label: "SvelteKit" },
-  supabase: { icon: SiSupabase, color: "#3ECF8E", label: "Supabase" },
-  chakra: { icon: SiChakraui, color: "#319795", label: "Chakra UI" },
-  java: { icon: DiJava, color: "#F8981D", label: "Java" },
-  csharp: { icon: TbBrandCSharp, color: "#9B4F96", label: "C#" },
-  unity: { icon: SiUnity, color: "#2a1e28", label: "Unity" },
-  blender: { icon: SiBlender, color: "#F5792A", label: "Blender" },
-  cpp: { icon: SiCplusplus, color: "#00599C", label: "C++" },
-  opengl: { icon: SiOpengl, color: "#5586A4", label: "OpenGL" },
-  go: { icon: SiGo, color: "#00ACD7", label: "Go" },
-  solidity: { icon: SiSolidity, color: "#555", label: "Solidity" },
-  dotnet: { icon: SiDotnet, color: "#512BD4", label: ".NET" },
-  postgresql: { icon: SiPostgresql, color: "#336791", label: "PostgreSQL" },
+const ICON_MAP: Record<string, { icon: IconType; label: string }> = {
+  react: { icon: SiReact, label: "React" },
+  next: { icon: SiNextdotjs, label: "Next.js" },
+  typescript: { icon: SiTypescript, label: "TypeScript" },
+  javascript: { icon: SiJavascript, label: "JavaScript" },
+  tailwind: { icon: SiTailwindcss, label: "Tailwind CSS" },
+  svelte: { icon: SiSvelte, label: "SvelteKit" },
+  supabase: { icon: SiSupabase, label: "Supabase" },
+  chakra: { icon: SiChakraui, label: "Chakra UI" },
+  java: { icon: DiJava, label: "Java" },
+  csharp: { icon: TbBrandCSharp, label: "C#" },
+  unity: { icon: SiUnity, label: "Unity" },
+  blender: { icon: SiBlender, label: "Blender" },
+  cpp: { icon: SiCplusplus, label: "C++" },
+  opengl: { icon: SiOpengl, label: "OpenGL" },
+  go: { icon: SiGo, label: "Go" },
+  solidity: { icon: SiSolidity, label: "Solidity" },
+  dotnet: { icon: SiDotnet, label: ".NET" },
+  postgresql: { icon: SiPostgresql, label: "PostgreSQL" },
 };
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -108,26 +106,26 @@ const ProjectCard = ({ project }: ProjectCard) => {
   return (
     <GridItem
       ref={cardRef}
+      role="group"
       cursor="pointer"
       onClick={() => onOpen()}
       position="relative"
       zIndex={1}
       w="full"
-      transition="transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease"
+      transition="transform 0.35s ease, border-color 0.35s ease"
       willChange="transform"
       _hover={{
-        transform: "translateY(-8px)",
-        boxShadow: "0 24px 48px rgba(42,30,40,0.14)",
+        transform: "translateY(-4px)",
       }}
     >
       <Box
         color="text.main"
         bg="accent.main"
-        rounded="2xl"
         overflow="hidden"
         border="1px solid"
-        borderColor="primary.100"
-        boxShadow="0 2px 16px rgba(42,30,40,0.07)"
+        borderColor="background.300"
+        transition="border-color 0.35s ease"
+        _groupHover={{ borderColor: "primary.main" }}
       >
         <Box position="relative" overflow="hidden">
           <Image
@@ -173,16 +171,14 @@ const SelectedModal = ({ project, isOpen, onClose }: SelectedModal) => {
       scrollBehavior="inside"
     >
       <ModalOverlay
-        bg="none"
+        bg="rgba(28, 26, 23, 0.5)"
         backdropFilter="auto"
-        backdropInvert="20%"
         backdropBlur="2px"
       />
-      <ModalContent>
-        <ModalHeader fontFamily="Khand-Bold" p={0}>
+      <ModalContent bg="accent.main" borderRadius="0" overflow="hidden">
+        <ModalHeader p={0}>
           <Box>
             <Image
-              roundedTop="md"
               h={{ base: 52, md: 60 }}
               w="100%"
               src={project.image}
@@ -191,49 +187,110 @@ const SelectedModal = ({ project, isOpen, onClose }: SelectedModal) => {
               objectFit="cover"
             />
           </Box>
-          <Heading px={5}>{project.title}</Heading>
+          <Heading fontWeight="500" fontSize={{ base: "xl", md: "2xl" }} px={6} pt={5}>
+            {project.title}
+          </Heading>
         </ModalHeader>
-        <ModalCloseButton color="accent.main" bg="text.main" />
+        <ModalCloseButton
+          color="accent.main"
+          bg="text.main"
+          borderRadius="0"
+          _hover={{ bg: "primary.main" }}
+        />
         <ModalBody
+          px={6}
+          pb={8}
           sx={{
             "::-webkit-scrollbar-thumb": {
-              background: "#babac0",
-              borderRadius: "16px",
-              border: "4px solid #fff",
+              background: "var(--chakra-colors-background-300)",
+              borderRadius: "10px",
             },
           }}
         >
-          <Flex mb={2}>
+          <Flex mb={4} gap={1}>
             {project.tools.map((path: string) => {
               return <CustomIcon key={path} src={"icons/" + path} />;
             })}
           </Flex>
-          {project.description}
-          <Text fontWeight="bold" mt={3}>
-            🌳 Key Features
+
+          <Text color="text.main" opacity={0.8} lineHeight={1.7}>
+            {project.description}
           </Text>
-          {project.feature}
-          <Text fontWeight="bold" mt={3}>
-            🎮 Lessons
-          </Text>
-          {project.lessons}
-          <br />
-          <br />
-          <Flex gap={6} color="secondary.main">
+
+          <ModalSection label="Key Features" text={project.feature} />
+          <ModalSection label="Lessons" text={project.lessons} />
+
+          <Flex gap={3} mt={6}>
             {project.github !== "" && (
-              <Link href={project.github} target="_blank">
+              <Button
+                as="a"
+                href={project.github}
+                target="_blank"
+                variant="outline"
+                borderRadius="0"
+                border="1px solid"
+                borderColor="text.main"
+                color="text.main"
+                bg="transparent"
+                letterSpacing="0.12em"
+                fontSize="xs"
+                textTransform="uppercase"
+                size="sm"
+                _hover={{ bg: "text.main", color: "background.main" }}
+                transition="background 0.3s ease, color 0.3s ease"
+              >
                 Github
-              </Link>
+              </Button>
             )}
             {project.demo !== "" && (
-              <Link href={project.demo} target="_blank">
+              <Button
+                as="a"
+                href={project.demo}
+                target="_blank"
+                variant="outline"
+                borderRadius="0"
+                border="1px solid"
+                borderColor="primary.main"
+                color="primary.main"
+                bg="transparent"
+                letterSpacing="0.12em"
+                fontSize="xs"
+                textTransform="uppercase"
+                size="sm"
+                _hover={{ bg: "primary.main", color: "background.main" }}
+                transition="background 0.3s ease, color 0.3s ease"
+              >
                 Live Demo
-              </Link>
+              </Button>
             )}
           </Flex>
         </ModalBody>
       </ModalContent>
     </Modal>
+  );
+};
+
+interface ModalSectionProps {
+  label: string;
+  text: string;
+}
+
+const ModalSection = ({ label, text }: ModalSectionProps) => {
+  return (
+    <Box mt={5} pt={5} borderTop="1px solid" borderColor="background.300">
+      <Text
+        fontSize="xs"
+        letterSpacing="0.16em"
+        textTransform="uppercase"
+        color="primary.main"
+        mb={2}
+      >
+        {label}
+      </Text>
+      <Text color="text.main" opacity={0.8} lineHeight={1.7}>
+        {text}
+      </Text>
+    </Box>
   );
 };
 
@@ -249,17 +306,20 @@ const CustomIcon = ({ src }: CustomIcon) => {
     );
   }
 
-  const { icon: Icon, color, label } = entry;
+  const { icon: Icon, label } = entry;
   return (
     <Tooltip hasArrow label={label} fontSize="sm">
       <Box
         as="span"
-        fontSize="22px"
-        color={color}
-        mr={2}
+        fontSize="18px"
+        color="text.main"
+        opacity={0.55}
+        mr={3}
         lineHeight={1}
         display="inline-flex"
         alignItems="center"
+        transition="opacity 0.25s ease, color 0.25s ease"
+        _hover={{ opacity: 1, color: "primary.main" }}
       >
         <Icon />
       </Box>

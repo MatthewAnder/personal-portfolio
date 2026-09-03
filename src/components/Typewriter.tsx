@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 gsap.registerPlugin(useGSAP);
 
 const Typewriter = () => {
-  const texts = ["Frontend", "Backend", "Game", "Cybersecurity"];
+  const texts = ["Frontend", "Backend", "Systems"];
   const [displayText, setDisplayText] = useState("");
   const containerRef = useRef<HTMLHeadingElement>(null);
 
@@ -50,8 +50,9 @@ const Typewriter = () => {
   return (
     <Heading
       ref={containerRef}
-      color="text.main"
-      fontSize={{ base: "2xl", sm: "3xl", lg: "5xl" }}
+      color="primary.main"
+      fontWeight="500"
+      fontSize={{ base: "xl", sm: "2xl", lg: "3xl" }}
       textAlign={{ base: "center", lg: "end" }}
     >
       {displayText}

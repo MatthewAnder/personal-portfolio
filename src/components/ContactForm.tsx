@@ -130,24 +130,25 @@ const ContactForm = () => {
         loadingText="Submitting"
         isLoading={isSubmitting}
         disabled={isSubmitting}
-        mt={6}
+        mt={8}
         px={10}
         py={6}
-        color="accent.main"
-        bg="secondary.main"
-        rounded="full"
-        letterSpacing="0.08em"
-        fontSize="sm"
-        boxShadow="0 4px 16px rgba(94,138,121,0.3)"
+        variant="outline"
+        borderRadius="0"
+        border="1px solid"
+        borderColor="text.main"
+        color="text.main"
+        bg="transparent"
+        letterSpacing="0.16em"
+        fontSize="xs"
+        textTransform="uppercase"
         _hover={{
-          bg: "secondary.400",
-          boxShadow: "0 6px 24px rgba(94,138,121,0.45)",
-          transform: "translateY(-1px)",
+          bg: "text.main",
+          color: "background.main",
         }}
-        _active={{ transform: "translateY(0)" }}
-        transition="all 0.2s ease"
+        transition="background 0.3s ease, color 0.3s ease"
       >
-        SEND MESSAGE
+        Send Message
       </Button>
     </form>
   );
@@ -172,10 +173,10 @@ const TextInput = ({
           {...register(id, {
             required: "This is required!",
           })}
-          borderBottom={"2px"}
-          borderColor={"secondary.main"}
-          focusBorderColor="secondary.700"
-          fontSize={"lg"}
+          borderBottom={"1px"}
+          borderColor={"secondary.300"}
+          focusBorderColor="primary.main"
+          fontSize={"md"}
           resize={"none"}
           h={"10em"}
         />
@@ -187,10 +188,10 @@ const TextInput = ({
           {...register(id, {
             required: "This is required",
           })}
-          fontSize={"lg"}
-          borderBottom={"2px"}
-          borderColor={"secondary.main"}
-          focusBorderColor="secondary.700"
+          fontSize={"md"}
+          borderBottom={"1px"}
+          borderColor={"secondary.300"}
+          focusBorderColor="primary.main"
         />
       )}
       <FormErrorMessage>
@@ -202,7 +203,14 @@ const TextInput = ({
 
 const Label = ({ children, id }: LabelProps) => {
   return (
-    <FormLabel htmlFor={id} fontSize={"2xl"} fontWeight={"bold"}>
+    <FormLabel
+      htmlFor={id}
+      fontSize={"xs"}
+      letterSpacing="0.14em"
+      textTransform="uppercase"
+      fontWeight={"500"}
+      opacity={0.6}
+    >
       {children}
     </FormLabel>
   );

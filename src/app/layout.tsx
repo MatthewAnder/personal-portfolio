@@ -2,7 +2,6 @@ import "./globals.css";
 
 // Chakra Provider Component
 import { Providers } from "@/app/providers";
-import AnimatedBackground from "@/components/AnimatedBackground";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Socials from "@/components/Socials";
@@ -21,7 +20,6 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <AnimatedBackground />
         <Providers>
           <Navbar />
           <Socials />

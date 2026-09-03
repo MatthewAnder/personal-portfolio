@@ -1,122 +1,266 @@
 "use client";
 import { milestones } from "@/lib/data";
-import { Box, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import { Box, Flex, Text, Tooltip } from "@chakra-ui/react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const Milestones = () => {
-  return (
-    <Box position="relative" w="100%" maxW="4xl" mx="auto" px={{ base: 6, md: 10 }} py={4}>
-      {/* Vertical line — desktop center */}
-      <Box
-        position="absolute"
-        left="50%"
-        top={0}
-        bottom={0}
-        w="1px"
-        bgGradient="linear(to-b, transparent, primary.200 8%, primary.200 92%, transparent)"
-        transform="translateX(-50%)"
-        display={{ base: "none", md: "block" }}
-      />
-      {/* Vertical line — mobile left */}
-      <Box
-        position="absolute"
-        left="28px"
-        top={0}
-        bottom={0}
-        w="1px"
-        bgGradient="linear(to-b, transparent, primary.200 8%, primary.200 92%, transparent)"
-        display={{ base: "block", md: "none" }}
-      />
+type Milestone = (typeof milestones)[number];
 
-      <VStack spacing={0} align="stretch">
-        {milestones.map((milestone, i) => (
-          <MilestoneItem key={milestone.id} milestone={milestone} isRight={i % 2 === 0} />
-        ))}
-      </VStack>
-    </Box>
-  );
+const PX_PER_MONTH = 22;
+const MIN_BAR_HEIGHT = 64;
+const TOP_PAD = 24;
+const BOTTOM_PAD = 24;
+const AXIS_X = 20;
+const LANES_OFFSET = 48;
+
+const monthIndex = (ym: string) => {
+  const [y, m] = ym.split("-").map(Number);
+  return y * 12 + (m - 1);
 };
 
-interface MilestoneProps {
-  milestone: { id: number; date: string; title: string; description: string };
-  isRight: boolean;
-}
+const now = new Date();
+const presentIndex = now.getFullYear() * 12 + now.getMonth();
 
-const MilestoneItem = ({ milestone, isRight }: MilestoneProps) => {
-  const itemRef = useRef<HTMLDivElement>(null);
+const endIndex = (m: Milestone) =>
+  m.end === "present" ? presentIndex : monthIndex(m.end);
+
+// For lane packing only: an ongoing commitment should never be treated as
+// "finished" just because it's rendered up to today, so nothing else gets
+// stacked directly beneath it in the same lane.
+const laneEndIndex = (m: Milestone) =>
+  m.end === "present" ? Infinity : monthIndex(m.end);
+
+const Milestones = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { baseIndex, years, lanes, points, totalHeight } = useMemo(() => {
+    const starts = milestones.map((m) => monthIndex(m.start));
+    const ends = milestones.map((m) => endIndex(m));
+    const baseIndex = Math.min(...starts);
+    const maxIndex = Math.max(...ends);
+    const totalHeight =
+      (maxIndex - baseIndex) * PX_PER_MONTH + TOP_PAD + BOTTOM_PAD;
+
+    const ranges = milestones.filter((m) => m.start !== m.end);
+    const points = milestones.filter((m) => m.start === m.end);
+
+    const sorted = [...ranges].sort(
+      (a, b) => monthIndex(a.start) - monthIndex(b.start),
+    );
+    const laneEnds: number[] = [];
+    const lanes: Milestone[][] = [];
+    for (const m of sorted) {
+      const s = monthIndex(m.start);
+      let laneIdx = laneEnds.findIndex((end) => end <= s);
+      if (laneIdx === -1) {
+        laneIdx = laneEnds.length;
+        laneEnds.push(laneEndIndex(m));
+        lanes.push([]);
+      } else {
+        laneEnds[laneIdx] = laneEndIndex(m);
+      }
+      lanes[laneIdx].push(m);
+    }
+
+    const startYear = Math.floor(baseIndex / 12);
+    const endYear = Math.floor(maxIndex / 12);
+    const years = Array.from(
+      { length: endYear - startYear + 1 },
+      (_, i) => startYear + i,
+    ).filter((yr) => yr * 12 >= baseIndex);
+
+    return { baseIndex, years, lanes, points, totalHeight };
+  }, []);
+
+  const y = (idx: number) => (idx - baseIndex) * PX_PER_MONTH + TOP_PAD;
 
   useGSAP(
     () => {
-      gsap.from(itemRef.current, {
-        opacity: 0,
-        x: isRight ? 36 : -36,
-        duration: 0.65,
-        ease: "expo.out",
+      gsap.from(".lane-bar", {
+        scaleY: 0,
+        transformOrigin: "top center",
+        duration: 0.7,
+        stagger: 0.06,
+        ease: "power2.out",
         scrollTrigger: {
-          trigger: itemRef.current,
-          start: "top 88%",
+          trigger: containerRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+      gsap.from(".point-marker", {
+        opacity: 0,
+        scale: 0,
+        duration: 0.4,
+        stagger: 0.06,
+        delay: 0.3,
+        ease: "back.out(2)",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
           once: true,
         },
       });
     },
-    { scope: itemRef },
+    { scope: containerRef },
   );
 
   return (
-    <Flex
-      ref={itemRef}
-      position="relative"
-      justify={{ base: "flex-start", md: isRight ? "flex-end" : "flex-start" }}
-      mb={8}
-      pl={{ base: "52px", md: 0 }}
+    <Box
+      ref={containerRef}
+      w="100%"
+      maxW="3xl"
+      mx="auto"
+      px={{ base: 6, md: 10 }}
+      py={4}
     >
-      {/* Dot */}
-      <Box
-        position="absolute"
-        left={{ base: "22px", md: "calc(50% - 5px)" }}
-        top="20px"
-        w="10px"
-        h="10px"
-        borderRadius="full"
-        bg={isRight ? "secondary.main" : "primary.300"}
-        border="2px solid"
-        borderColor="background.main"
-        zIndex={1}
-      />
+      <Box position="relative" h={`${totalHeight}px`}>
+        {/* Year gridlines, spanning full width */}
+        {years.map((yr) => (
+          <Box
+            key={yr}
+            position="absolute"
+            top={`${y(yr * 12)}px`}
+            left={0}
+            right={0}
+          >
+            <Box h="1px" bg="background.300" />
+            <Text
+              position="absolute"
+              top="4px"
+              left={0}
+              fontSize="10px"
+              letterSpacing="0.08em"
+              color="text.main"
+              opacity={0.5}
+            >
+              {yr}
+            </Text>
+          </Box>
+        ))}
 
-      {/* Card */}
+        {/* Axis line + one-off event dots */}
+        <Box
+          position="absolute"
+          left={`${AXIS_X}px`}
+          top={0}
+          bottom={0}
+          w="1px"
+          bg="background.300"
+        />
+        {points.map((m) => (
+          <PointMarker key={m.id} milestone={m} top={y(monthIndex(m.start))} />
+        ))}
+
+        {/* Lanes: overlapping roles/commitments as bars */}
+        <Flex
+          position="absolute"
+          top={0}
+          bottom={0}
+          left={`${LANES_OFFSET}px`}
+          right={0}
+          gap={{ base: 2, md: 3 }}
+        >
+          {lanes.map((lane, i) => (
+            <Box key={i} flex={1} position="relative">
+              {lane.map((m) => (
+                <LaneBar
+                  key={m.id}
+                  milestone={m}
+                  top={y(monthIndex(m.start))}
+                  height={Math.max(
+                    y(endIndex(m)) - y(monthIndex(m.start)),
+                    MIN_BAR_HEIGHT,
+                  )}
+                />
+              ))}
+            </Box>
+          ))}
+        </Flex>
+      </Box>
+    </Box>
+  );
+};
+
+interface LaneBarProps {
+  milestone: Milestone;
+  top: number;
+  height: number;
+}
+
+const LaneBar = ({ milestone, top, height }: LaneBarProps) => {
+  return (
+    <Tooltip hasArrow label={milestone.description} fontSize="xs" maxW="18em">
       <Box
-        w={{ base: "100%", md: "46%" }}
-        bg="accent.main"
-        border="1px solid"
-        borderColor="primary.100"
-        borderRadius="xl"
-        px={{ base: 3, md: 5 }}
-        py={{ base: 3, md: 4 }}
-        boxShadow="0 2px 12px rgba(42,30,40,0.05)"
+        className="lane-bar"
+        position="absolute"
+        top={`${top}px`}
+        height={`${height}px`}
+        w="100%"
+        bg="background.200"
+        borderTop="2px solid"
+        borderColor="primary.main"
+        px={2}
+        py={2}
+        cursor="default"
+        overflow="hidden"
+        transition="background 0.25s ease"
+        _hover={{ bg: "background.300" }}
       >
         <Text
           fontSize="xs"
-          fontWeight="700"
-          color="secondary.400"
-          letterSpacing="0.1em"
-          mb={1}
+          fontWeight="500"
+          color="text.main"
+          noOfLines={2}
+          lineHeight={1.35}
         >
-          {milestone.date.toUpperCase()}
-        </Text>
-        <Heading fontSize={{ base: "md", md: "xl" }} mb={1}>
           {milestone.title}
-        </Heading>
-        <Text fontSize={{ base: "xs", md: "sm" }} color="text.main" opacity={0.72} lineHeight={1.6}>
-          {milestone.description}
+        </Text>
+        <Text
+          fontSize="10px"
+          letterSpacing="0.06em"
+          textTransform="uppercase"
+          color="primary.main"
+          opacity={0.8}
+          mt={0.5}
+        >
+          {milestone.date}
         </Text>
       </Box>
-    </Flex>
+    </Tooltip>
+  );
+};
+
+interface PointMarkerProps {
+  milestone: Milestone;
+  top: number;
+}
+
+const PointMarker = ({ milestone, top }: PointMarkerProps) => {
+  return (
+    <Tooltip
+      hasArrow
+      label={`${milestone.title}: ${milestone.description}`}
+      fontSize="xs"
+      maxW="18em"
+    >
+      <Box
+        className="point-marker"
+        position="absolute"
+        left={`${AXIS_X}px`}
+        top={`${top}px`}
+        transform="translate(-50%, -50%)"
+        w="7px"
+        h="7px"
+        borderRadius="full"
+        bg="primary.main"
+        cursor="default"
+      />
+    </Tooltip>
   );
 };
 

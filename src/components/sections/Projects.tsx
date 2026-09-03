@@ -33,9 +33,9 @@ const Projects = () => {
   useGSAP(
     () => {
       gsap.from(".project-tag", {
-        scale: 0,
-        duration: 0.3,
-        stagger: 0.2,
+        opacity: 0,
+        duration: 0.4,
+        stagger: 0.08,
         scrollTrigger: {
           trigger: tagsContainerRef.current,
           start: "top 90%",
@@ -54,7 +54,6 @@ const Projects = () => {
     gsap.to(indicatorRef.current, {
       x: activeTag.offsetLeft,
       width: activeTag.offsetWidth,
-      height: activeTag.offsetHeight,
       duration: 0.3,
       ease: "power1.inOut",
     });
@@ -78,7 +77,7 @@ const Projects = () => {
       py={{ base: 10, lg: 16 }}
       my={0}
     >
-      <SectionHeading label="Behold My Creations!" />
+      <SectionHeading eyebrow="Selected Work" label="Projects" />
       <Flex
         ref={tagsContainerRef}
         direction="row"
@@ -90,13 +89,13 @@ const Projects = () => {
       >
         <Box
           ref={indicatorRef}
-          rounded="full"
           bg="primary.main"
+          h="1px"
           position="absolute"
-          top={0}
+          bottom={0}
           left={0}
           zIndex={0}
-          style={{ width: 0, height: 0 }}
+          style={{ width: 0 }}
         />
         {tagNames.map((name, i) => (
           <ProjectTag
@@ -129,21 +128,25 @@ const Projects = () => {
   );
 };
 
-const ProjectTag = ({ name, onClick, tagRef }: ProjectTag) => {
+const ProjectTag = ({ name, onClick, tag, tagRef }: ProjectTag) => {
   return (
     <Box
       className="project-tag"
       ref={tagRef}
       onClick={() => onClick(name)}
-      rounded="full"
-      px={5}
+      px={4}
       py={2}
-      fontSize="xl"
+      fontSize="sm"
+      letterSpacing="0.12em"
+      textTransform="uppercase"
       cursor="pointer"
       position="relative"
       zIndex={1}
-      fontWeight="bold"
+      fontWeight="500"
       color="text.main"
+      opacity={tag === name ? 1 : 0.5}
+      transition="opacity 0.3s ease"
+      _hover={{ opacity: 1 }}
     >
       {name}
     </Box>

@@ -1,5 +1,5 @@
 "use client";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,9 +14,9 @@ const SectionDivider = () => {
     () => {
       gsap.from(ref.current, {
         opacity: 0,
-        scaleX: 0.4,
-        duration: 1,
-        ease: "expo.out",
+        scaleX: 0.3,
+        duration: 1.1,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: ref.current,
           start: "top 90%",
@@ -28,56 +28,16 @@ const SectionDivider = () => {
   );
 
   return (
-    <Flex
+    <Box
       ref={ref}
-      alignItems="center"
       w="100%"
-      maxW="3xl"
+      maxW="2xl"
       mx="auto"
       px={{ base: 8, md: 0 }}
-      py={10}
+      py={{ base: 12, md: 16 }}
     >
-      {/* Left line */}
-      <Box
-        flex={1}
-        h="1px"
-        bgGradient="linear(to-r, transparent, primary.200)"
-      />
-
-      {/* Diamond cluster */}
-      <Flex alignItems="center" gap={2} mx={5}>
-        <Box
-          w="5px"
-          h="5px"
-          border="1.5px solid"
-          borderColor="primary.200"
-          transform="rotate(45deg)"
-          opacity={0.5}
-        />
-        <Box
-          w="9px"
-          h="9px"
-          border="1.5px solid"
-          borderColor="primary.400"
-          transform="rotate(45deg)"
-        />
-        <Box
-          w="5px"
-          h="5px"
-          border="1.5px solid"
-          borderColor="primary.200"
-          transform="rotate(45deg)"
-          opacity={0.5}
-        />
-      </Flex>
-
-      {/* Right line */}
-      <Box
-        flex={1}
-        h="1px"
-        bgGradient="linear(to-l, transparent, primary.200)"
-      />
-    </Flex>
+      <Box h="1px" w="100%" bg="background.300" />
+    </Box>
   );
 };
 

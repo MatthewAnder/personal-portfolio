@@ -16,7 +16,7 @@ const Contact = () => {
       w="100%"
       mb={10}
     >
-      <SectionHeading label="Contact Me!" />
+      <SectionHeading eyebrow="Get In Touch" label="Contact" />
       <Flex
         pt={10}
         direction={{ base: "column", lg: "row" }}
@@ -35,17 +35,17 @@ const SubTexts = () => {
   return (
     <Box w={{ base: "90%", sm: "26em", lg: "fit-content" }} maxW="30em" justifySelf="center">
       <Reveal width="fit-content">
-        <Heading>
-          Please contact me directly at <br />
+        <Heading fontWeight="500" fontSize={{ base: "2xl", md: "3xl" }}>
+          Reach me directly at <br />
           <Link color="primary.main" href="mailto:matthewanh@hotmail.com">
-            matthewanh@hotmail.com <br />
+            matthewanh@hotmail.com
           </Link>
-          or through this form.
+          , or send a message.
         </Heading>
       </Reveal>
       <Reveal width="fit-content" delay={0.3}>
-        <Text fontSize="lg" mt={2}>
-          Happy to chat about sports, technology, and ice cream!
+        <Text fontSize="md" mt={3} opacity={0.65}>
+          Open to conversations about new opportunities and collaborations.
         </Text>
       </Reveal>
     </Box>

@@ -13,7 +13,6 @@ import {
   Image,
   Text,
   VStack,
-  useBreakpointValue,
 } from "@chakra-ui/react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -23,7 +22,6 @@ import { useRef } from "react";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 // Import Sections
-import Tilt from "@/components/Tilt";
 import SectionDivider from "@/components/SectionDivider";
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
@@ -51,13 +49,15 @@ const Home = () => {
   const pictureRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-    tl.from(titleRef.current, { opacity: 0, y: 30, duration: 0.7 })
-      .from(pictureRef.current, { opacity: 0, scale: 0.92, duration: 0.7 }, 0.3);
+    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+    tl.from(titleRef.current, { opacity: 0, y: 20, duration: 0.9 }).from(
+      pictureRef.current,
+      { opacity: 0, duration: 0.9 },
+      0.25,
+    );
 
-    // Subtle parallax on scroll out of hero
     gsap.to(pictureRef.current, {
-      y: -60,
+      y: -30,
       ease: "none",
       scrollTrigger: {
         trigger: titleRef.current,
@@ -74,19 +74,14 @@ const Home = () => {
       flexDir={{ base: "column", lg: "row" }}
       alignItems="center"
       justifyContent="center"
-      gap={{ base: 4, lg: 10 }}
+      gap={{ base: 10, lg: 16 }}
       minH="100vh"
       h={{ base: "auto", lg: "100vh" }}
       w="100%"
-      pt={{ base: 20, lg: 0 }}
-      pb={{ base: 10, lg: 0 }}
+      pt={{ base: 24, lg: 0 }}
+      pb={{ base: 12, lg: 0 }}
       userSelect="none"
-      style={{
-        background:
-          "radial-gradient(ellipse 90% 80% at 15% 45%, rgba(150,187,167,0.6) 0%, transparent 65%)," +
-          "radial-gradient(ellipse 70% 60% at 80% 20%, rgba(94,138,121,0.45) 0%, transparent 60%)," +
-          "radial-gradient(ellipse 130% 60% at 50% -5%, rgba(197,219,209,0.85) 0%, transparent 70%)",
-      }}
+      bg="background.main"
     >
       <Box ref={titleRef}>
         <Title />
@@ -100,69 +95,66 @@ const Home = () => {
 
 const Title = () => {
   return (
-    <VStack align={{ base: "center", lg: "start" }} mx={6}>
+    <VStack align={{ base: "center", lg: "start" }} mx={6} spacing={4}>
+      <Text
+        fontSize="xs"
+        letterSpacing="0.28em"
+        textTransform="uppercase"
+        color="primary.main"
+      >
+        Portfolio
+      </Text>
       <Heading
         cursor="default"
-        fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
-        lineHeight="tall"
-        color="secondary.600"
+        fontWeight="500"
+        fontSize={{ base: "4xl", sm: "5xl", lg: "7xl" }}
+        lineHeight="1.05"
+        color="text.main"
       >
-        {"Matthew Haryanto"}
+        Matthew Haryanto
       </Heading>
-      <HStack alignItems="center">
-        <Heading fontSize={{ base: "2xl", sm: "3xl", lg: "5xl" }}>is a</Heading>
+      <HStack alignItems="baseline">
+        <Heading
+          fontWeight="400"
+          fontSize={{ base: "xl", sm: "2xl", lg: "3xl" }}
+          color="text.main"
+          opacity={0.7}
+        >
+          is a
+        </Heading>
         <Typewriter />
       </HStack>
       <Text
-        fontSize={{ base: "md", sm: "lg", lg: "3xl" }}
-        color="primary.400"
-        fontWeight="bold"
+        fontSize={{ base: "md", lg: "lg" }}
+        color="text.main"
+        opacity={0.65}
+        maxW="26em"
+        textAlign={{ base: "center", lg: "left" }}
       >
-        {"Developer!"}
+        Developer building considered, well-crafted web and systems software.
       </Text>
-      <br />
-      <DownloadBtn />
+      <Box pt={4}>
+        <DownloadBtn />
+      </Box>
     </VStack>
   );
 };
 
 const Picture = () => {
-  const isMobile = useBreakpointValue({ base: true, lg: false });
   return (
-    <Tilt>
-      <Box
-        position="relative"
-        transformOrigin="bottom right"
-        style={{
-          transformStyle: "preserve-3d",
-          transform: "translateZ(75px)",
-        }}
-        _before={{
-          content: "''",
-          position: "absolute",
-          top: isMobile ? "0px" : "1em",
-          left: isMobile ? "0px" : "1em",
-          transformOrigin: "center",
-          height: "100%",
-          width: "100%",
-          background: "text.main",
-          borderRadius: "full",
-          transformStyle: "preserve-3d",
-          transform: "translateZ(-50px) ",
-        }}
-      >
-        <Image
-          src="/images/profile.jpg"
-          alt="img"
-          position="relative"
-          boxSize={{ base: "36", sm: "52", lg: "xs" }}
-          objectFit="cover"
-          rounded="full"
-          boxShadow="2xl"
-          zIndex={3}
-        />
-      </Box>
-    </Tilt>
+    <Box
+      position="relative"
+      border="1px solid"
+      borderColor="background.300"
+      p={2}
+    >
+      <Image
+        src="https://ccddxtqblestojwqksue.supabase.co/storage/v1/object/public/static/Matthew_Haryanto_headshot.png"
+        alt="Matthew Haryanto"
+        boxSize={{ base: "48", sm: "60", lg: "sm" }}
+        objectFit="cover"
+      />
+    </Box>
   );
 };
 
@@ -170,48 +162,29 @@ const DownloadBtn = () => {
   return (
     <Button
       as="a"
-      href="/Matthew_Haryanto_resume.pdf"
+      href="https://ccddxtqblestojwqksue.supabase.co/storage/v1/object/public/static/Matthew_Haryanto_resume.pdf"
       target="_blank"
       size="lg"
-      position="relative"
-      bg="text.main"
-      border="solid transparent"
-      borderRadius="full"
-      borderWidth="0 0 4px"
-      color="accent.main"
+      variant="outline"
+      borderRadius="0"
+      border="1px solid"
+      borderColor="text.main"
+      color="text.main"
+      bg="transparent"
       cursor="pointer"
-      letterSpacing="0.06em"
-      fontSize="sm"
-      px={8}
-      transform="translateZ(0)"
-      transition="filter 0.2s ease, transform 0.2s ease"
+      letterSpacing="0.16em"
+      fontSize="xs"
+      textTransform="uppercase"
+      px={10}
+      transition="background 0.3s ease, color 0.3s ease"
       userSelect="none"
-      _after={{
-        content: '""',
-        bgClip: "padding-box",
-        backgroundColor: "secondary.main",
-        border: "solid transparent",
-        borderRadius: "full",
-        borderWidth: "0 0 4px",
-        bottom: "-4px",
-        left: "0",
-        position: "absolute",
-        right: "0",
-        top: "0",
-        zIndex: "-1",
-      }}
       _hover={{
-        filter: "brightness(1.15)",
-        transform: "translateY(-1px) translateZ(0)",
-      }}
-      _active={{
-        borderWidth: "4px 0 0",
-        background: "none",
-        transform: "translateY(0) translateZ(0)",
+        bg: "text.main",
+        color: "background.main",
       }}
       rightIcon={<DownloadIcon />}
     >
-      MY RESUME
+      Resume
     </Button>
   );
 };
